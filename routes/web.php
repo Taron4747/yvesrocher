@@ -7,6 +7,7 @@ use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\CategoriesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -140,3 +141,34 @@ Route::get('reports', [ReportsController::class, 'index'])
 Route::get('/img/{path}', [ImagesController::class, 'show'])
     ->where('path', '.*')
     ->name('image');
+
+
+    // Gategories
+
+Route::get('categories', [CategoriesController::class, 'index'])
+->name('categories')
+->middleware('auth');
+
+Route::get('categories/create', [CategoriesController::class, 'create'])
+->name('categories.create')
+->middleware('auth');
+
+Route::post('categories', [CategoriesController::class, 'store'])
+->name('categories.store')
+->middleware('auth');
+
+Route::get('categories/{category}/edit', [CategoriesController::class, 'edit'])
+->name('categories.edit')
+->middleware('auth');
+
+Route::put('categories/{category}', [CategoriesController::class, 'update'])
+->name('categories.update')
+->middleware('auth');
+
+Route::delete('categories/{category}', [CategoriesController::class, 'destroy'])
+->name('categories.destroy')
+->middleware('auth');
+
+Route::put('categories/{category}/restore', [CategoriesController::class, 'restore'])
+->name('categories.restore')
+->middleware('auth');
