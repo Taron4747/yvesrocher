@@ -19,16 +19,16 @@ class CategoriesController extends Controller
         return Inertia::render('Categories/Index', [
             'filters' => Request::all('search', 'trashed'),
             'categories' =>Category::
-                
-                filter(Request::only('search', 'trashed'))
+                whereNull('parent_id')
+                ->filter(Request::only('search', 'trashed'))
                 ->paginate(10)
                 ->withQueryString()
-                ->through(fn ($contact) => [
-                    'id' => $contact->id,
-                    'name_arm' => $contact->name_arm,
-                    'name_en' => $contact->name_en,
-                    'name_ru' => $contact->name_ru,
-                    'image' => $contact->image ? URL::route('image', ['path' => $contact->image, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
+                ->through(fn ($category) => [
+                    'id' => $category->id,
+                    'name_arm' => $category->name_arm,
+                    'name_en' => $category->name_en,
+                    'name_ru' => $category->name_ru,
+                    'image' => $category->image ? URL::route('image', ['path' => $category->image, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
                     
                 ]),
         ]);
@@ -58,7 +58,7 @@ class CategoriesController extends Controller
             ])
         );
 
-        return Redirect::route('contacts')->with('success', 'Contact created.');
+        return Redirect::route('categories')->with('success', 'Category created.');
     }
 
     public function edit(Category $category): Response
@@ -80,40 +80,219 @@ class CategoriesController extends Controller
         ]);
     }
 
-    public function update(Contact $contact): RedirectResponse
+    public function update(Category $category): RedirectResponse
     {
-        $contact->update(
+        $category->update(
             Request::validate([
-                'first_name' => ['required', 'max:50'],
-                'last_name' => ['required', 'max:50'],
-                'organization_id' => [
-                    'nullable',
-                    Rule::exists('organizations', 'id')->where(fn ($query) => $query->where('account_id', Auth::user()->account_id)),
-                ],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'name_en' => ['required', 'max:50'],
             ])
         );
 
-        return Redirect::back()->with('success', 'Contact updated.');
+        return Redirect::back()->with('success', 'Category updated.');
     }
 
-    public function destroy(Contact $contact): RedirectResponse
+    public function destroy(Category $category): RedirectResponse
     {
-        $contact->delete();
+        $category->delete();
 
-        return Redirect::back()->with('success', 'Contact deleted.');
+        return Redirect::back()->with('success', 'Category deleted.');
     }
 
-    public function restore(Contact $contact): RedirectResponse
+    public function restore(Category $category): RedirectResponse
     {
-        $contact->restore();
+        $category->restore();
 
-        return Redirect::back()->with('success', 'Contact restored.');
+        return Redirect::back()->with('success', 'Category restored.');
+    }
+
+
+    public function indexSub(): Response
+    {
+        return Inertia::render('SubCategories/Index', [
+            'filters' => Request::all('search', 'trashed'),
+            'categories' =>Category::
+                    whereIn('parent_id', function($query) {
+                        $query->select('id')->from('categories')->whereNull('parent_id');
+                    })
+                ->filter(Request::only('search', 'trashed'))
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn ($category) => [
+                    'id' => $category->id,
+                    'name_arm' => $category->name_arm,
+                    'name_en' => $category->name_en,
+                    'name_ru' => $category->name_ru,
+                    'image' => $category->image ? URL::route('image', ['path' => $category->image, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
+                    
+                ]),
+        ]);
+    }
+
+    public function createSub(): Response
+    {
+        return Inertia::render('SubCategories/Create', [
+            'categories' => Category::
+            whereNull('parent_id')->get()
+           
+            
+            
+        ]);
+    }
+
+    public function storeSub(): RedirectResponse
+    {
+        Category::create(
+            Request::validate([
+                'name_en' => ['required', 'max:50'],
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'parent_id' => ['required'],
+               
+            ])
+        );
+
+        return Redirect::route('sub-category')->with('success', 'Sub category created.');
+    }
+
+    public function editSub(Category $category): Response
+    {
+        return Inertia::render('SubCategories/Edit', [
+            'category' => [
+                'id' => $category->id,
+                'name_arm' => $category->name_arm,
+                'name_ru' => $category->name_ru,
+                'name_en' => $category->name_en,
+                'parent_id' => $category->parent_id,
+              
+                'deleted_at' => $category->deleted_at,
+            ],
+            'categories' => Category::
+            whereNull('parent_id')->get()
+        ]);
+    }
+
+    public function updateSub(Category $category): RedirectResponse
+    {
+        $category->update(
+            Request::validate([
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'name_en' => ['required', 'max:50'],
+            ])
+        );
+
+        return Redirect::back()->with('success', 'Sub Category updated.');
+    }
+
+    public function destroySub(Category $category): RedirectResponse
+    {
+        $category->delete();
+
+        return Redirect::back()->with('success', 'Sub Category deleted.');
+    }
+
+    public function restoreSub(Category $category): RedirectResponse
+    {
+        $category->restore();
+        return Redirect::back()->with('success', 'Sub Category restored.');
+
+    }
+
+    public function indexSubSub(): Response
+    {
+        return Inertia::render('SubSubCategories/Index', [
+            'filters' => Request::all('search', 'trashed'),
+            'categories' =>Category::
+                whereIn('parent_id', function($query) {
+                    $query->select('id')->from('categories')->whereIn('parent_id', function($q) {
+                        $q->select('id')->from('categories')->whereNull('parent_id');
+                    });
+                })
+                ->filter(Request::only('search', 'trashed'))
+                ->paginate(10)
+                ->withQueryString()
+                ->through(fn ($category) => [
+                    'id' => $category->id,
+                    'name_arm' => $category->name_arm,
+                    'name_en' => $category->name_en,
+                    'name_ru' => $category->name_ru,
+                    'image' => $category->image ? URL::route('image', ['path' => $category->image, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
+                    
+                ]),
+        ]);
+    }
+
+    public function createSubSub(): Response
+    {
+        return Inertia::render('SubSubCategories/Create', [
+            'categories' => Category::
+            whereIn('parent_id', function($query) {
+                $query->select('id')->from('categories')->whereNull('parent_id');
+            })->get()
+           
+            
+            
+        ]);
+    }
+
+    public function storeSubSub(): RedirectResponse
+    {
+        Category::create(
+            Request::validate([
+                'name_en' => ['required', 'max:50'],
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'parent_id' => ['required'],
+               
+            ])
+        );
+
+        return Redirect::route('sub-sub-categories')->with('success', 'Sub sub category created.');
+    }
+
+    public function editSubSub(Category $category): Response
+    {
+        return Inertia::render('SubCategories/Edit', [
+            'category' => [
+                'id' => $category->id,
+                'name_arm' => $category->name_arm,
+                'name_ru' => $category->name_ru,
+                'name_en' => $category->name_en,
+                'parent_id' => $category->parent_id,
+              
+                'deleted_at' => $category->deleted_at,
+            ],
+            'categories' => Category::
+            whereNull('parent_id')->get()
+        ]);
+    }
+
+    public function updateSubSub(Category $category): RedirectResponse
+    {
+        $category->update(
+            Request::validate([
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'name_en' => ['required', 'max:50'],
+            ])
+        );
+
+        return Redirect::back()->with('success', 'Sub Category updated.');
+    }
+
+    public function destroySubSub(Category $category): RedirectResponse
+    {
+        $category->delete();
+
+        return Redirect::back()->with('success', 'Sub Category deleted.');
+    }
+
+    public function restoreSubSub(Category $category): RedirectResponse
+    {
+        $category->restore();
+        return Redirect::back()->with('success', 'Sub Category restored.');
+
     }
 }

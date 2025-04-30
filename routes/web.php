@@ -143,7 +143,7 @@ Route::get('/img/{path}', [ImagesController::class, 'show'])
     ->name('image');
 
 
-    // Gategories
+    // Categories
 
 Route::get('categories', [CategoriesController::class, 'index'])
 ->name('categories')
@@ -172,3 +172,61 @@ Route::delete('categories/{category}', [CategoriesController::class, 'destroy'])
 Route::put('categories/{category}/restore', [CategoriesController::class, 'restore'])
 ->name('categories.restore')
 ->middleware('auth');
+
+ // Sub Categories
+Route::get('sub-categories', [CategoriesController::class, 'indexSub'])
+->name('sub-categories')
+->middleware('auth');
+
+Route::get('sub-categories/create', [CategoriesController::class, 'createSub'])
+->name('sub-categories.create')
+->middleware('auth');
+
+Route::post('sub-categories', [CategoriesController::class, 'storeSub'])
+->name('sub-categories.store')
+->middleware('auth');
+
+Route::get('sub-categories/{category}/edit', [CategoriesController::class, 'editSub'])
+->name('sub-categories.edit')
+->middleware('auth');
+
+Route::put('sub-categories/{category}', [CategoriesController::class, 'updateSub'])
+->name('categories.update')
+->middleware('auth');
+
+Route::delete('sub-categories/{category}', [CategoriesController::class, 'destroySub'])
+->name('categories.destroy')
+->middleware('auth');
+
+Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'restoreSub'])
+->name('sub-categories.restore')
+->middleware('auth');
+
+ // Sub Categories
+ Route::get('sub-sub-categories', [CategoriesController::class, 'indexSubSub'])
+ ->name('sub-sub-categories')
+ ->middleware('auth');
+ 
+ Route::get('sub-sub-categories/create', [CategoriesController::class, 'createSubSub'])
+ ->name('sub-sub-categories.create')
+ ->middleware('auth');
+ 
+ Route::post('sub-sub-categories', [CategoriesController::class, 'storeSubSub'])
+ ->name('sub-sub-categories.store')
+ ->middleware('auth');
+ 
+ Route::get('sub-sub-categories/{category}/edit', [CategoriesController::class, 'editSubSub'])
+ ->name('sub-sub-categories.edit')
+ ->middleware('auth');
+ 
+ Route::put('sub-sub-categories/{category}', [CategoriesController::class, 'updateSubSub'])
+ ->name('categories.update')
+ ->middleware('auth');
+ 
+ Route::delete('sub-sub-categories/{category}', [CategoriesController::class, 'destroySubSub'])
+ ->name('categories.destroy')
+ ->middleware('auth');
+ 
+ Route::put('sub-sub-categories/{category}/restore', [CategoriesController::class, 'restoreSubSub'])
+ ->name('sub-sub-categories.restore')
+ ->middleware('auth');

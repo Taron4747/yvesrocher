@@ -12,6 +12,18 @@
         <div :class="isUrl('categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Categories</div>
       </Link>
     </div>
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" href="/sub-categories">
+        <icon name="office" class="mr-2 w-4 h-4" :class="isUrl('sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+        <div :class="isUrl('sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Sub Categories</div>
+      </Link>
+    </div>
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" href="/sub-sub-categories">
+        <icon name="office" class="mr-2 w-4 h-4" :class="isUrl('sub-sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+        <div :class="isUrl('sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Sub sub Categories</div>
+      </Link>
+    </div>
     <!-- <div class="mb-4">
       <Link class="group flex items-center py-3" href="/contacts">
         <icon name="users" class="mr-2 w-4 h-4" :class="isUrl('contacts') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
