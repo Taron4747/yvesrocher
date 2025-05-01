@@ -8,6 +8,7 @@ use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth
+Route::middleware(['setLocale'])->group(function () {
 
 Route::get('login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
@@ -36,10 +38,11 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // Dashboard
 
-Route::get('/', [DashboardController::class, 'index'])
+Route::get('/', [HomeController::class, 'index'])
+    ->name('home');
+    Route::get('/admin', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
-
 // Users
 
 Route::get('users', [UsersController::class, 'index'])
@@ -230,3 +233,11 @@ Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'r
  Route::put('sub-sub-categories/{category}/restore', [CategoriesController::class, 'restoreSubSub'])
  ->name('sub-sub-categories.restore')
  ->middleware('auth');
+
+});
+
+ Route::get('/language/{language}', function ($language) {
+    Session()->put('locale', $language);
+ 
+    return redirect()->back();
+})->name('language');
