@@ -1,54 +1,59 @@
 <template>
   <div>
     <Head title="Categories" />
-    <h1 class="mb-8 text-3xl font-bold">Под Подкатегории</h1>
+    <h1 class="mb-8 text-3xl font-bold">Categories</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Trashed:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />
-          <option value="with">С удаленными</option>
-          <option value="only">Только удаленные</option>
+          <option value="with">With Trashed</option>
+          <option value="only">Only Trashed</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/sub-sub-categories/create">
-        <span>Создать</span>
-        <span class="hidden md:inline">&nbsp;Под Подкатегорию</span>
+      <Link class="btn-indigo" href="/categories/create">
+        <span>Create</span>
+        <span class="hidden md:inline">&nbsp;Category</span>
       </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6">Название Арм</th>
-          <th class="pb-4 pt-6 px-6">Название Ру</th>
-          <th class="pb-4 pt-6 px-6">Название Анг</th>
+          <th class="pb-4 pt-6 px-6">Name Arm</th>
+          <th class="pb-4 pt-6 px-6">Name Ru</th>
+          <th class="pb-4 pt-6 px-6">Name En</th>
+          <th class="pb-4 pt-6 px-6">Photo</th>
         </tr>
         <tr v-for="category in categories.data" :key="category.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/sub-sub-categories/${category.id}/edit`">
+            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/categories/${category.id}/edit`">
               {{ category.name_arm }}
               <icon v-if="category.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/sub-sub-categories/${category.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/categories/${category.id}/edit`" tabindex="-1">
                 {{ category.name_ru }}
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/sub-sub-categories/${category.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/categories/${category.id}/edit`" tabindex="-1">
               {{ category.name_en }}
             </Link>
           </td>
-        
+          <td class="border-t">
+            <Link class="flex items-center px-6 py-4" :href="`/categories/${category.id}/edit`" tabindex="-1">
+              <img v-if="category.image" class="block -my-2 mr-2 w-5 h-5 rounded-full" :src="category.image" />
+            </Link>
+          </td>
           <td class="w-px border-t">
-            <Link class="flex items-center px-4" :href="`/sub-sub-categories/${category.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-4" :href="`/categories/${category.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
             </Link>
           </td>
         </tr>
         <tr v-if="categories.data.length === 0">
-          <td class="px-6 py-4 border-t" colspan="4">No sub sub categories found.</td>
+          <td class="px-6 py-4 border-t" colspan="4">No categories found.</td>
         </tr>
       </table>
     </div>
@@ -91,7 +96,7 @@ export default {
     form: {
       deep: true,
       handler: throttle(function () {
-        this.$inertia.get('/sub-sub-categories', pickBy(this.form), { preserveState: true })
+        this.$inertia.get('/categories', pickBy(this.form), { preserveState: true })
       }, 150),
     },
   },

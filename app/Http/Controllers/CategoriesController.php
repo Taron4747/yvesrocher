@@ -167,7 +167,7 @@ Request::validate([
             ])
         );
 
-        return Redirect::route('sub-category')->with('success', 'Sub category created.');
+        return Redirect::route('sub-categories')->with('success', 'Sub category created.');
     }
 
     public function editSub(Category $category): Response
@@ -268,6 +268,7 @@ Request::validate([
 
     public function editSubSub(Category $category): Response
     {
+       
         return Inertia::render('SubCategories/Edit', [
             'category' => [
                 'id' => $category->id,
@@ -278,8 +279,9 @@ Request::validate([
               
                 'deleted_at' => $category->deleted_at,
             ],
-            'categories' => Category::
-            whereNull('parent_id')->get()
+            'categories' => Category::whereIn('parent_id', function($query) {
+                $query->select('id')->from('categories')->whereNull('parent_id');
+            })->get()
         ]);
     }
 

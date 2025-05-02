@@ -1,27 +1,27 @@
 <template>
   <div>
     <Head title="Categories" />
-    <h1 class="mb-8 text-3xl font-bold">Sub Categories</h1>
+    <h1 class="mb-8 text-3xl font-bold">Подкатегории</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Trashed:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />
-          <option value="with">With Trashed</option>
-          <option value="only">Only Trashed</option>
+          <option value="with">С удаленными</option>
+          <option value="only">Только удаленные</option>
         </select>
       </search-filter>
       <Link class="btn-indigo" href="/sub-categories/create">
-        <span>Create</span>
-        <span class="hidden md:inline">&nbsp;Sub Category</span>
+        <span>Создать</span>
+        <span class="hidden md:inline">&nbsp;Подкатегорию</span>
       </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6">Name Arm</th>
-          <th class="pb-4 pt-6 px-6">Name Ru</th>
-          <th class="pb-4 pt-6 px-6">Name En</th>
+          <th class="pb-4 pt-6 px-6">Название Арм</th>
+          <th class="pb-4 pt-6 px-6">Название Ру</th>
+          <th class="pb-4 pt-6 px-6">Название Анг</th>
         </tr>
         <tr v-for="category in categories.data" :key="category.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">

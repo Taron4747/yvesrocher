@@ -3,8 +3,8 @@
     <div class="mb-4">
       <Link class="group flex items-center py-3" href="/admin">
       <icon name="dashboard" class="mr-2 w-4 h-4"
-        :class="isUrl('') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-      <div :class="isUrl('') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Панель</div>
+        :class="isUrl('admin') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Панель</div>
       </Link>
     </div>
     <div class="mb-4 group flex items-center" style="cursor: pointer;" @click="active = !active">
@@ -25,7 +25,7 @@
         <Link class="group flex items-center py-3" href="/sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
           :class="isUrl('sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Подкотегории
+        <div :class="isUrl('sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Подкатегории
         </div>
         </Link>
       </div>
@@ -33,11 +33,17 @@
         <Link class="group flex items-center py-3" href="/sub-sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
           :class="isUrl('sub-sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Под Подкотегории</div>
+        <div :class="isUrl('sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Под Подкатегории</div>
         </Link>
       </div>
     </div>
-      
+    <div class="mb-4">
+      <Link class="group flex items-center py-3" href="/attributes">
+      <icon name="printer" class="mr-2 w-4 h-4"
+        :class="isUrl('attributes') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('attributes') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Аттрибуты</div>
+      </Link>
+    </div>
     <!-- <dropdown class="mt-1" placement="bottom-end">
       <template #default>
         <div class="mb-4">
