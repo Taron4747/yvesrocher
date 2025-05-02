@@ -28,7 +28,7 @@ class CategoriesController extends Controller
                     'name_arm' => $category->name_arm,
                     'name_en' => $category->name_en,
                     'name_ru' => $category->name_ru,
-                    'image' => $category->image ? URL::route('image', ['path' => $category->image, 'w' => 60, 'h' => 60, 'fit' => 'crop']) : null,
+                    'image' => $category->image,
                     
                 ]),
         ]);
@@ -48,15 +48,29 @@ class CategoriesController extends Controller
 
     public function store(): RedirectResponse
     {
-        Category::create(
-            Request::validate([
-                'name_en' => ['required', 'max:50'],
-                'name_arm' => ['required', 'max:50'],
-                'name_ru' => ['required', 'max:50'],
-                'image' => ['required', 'image'],
-               
-            ])
-        );
+//        \Storage::disk('s3')->put('test.txt', 'Hello, S3!');
+// dd(\Storage::disk('s3')->url('test.txt'));
+Request::validate([
+    'name_en' => ['required', 'max:50'],
+    'name_arm' => ['required', 'max:50'],
+    'name_ru' => ['required', 'max:50'],
+    'image' => ['required', 'image'],
+   
+]);
+        $path = Request::file('image')->store('images', 's3');
+        $url = \Storage::disk('s3')->url($path);
+
+        $data =Request::all();
+        $insertdata = [
+            'name_en' => $data['name_en'],
+            'name_arm' => $data['name_arm'],
+            'name_ru' => $data['name_ru'],
+            'image' => $url,
+
+        ];
+// // Получение URL
+        // dd($url,$path);
+        Category::create($insertdata) ;
 
         return Redirect::route('categories')->with('success', 'Category created.');
     }
