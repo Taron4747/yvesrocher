@@ -21,7 +21,12 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(\App\Http\Middleware\HandleInertiaRequests::class);
 
         $middleware->throttleApi();
-
+        $middleware->alias([
+            'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+        
+            'setLocale' => \App\Http\Middleware\SetLocale::class,
+        
+        ]);
         $middleware->replace(\Illuminate\Http\Middleware\TrustProxies::class, \App\Http\Middleware\TrustProxies::class);
     })
     ->withExceptions(function (Exceptions $exceptions) {
