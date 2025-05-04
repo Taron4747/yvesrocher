@@ -39,8 +39,8 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 
 // Dashboard
 
-Route::get('/', [HomeController::class, 'index'])
-    ->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::post('/search', [HomeController::class, 'search'])->name('search');
     Route::get('/admin', [DashboardController::class, 'index'])
     ->name('dashboard')
     ->middleware('auth');
