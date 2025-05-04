@@ -1,3 +1,3 @@
 <template>
-  <img src="/logo.webp">
+  <img src="/images/logo.webp">
 </template>

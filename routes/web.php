@@ -8,7 +8,7 @@ use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\AttributesController;
+use App\Http\Controllers\FiltersController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -235,34 +235,34 @@ Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'r
  ->name('sub-sub-categories.restore')
  ->middleware('auth');
 
-    // Attributes
+    // Filters
 
-    Route::get('attributes', [AttributesController::class, 'index'])
-    ->name('attributes')
+    Route::get('filter', [FiltersController::class, 'index'])
+    ->name('filter')
     ->middleware('auth');
 
-    Route::get('attributes/create', [AttributesController::class, 'create'])
-    ->name('attributes.create')
+    Route::get('filter/create', [FiltersController::class, 'create'])
+    ->name('filter.create')
     ->middleware('auth');
 
-    Route::post('attributes', [AttributesController::class, 'store'])
-    ->name('attributes.store')
+    Route::post('filter', [FiltersController::class, 'store'])
+    ->name('filter.store')
     ->middleware('auth');
 
-    Route::get('attributes/{category}/edit', [AttributesController::class, 'edit'])
-    ->name('attributes.edit')
+    Route::get('filter/{category}/edit', [FiltersController::class, 'edit'])
+    ->name('filter.edit')
     ->middleware('auth');
 
-    Route::put('attributes/{category}', [AttributesController::class, 'update'])
-    ->name('attributes.update')
+    Route::put('filter/{category}', [FiltersController::class, 'update'])
+    ->name('filter.update')
     ->middleware('auth');
 
-    Route::delete('attributes/{category}', [AttributesController::class, 'destroy'])
-    ->name('attributes.destroy')
+    Route::delete('filter/{category}', [FiltersController::class, 'destroy'])
+    ->name('filter.destroy')
     ->middleware('auth');
 
-    Route::put('attributes/{category}/restore', [AttributesController::class, 'restore'])
-    ->name('attributes.restore')
+    Route::put('filter/{category}/restore', [FiltersController::class, 'restore'])
+    ->name('filter.restore')
     ->middleware('auth');
 
 });

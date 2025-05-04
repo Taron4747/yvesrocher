@@ -38,10 +38,10 @@
       </div>
     </div>
     <div class="mb-4">
-      <Link class="group flex items-center py-3" href="/attributes">
+      <Link class="group flex items-center py-3" href="/filter">
       <icon name="printer" class="mr-2 w-4 h-4"
-        :class="isUrl('attributes') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-      <div :class="isUrl('attributes') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Аттрибуты</div>
+        :class="isUrl('filters') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('filters') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Фильтры</div>
       </Link>
     </div>
     <!-- <dropdown class="mt-1" placement="bottom-end">

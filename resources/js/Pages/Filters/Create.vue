@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Contact" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/attributes">Атррибут</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/filter">Фильтр</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="mb-8 bg-white rounded-md shadow overflow-hidden">
@@ -12,11 +12,21 @@
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Арм" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Ру" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Анг" />
-          <div class="add_button_program" @click="addDelivery()">
-            <img src="/images/add_photo_blue.svg">
-            <span>Добавить значение</span>
+          <label class="custom_checkbox">One
+              <input v-model="form.filterType" type="checkbox" checked="checked">
+              <span class="checkmark"></span>
+          </label>
+          <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterType">
+            <div v-for="key in countOfCustom" class="flex flex-wrap w-full -mb-8 -mr-6 p-8">
+              <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Арм" />
+              <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Ру" />
+              <text-input v-model="customData[key-1].name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Анг" />
+            </div>
+            <div class="add_button" @click="addDelivery()">
+              <img src="/images/add_photo_blue.svg">
+              <span>Добавить значение</span>
+            </div>
           </div>
-          
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать категорию</loading-button>
@@ -54,18 +64,31 @@ export default {
         name_arm: '',
         name_ru: '',
         name_en: '',
-        image: null,
+        customData: [],
+        filterType: false,
       }),
+      customData: [
+        {
+          name_arm: '',
+          name_ru: '',
+          name_en: '',
+        }
+      ],
+      countOfCustom:1,
     }
   },
   methods: {
+    // store() {
+    //   this.form.post('/categories')
+    // },
     store() {
-      this.form.post('/categories')
-    },
+      this.form.customData = this.customData;
+        this.form.post('/filter')
+      },
   },
 }
 </script>
-<style scoped lang="scss">
+<style  lang="scss">
 .add_button{
   display: flex;
   align-items: center;

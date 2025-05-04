@@ -12,13 +12,13 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\URL;
 
-class AttributesController extends Controller
+class FiltersController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Attributes/Index', [
+        return Inertia::render('Filters/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'attributes' =>Category::
+            'filters_data' =>Category::
                 whereNull('parent_id')
                 ->filter(Request::only('search', 'trashed'))
                 ->paginate(10)
@@ -36,7 +36,7 @@ class AttributesController extends Controller
 
     public function create(): Response
     {
-        return Inertia::render('Attributes/Create', [
+        return Inertia::render('Filters/Create', [
             'organizations' => Auth::user()->account
                 ->organizations()
                 ->orderBy('name')
@@ -49,7 +49,7 @@ class AttributesController extends Controller
     public function store(): RedirectResponse
     {
 //        \Storage::disk('s3')->put('test.txt', 'Hello, S3!');
-// dd(\Storage::disk('s3')->url('test.txt'));
+dd(Request::all());
 Request::validate([
     'name_en' => ['required', 'max:50'],
     'name_arm' => ['required', 'max:50'],
