@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Attribute extends Model
+class Filter extends Model
 {
     public function values()
     {
-        return $this->hasMany(AttributeValue::class);
+        return $this->hasMany(FilterValue::class);
     }
 }

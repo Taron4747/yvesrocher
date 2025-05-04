@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function attributeValues()
+    public function filterValues()
     {
-        return $this->belongsToMany(AttributeValue::class);
+        return $this->belongsToMany(FilterValue::class);
     }
 }
