@@ -83,7 +83,7 @@ class FiltersController extends Controller
                 'name_ru' => $filter->name_ru,
                 'name_en' => $filter->name_en,
                 'filterable' => $filter->filterable,
-              
+                'values'=>$filter->values,
                 'deleted_at' => $filter->deleted_at,
             ],
            
@@ -92,6 +92,7 @@ class FiltersController extends Controller
 
     public function update(Category $filter): RedirectResponse
     {
+        $data =Request::all();
         $filter->update(
             Request::validate([
                 'name_arm' => ['required', 'max:50'],
