@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attributes', function (Blueprint $table) {
+        Schema::create('filters', function (Blueprint $table) {
             $table->id();
             $table->string('name_en');        // Например: Цвет, Тип кожи
             $table->string('name_ru');        // Например: Цвет, Тип кожи
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('atributes');
+        Schema::dropIfExists('filters');
     }
 };

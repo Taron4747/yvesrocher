@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attribute_values', function (Blueprint $table) {
+        Schema::create('filter_values', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('attribute_id')->constrained()->onDelete('cascade');
+            $table->foreignId('filter_id')->constrained()->onDelete('cascade');
             $table->string('value');      // Например: Красный, Жирная кожа
             $table->timestamps();
         });
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('atribute_values');
+        Schema::dropIfExists('filter_values');
     }
 };
