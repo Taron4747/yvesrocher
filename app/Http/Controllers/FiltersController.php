@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
+use App\Models\Filter;
+use App\Models\FilterValue;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -18,17 +19,16 @@ class FiltersController extends Controller
     {
         return Inertia::render('Filters/Index', [
             'filters' => Request::all('search', 'trashed'),
-            'filters_data' =>Category::
-                whereNull('parent_id')
-                ->filter(Request::only('search', 'trashed'))
+            'filters_data' =>Filter::
+                filter(Request::only('search', 'trashed'))
                 ->paginate(10)
                 ->withQueryString()
-                ->through(fn ($category) => [
-                    'id' => $category->id,
-                    'name_arm' => $category->name_arm,
-                    'name_en' => $category->name_en,
-                    'name_ru' => $category->name_ru,
-                    'image' => $category->image,
+                ->through(fn ($filter) => [
+                    'id' => $filter->id,
+                    'name_arm' => $filter->name_arm,
+                    'name_en' => $filter->name_en,
+                    'name_ru' => $filter->name_ru,
+                    'image' => $filter->image,
                     
                 ]),
         ]);
@@ -37,66 +37,62 @@ class FiltersController extends Controller
     public function create(): Response
     {
         return Inertia::render('Filters/Create', [
-            'organizations' => Auth::user()->account
-                ->organizations()
-                ->orderBy('name')
-                ->get()
-                ->map
-                ->only('id', 'name'),
+          
         ]);
     }
 
     public function store(): RedirectResponse
     {
-//        \Storage::disk('s3')->put('test.txt', 'Hello, S3!');
-dd(Request::all());
-Request::validate([
-    'name_en' => ['required', 'max:50'],
-    'name_arm' => ['required', 'max:50'],
-    'name_ru' => ['required', 'max:50'],
-    'image' => ['required', 'image'],
-   
-]);
-        $path = Request::file('image')->store('images', 's3');
-        $url = \Storage::disk('s3')->url($path);
+        Request::validate([
+            'name_en' => ['required', 'max:50'],
+            'name_arm' => ['required', 'max:50'],
+            'name_ru' => ['required', 'max:50'],
+    
+        ]);
+       
 
         $data =Request::all();
         $insertdata = [
             'name_en' => $data['name_en'],
             'name_arm' => $data['name_arm'],
             'name_ru' => $data['name_ru'],
-            'image' => $url,
+            'filterable' => $data['filterable'],
 
         ];
-// // Получение URL
-        // dd($url,$path);
-        Category::create($insertdata) ;
-
-        return Redirect::route('categories')->with('success', 'Category created.');
+        $filter = Filter::create($insertdata) ;
+        if ($data['filterable'] ==true) {
+            foreach ($data['customData'] as $key => $customData) {
+                $filterdata =[
+                    'name_en' => $customData['name_en'],
+                    'name_arm' => $customData['name_arm'],
+                    'name_ru' => $customData['name_ru'],
+                    'filter_id'=>$filter->id,
+                ];
+                FilterValue::create($filterdata);
+            }
+        }
+        return Redirect::route('filter')->with('success', 'Filter created.');
     }
 
-    public function edit(Category $category): Response
+    public function edit(Filter $filter): Response
     {
         return Inertia::render('Categories/Edit', [
-            'category' => [
-                'id' => $category->id,
-                'name_arm' => $category->name_arm,
-                'name_ru' => $category->name_ru,
-                'name_en' => $category->name_en,
+            'filter' => [
+                'id' => $filter->id,
+                'name_arm' => $filter->name_arm,
+                'name_ru' => $filter->name_ru,
+                'name_en' => $filter->name_en,
+                'filterable' => $filter->filterable,
               
-                'deleted_at' => $category->deleted_at,
+                'deleted_at' => $filter->deleted_at,
             ],
-            'organizations' => Auth::user()->account->organizations()
-                ->orderBy('name')
-                ->get()
-                ->map
-                ->only('id', 'name'),
+           
         ]);
     }
 
-    public function update(Category $category): RedirectResponse
+    public function update(Category $filter): RedirectResponse
     {
-        $category->update(
+        $filter->update(
             Request::validate([
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
@@ -107,16 +103,16 @@ Request::validate([
         return Redirect::back()->with('success', 'Category updated.');
     }
 
-    public function destroy(Category $category): RedirectResponse
+    public function destroy(Category $filter): RedirectResponse
     {
-        $category->delete();
+        $filter->delete();
 
         return Redirect::back()->with('success', 'Category deleted.');
     }
 
-    public function restore(Category $category): RedirectResponse
+    public function restore(Category $filter): RedirectResponse
     {
-        $category->restore();
+        $filter->restore();
 
         return Redirect::back()->with('success', 'Category restored.');
     }

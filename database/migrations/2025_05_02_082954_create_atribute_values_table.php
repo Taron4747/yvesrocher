@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('filter_values', function (Blueprint $table) {
             $table->id();
             $table->foreignId('filter_id')->constrained()->onDelete('cascade');
-            $table->string('value');      // Например: Красный, Жирная кожа
+            $table->string('name_arm');     
+            $table->string('name_en');     
+            $table->string('name_ru');     
             $table->timestamps();
         });
     }

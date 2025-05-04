@@ -13,10 +13,10 @@
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Ру" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Анг" />
           <label class="custom_checkbox">One
-              <input v-model="form.filterType" type="checkbox" checked="checked">
+              <input v-model="form.filterable" type="checkbox" checked="checked">
               <span class="checkmark"></span>
           </label>
-          <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterType">
+          <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterable">
             <div v-for="key in countOfCustom" class="flex flex-wrap w-full -mb-8 -mr-6 p-8">
               <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Арм" />
               <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Ру" />
@@ -65,7 +65,7 @@ export default {
         name_ru: '',
         name_en: '',
         customData: [],
-        filterType: false,
+        filterable: false,
       }),
       customData: [
         {

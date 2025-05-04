@@ -249,19 +249,19 @@ Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'r
     ->name('filter.store')
     ->middleware('auth');
 
-    Route::get('filter/{category}/edit', [FiltersController::class, 'edit'])
+    Route::get('filter/{filter}/edit', [FiltersController::class, 'edit'])
     ->name('filter.edit')
     ->middleware('auth');
 
-    Route::put('filter/{category}', [FiltersController::class, 'update'])
+    Route::put('filter/{filter}', [FiltersController::class, 'update'])
     ->name('filter.update')
     ->middleware('auth');
 
-    Route::delete('filter/{category}', [FiltersController::class, 'destroy'])
+    Route::delete('filter/{filter}', [FiltersController::class, 'destroy'])
     ->name('filter.destroy')
     ->middleware('auth');
 
-    Route::put('filter/{category}/restore', [FiltersController::class, 'restore'])
+    Route::put('filter/{filter}/restore', [FiltersController::class, 'restore'])
     ->name('filter.restore')
     ->middleware('auth');
 
