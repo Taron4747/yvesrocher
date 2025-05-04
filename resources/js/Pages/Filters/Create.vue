@@ -17,12 +17,15 @@
               <span class="checkmark"></span>
           </label>
           <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterable">
-            <div v-for="key in countOfCustom" class="flex flex-wrap w-full -mb-8 -mr-6 p-8">
+            <div v-for="key in countOfCustom" class="flex flex-wrap w-full -mb-8 -mr-6 p-8 relative">
               <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Арм" />
               <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Ру" />
               <text-input v-model="customData[key-1].name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Анг" />
+              <div v-if="countOfCustom != key" class="add_custom" @click="removeCustom(key)">
+                <img src="/images/trash.svg">
+              </div>   
             </div>
-            <div class="add_button" @click="addDelivery()">
+            <div class="add_button" @click="addValue()">
               <img src="/images/add_photo_blue.svg">
               <span>Добавить значение</span>
             </div>
@@ -83,8 +86,31 @@ export default {
     // },
     store() {
       this.form.customData = this.customData;
-        this.form.post('/filter')
-      },
+      this.form.post('/filter')
+    },
+    
+    addValue(){
+      var key = this.customData.length-1;
+        if(this.customData[key].name_arm && this.customData[key].name_ru && this.customData[key].name_en
+        && this.form.name_arm && this.form.name_ru && this.form.name_en){
+          this.pushData(key)
+          this.countOfCustom ++
+        }     
+        console.log(this.customData)
+    },
+    pushData(){
+      let newObject = {
+        name_arm: '',
+        name_ru:'',
+        name_en: '',
+      }
+      this.customData.push(newObject); 
+    },
+    removeCustom(key){
+        this.customData.splice(key-1, 1);
+        this.countOfCustom --;
+        console.log(this.customData)
+    },
   },
 }
 </script>
@@ -92,7 +118,7 @@ export default {
 .add_button{
   display: flex;
   align-items: center;
-  margin: 0 auto;
+  margin: 20px auto 0 auto;
   width: fit-content;
   color: #3F4EBD;
   font-size: 14px;
@@ -103,5 +129,11 @@ export default {
     height: 20px;
     margin-right: 6px;
   }
+}
+.add_custom{
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  bottom: 73px;
 }
 </style>

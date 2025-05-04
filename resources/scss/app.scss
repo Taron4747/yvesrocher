@@ -1,4 +1,4 @@
-/* The container */
+/* Custom checkbox */
 .custom_checkbox {
     display: block;
     position: relative;
@@ -50,4 +50,8 @@
   }
   .custom_checkbox:hover input ~ .checkmark {
     background-color: #ccc;
+  }
+
+  .relative{
+    position: relative;
   }
