@@ -8,6 +8,7 @@ use App\Http\Controllers\OrganizationsController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\AttributesController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -233,6 +234,36 @@ Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'r
  Route::put('sub-sub-categories/{category}/restore', [CategoriesController::class, 'restoreSubSub'])
  ->name('sub-sub-categories.restore')
  ->middleware('auth');
+
+    // Attributes
+
+    Route::get('attributes', [AttributesController::class, 'index'])
+    ->name('attributes')
+    ->middleware('auth');
+
+    Route::get('attributes/create', [AttributesController::class, 'create'])
+    ->name('attributes.create')
+    ->middleware('auth');
+
+    Route::post('attributes', [AttributesController::class, 'store'])
+    ->name('attributes.store')
+    ->middleware('auth');
+
+    Route::get('attributes/{category}/edit', [AttributesController::class, 'edit'])
+    ->name('attributes.edit')
+    ->middleware('auth');
+
+    Route::put('attributes/{category}', [AttributesController::class, 'update'])
+    ->name('attributes.update')
+    ->middleware('auth');
+
+    Route::delete('attributes/{category}', [AttributesController::class, 'destroy'])
+    ->name('attributes.destroy')
+    ->middleware('auth');
+
+    Route::put('attributes/{category}/restore', [AttributesController::class, 'restore'])
+    ->name('attributes.restore')
+    ->middleware('auth');
 
 });
 
