@@ -57,8 +57,10 @@ Request::validate([
     'image' => ['required', 'image'],
    
 ]);
-        $path = Request::file('image')->store('images', 's3');
+        $path = Request::file('image')->store('images', 's3', 'public');
         $url = \Storage::disk('s3')->url($path);
+
+      
 
         $data =Request::all();
         $insertdata = [
