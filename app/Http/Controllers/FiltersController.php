@@ -76,33 +76,57 @@ class FiltersController extends Controller
 
     public function edit(Filter $filter): Response
     {
-        return Inertia::render('Categories/Edit', [
-            'filter' => [
-                'id' => $filter->id,
-                'name_arm' => $filter->name_arm,
-                'name_ru' => $filter->name_ru,
-                'name_en' => $filter->name_en,
-                'filterable' => $filter->filterable,
-                'values'=>$filter->values,
-                'deleted_at' => $filter->deleted_at,
-            ],
+        return Inertia::render('Filters/Edit', [
+            'filter' => $filter->load('values'),
            
         ]);
     }
 
-    public function update(Category $filter): RedirectResponse
+    public function update(Request $request, Filter $filter): RedirectResponse
     {
-        $data =Request::all();
-        $filter->update(
-            Request::validate([
-                'name_arm' => ['required', 'max:50'],
-                'name_ru' => ['required', 'max:50'],
-                'name_en' => ['required', 'max:50'],
-            ])
-        );
+        $request = Request::instance();
+        $request->validate([
+            'name_en' => ['required', 'max:50'],
+            'name_arm' => ['required', 'max:50'],
+            'name_ru' => ['required', 'max:50'],
+        ]);
+    
+        $filter->update([
+            'name_en' => $request->name_en,
+            'name_arm' => $request->name_arm,
+            'name_ru' => $request->name_ru,
+            'filterable' => $request->filterable,
+        ]);
+    
+        $existingIds = collect($request->customData)->pluck('id')->filter()->toArray();
 
-        return Redirect::back()->with('success', 'Category updated.');
+        // Удаляем те значения, которых больше нет
+        $filter->values()->whereNotIn('id', $existingIds)->delete();
+        
+        // Обновляем и добавляем
+        foreach ($request->customData as $item) {
+            if (!empty($item['id'])) {
+                // Обновить существующее значение
+                FilterValue::where('id', $item['id'])->update([
+                    'name_en' => $item['name_en'],
+                    'name_arm' => $item['name_arm'],
+                    'name_ru' => $item['name_ru'],
+                ]);
+            } else {
+                // Добавить новое значение
+                FilterValue::create([
+                    'name_en' => $item['name_en'],
+                    'name_arm' => $item['name_arm'],
+                    'name_ru' => $item['name_ru'],
+                    'filter_id' => $filter->id,
+                ]);
+            }
+        }
+        
+    
+        return redirect()->route('filter')->with('success', 'Filter updated.');
     }
+    
 
     public function destroy(Category $filter): RedirectResponse
     {
