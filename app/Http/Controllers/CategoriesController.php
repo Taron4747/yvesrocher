@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Filter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -36,27 +37,22 @@ class CategoriesController extends Controller
 
     public function create(): Response
     {
+        $filters = Filter::with('values')->get();
         return Inertia::render('Categories/Create', [
-            'organizations' => Auth::user()->account
-                ->organizations()
-                ->orderBy('name')
-                ->get()
-                ->map
-                ->only('id', 'name'),
+           'filtrs'=> $filters->where('filterable',true),
+           'butonFilters'=> $filters->where('filterable',false),
         ]);
     }
 
     public function store(): RedirectResponse
     {
-//        \Storage::disk('s3')->put('test.txt', 'Hello, S3!');
-// dd(\Storage::disk('s3')->url('test.txt'));
-Request::validate([
-    'name_en' => ['required', 'max:50'],
-    'name_arm' => ['required', 'max:50'],
-    'name_ru' => ['required', 'max:50'],
-    'image' => ['required', 'image'],
-   
-]);
+        Request::validate([
+            'name_en' => ['required', 'max:50'],
+            'name_arm' => ['required', 'max:50'],
+            'name_ru' => ['required', 'max:50'],
+            'image' => ['required', 'image'],
+        
+        ]);
         $path = Request::file('image')->store('images', 's3', 'public');
         $url = \Storage::disk('s3')->url($path);
 
@@ -70,8 +66,6 @@ Request::validate([
             'image' => $url,
 
         ];
-// // Получение URL
-        // dd($url,$path);
         Category::create($insertdata) ;
 
         return Redirect::route('categories')->with('success', 'Category created.');
