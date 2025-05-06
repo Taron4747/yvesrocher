@@ -39,8 +39,8 @@ class CategoriesController extends Controller
     {
         $filters = Filter::with('values')->get();
         return Inertia::render('Categories/Create', [
-           'filters'=> $filters->where('filterable',true),
-           'butonFilters'=> $filters->where('filterable',false),
+           'filters'=> $filters->where('filterable',true)->values()->toArray(),
+           'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
         ]);
     }
 

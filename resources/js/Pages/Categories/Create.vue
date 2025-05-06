@@ -18,41 +18,36 @@
 
 
         <div class="w-full px-8 mt-6">
-  <label class="block font-bold mb-4">Фильтры по значениям</label>
-
-  <div v-for="filter in filters" :key="filter.id" class="mb-4">
-    <p class="font-semibold mb-2">{{ filter.name_ru }}</p>
-
-    <div class="flex flex-wrap">
-      <div v-for="value in filter.values" :key="value.id" class="mr-4 mb-2">
-        <label class="inline-flex items-center">
-          <input
-            type="checkbox"
-            :value="value.id"
-            v-model="form.filter_value_ids"
-            class="form-checkbox"
-          >
-          <span class="ml-2">{{ value.name_ru }}</span>
-        </label>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Мультиселект: buttonFilters -->
-<div class="w-full px-8 mt-6">
-  <label class="block font-bold mb-2">Кнопочные фильтры (мультиселект)</label>
-
-  <select-input  v-model="form.button_filters" :error="form.errors.button_filters" class="pb-8 pr-6 w-full lg:w-1/2" label="Кнопочные фильтры (мультиселект)">
-    <option v-for="filter in butonFilters" :key="filter.id" :value="filter.id">
-      {{ filter.name_ru }}
-    </option>
+          <label class="block font-bold mb-4">Фильтры по значениям</label>
+          <div v-for="filter in filters" :key="filter.id" class="mb-4">
+            <p class="font-semibold mb-2">{{ filter.name_ru }}</p>
+            <div class="flex flex-wrap">
+              <div v-for="value in filter.values" :key="value.id" class="mr-4 mb-2">
+                <label class="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    :value="value.id"
+                    v-model="value.id"
+                    class="form-checkbox"
+                  >
+                  <span class="ml-2">{{ value.name_ru }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Мультиселект: buttonFilters -->
+        <!-- <div class="w-full px-8 mt-6">
+          <label class="block font-bold mb-2">Кнопочные фильтры (мультиселект)</label>
+          <select-input  v-model="form.button_filters" :error="form.errors.button_filters" class="pb-8 pr-6 w-full lg:w-1/2" label="Кнопочные фильтры (мультиселект)">
+            <option v-for="filter in butonFilters" :key="filter.id" :value="filter.id">
+              {{ filter.name_ru }}
+            </option>
           </select-input>
-
-
-</div>
-
-
+        </div> -->
+        
+        <MultiSelect  v-model="form.button_filters" display="chip" :options="butonFiltersData" optionLabel="name_arm"
+        :maxSelectedLabels="3" class="w-full md:w-20rem" />
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать категорию</loading-button>
         </div>
@@ -68,6 +63,9 @@ import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import FileInput from '@/Shared/FileInput.vue'
+// import MultiSelect from 'primevue/multiselect';
+
+// import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 export default {
   components: {
@@ -85,17 +83,23 @@ export default {
   },
   remember: 'form',
   data() {
-  return {
-    form: this.$inertia.form({
-      name_arm: '',
-      name_ru: '',
-      name_en: '',
-      image: null,
-      filters: [], // selected filterable IDs (checkbox)
-      button_filters: [], // selected button filter IDs (multi-select)
-    }),
-  }
-},
+    return {
+      filtersData:this.filters,
+      butonFiltersData:this.butonFilters,
+      form: this.$inertia.form({
+        name_arm: '',
+        name_ru: '',
+        name_en: '',
+        image: null,
+        filters: [], // selected filterable IDs (checkbox)
+        button_filters: [], // selected button filter IDs (multi-select)
+      }),
+    }
+  },
+  mounted(){
+    console.log(this.butonFiltersData)
+    console.log(this.form.button_filters)
+  },
   methods: {
     store() {
       this.form.post('/categories')
@@ -103,3 +107,83 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+ .input_content{
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin-bottom: 16px;
+            width:32%;
+            .p-multiselect{
+              padding: 0 !important;
+            }
+            .vuejs3-datepicker__value {
+                width: 100%;
+                border: none;
+            }
+            .form-label{
+              padding-left: 16px;
+              color: #555B86;
+              font-size: 12px;
+              margin-bottom: 8px;
+            }
+            input,textarea,select,.p-multiselect{
+                width: 100%;
+                height: 48px;
+                padding: 13px 16px;
+                border: none;
+                outline: none;
+            }
+            textarea:focus, input:focus, select:focus, .p-multiselect:focus{
+                outline: none;
+                --tw-ring-shadow:none;
+            }
+            .photo_content{
+              border: 1px dashed  #C4C4C4;
+              border-radius: 12px;
+              margin-top: 26px;
+              .file-upload-form{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                height: 48px;
+                cursor: pointer;
+                img{
+                  height: 20px;
+                  width: 20px;
+                  margin-right: 16px;
+                }
+                span{
+                  color: #3F4EBD;
+                  font-size: 14px;
+                  line-height: 130%
+                }
+              }
+              .image-preview{
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0!important;
+                width: 100%;
+                .preview{
+                  height: 100px;
+                  width: 100px;
+                  object-fit: cover;
+                  border-radius: 12px;
+                }
+                .image_name{
+                  max-width: calc(100% - 165px);
+                  overflow-wrap: break-word;
+                }
+                .remove{
+                  cursor: pointer;
+                  height: 20px;
+                  width: 20px;
+                  margin-right: 12px;
+                }
+              }
+            }
+          }
+</style>
