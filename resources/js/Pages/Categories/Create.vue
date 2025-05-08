@@ -21,7 +21,7 @@
                 <span class="checkmark"></span>
             </label>
             <div class="flex flex-wrap">
-              <div v-for="value in filter.values" :key="value.id" class="mr-4 mb-2">
+              <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2">
                 <label class="inline-flex items-center">
                   <label class="custom_checkbox">{{value.name_ru}}
                       <input v-model="value.type" type="checkbox" checked="checked">
@@ -107,7 +107,7 @@ export default {
     console.log(this.butonFiltersData);
     this.filtersData.forEach((filters) => {
       filters.type = false;
-      filters.values.forEach((value) => {
+      filters.sub_filters.forEach((value) => {
         value.type = false;
       });
     });
@@ -122,7 +122,7 @@ export default {
       if(filter.type == true){
         this.filtersData.forEach((filters) => {
         if(filters.id == filter.id){
-          filters.values.forEach((value) => {
+          filters.sub_filters.forEach((value) => {
           value.type = true;
         });
         }

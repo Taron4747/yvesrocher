@@ -41,32 +41,8 @@ class CategoriesController extends Controller
     {
 
 
-        $category = Category::with(['filters.values'])->find(16);
-// dd( $category->filters);
-        $filtersWithCounts = $category->filters->map(function ($filter) use ($category) {
-            $valuesWithCount = $filter->values->map(function ($value) use ($category) {
-                $productCount = Product::where('category_id', $category->id)
-                    ->whereHas('filterValues', function ($q) use ($value) {
-                        $q->where('filter_value_id', $value->id);
-                    })
-                    ->count();
-        
-                return [
-                    'id' => $value->id,
-                    'name' => $value->name_arm,
-                    'product_count' => $productCount,
-                ];
-            });
-        
-            return [
-                'id' => $filter->id,
-                'name' => $filter->name_arm,
-                'values' => $valuesWithCount,
-            ];
-        });
-
-dd( $filtersWithCounts);
-        $filters = Filter::with('values')->get();
+     
+        $filters = Filter::with('subFilters')->get();
         return Inertia::render('Categories/Create', [
            'filters'=> $filters->where('filterable',true)->values()->toArray(),
            'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
@@ -98,19 +74,15 @@ dd( $filtersWithCounts);
         ];
        $category = Category::create($insertdata) ;
         if (isset($data['filters'])) {
+            
             foreach ($data['filters'] as $key => $filters) {
                 if ( $filters['type']==1) {
-                    foreach ($filters['values'] as $key => $filter) {
+                $category->filters()->attach($filters['id']);
 
-                        if ($filter['type']==1) {
-                            $filterData =null;
-                            $filterData =[
-                                'category_id'=>$category->id,
-                                'filter_value_id'=>$filter['id'],
-                                'filter_id'=>$filters['id'],
-                            ];
-                            FilterCategory::create( $filterData);
-                        }
+                    foreach ($filters['sub_filters'] as $key => $filter) {
+
+                $category->subFilters()->attach($filter['id']);
+                       
                     }
                 }
             }
@@ -363,5 +335,47 @@ dd( $filtersWithCounts);
         $category->restore();
         return Redirect::back()->with('success', 'Sub Category restored.');
 
+    }
+
+
+    public function showFiltersWithCounts($categoryId)
+    {
+        // Получаем категорию с её фильтрами и субфильтрами
+        $category = Category::with(['filters.subFilters'])->findOrFail($categoryId);
+
+        // Список фильтров с количеством продуктов
+        $filtersWithCounts = $category->filters->map(function ($filter) {
+            // Подсчет количества продуктов для фильтра
+            $filterProductCount = $filter->products()->count();
+
+            // Субфильтры с количеством продуктов
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
+                return [
+                    'id' => $subFilter->id,
+                    'name' => $subFilter->name,
+                    'product_count' => $subFilter->products()->count(),
+                ];
+            });
+
+            return [
+                'id' => $filter->id,
+                'name' => $filter->name,
+                'type' => $filter->type,
+                'product_count' => $filterProductCount,
+                'sub_filters' => $subFiltersWithCounts,
+            ];
+        });
+
+        return view('filters.index', compact('filtersWithCounts', 'category'));
+        //         SELECT f.id AS filter_id, f.name AS filter_name, COUNT(DISTINCT pf.product_id) AS product_count,
+        //     sf.id AS sub_filter_id, sf.name AS sub_filter_name, COUNT(DISTINCT psf.product_id) AS sub_product_count
+        // FROM filters f
+        // LEFT JOIN product_filter pf ON f.id = pf.filter_id
+        // LEFT JOIN sub_filters sf ON sf.filter_id = f.id
+        // LEFT JOIN product_sub_filter psf ON sf.id = psf.sub_filter_id
+        // WHERE f.id IN (
+        //     SELECT filter_id FROM category_filter WHERE category_id = :category_id
+        // )
+        // GROUP BY f.id, sf.id;
     }
 }

@@ -74,13 +74,13 @@ export default {
       filterable: this.filter?.filterable || false,
       customData: [],
     }),
-    customData: this.filter?.subFilters?.map(value => ({
+    customData: this.filter?.sub_filters?.map(value => ({
       id: value.id,
       name_arm: value.name_arm,
       name_ru: value.name_ru,
       name_en: value.name_en,
     })) || [],
-    countOfCustom: (this.filter?.subFilters?.length || 1),
+    countOfCustom: (this.filter?.sub_filters?.length || 1),
   }
 },
   methods: {
