@@ -41,7 +41,14 @@
             </option>
           </select-input>
         </div> -->
-        
+        <multiselect 
+          v-model="selected" 
+          :options="butonFiltersData" 
+          :multiple="true" 
+          placeholder="Выберите фильтры" 
+          label="name_arm"  
+          track-by="id"  
+        />
         <!-- <MultiSelect  v-model="form.button_filters" display="chip" :options="butonFiltersData" optionLabel="name_arm"
         :maxSelectedLabels="3" class="w-full md:w-20rem" /> -->
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
@@ -59,7 +66,7 @@ import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import FileInput from '@/Shared/FileInput.vue'
-// import MultiSelect from 'primevue/multiselect';
+import Multiselect from 'vue-multiselect'
 
 // import 'vue-multiselect/dist/vue-multiselect.min.css';
 
@@ -71,6 +78,7 @@ export default {
     LoadingButton,
     SelectInput,
     TextInput,
+    Multiselect,
   },
   layout: Layout,
   props: {
@@ -83,6 +91,8 @@ export default {
       dsadsadsa:"sfafsa",
       filtersData:this.filters,
       butonFiltersData:this.butonFilters,
+      selected: [],
+      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
       form: this.$inertia.form({
         name_arm: '',
         name_ru: '',
@@ -94,6 +104,7 @@ export default {
     }
   },
   mounted(){
+    console.log(this.butonFiltersData);
     this.filtersData.forEach((filters) => {
       filters.type = false;
       filters.values.forEach((value) => {
@@ -103,8 +114,9 @@ export default {
   },
   methods: {
     store() {
-      console.log(this.filtersData);
-      // this.form.post('/categories')
+      this.form.filters = this.filtersData
+      this.form.button_filters = this.selected      
+      this.form.post('/categories')
     },
     onFilterChange(filter){
       if(filter.type == true){

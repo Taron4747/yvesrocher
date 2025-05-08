@@ -29,5 +29,8 @@
         "uuid": "^8.3.2",
         "vite": "^5.2.7",
         "vue": "^3.2.27"
+    },
+    "dependencies": {
+        "vue-multiselect": "^3.0.0-beta.3"
     }
 }

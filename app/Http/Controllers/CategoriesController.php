@@ -46,6 +46,7 @@ class CategoriesController extends Controller
 
     public function store(): RedirectResponse
     {
+        dd(Request::all());
         Request::validate([
             'name_en' => ['required', 'max:50'],
             'name_arm' => ['required', 'max:50'],
