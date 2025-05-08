@@ -35,4 +35,19 @@ class Category extends Model
     {
         return $this->hasMany(Category::class, 'parent_id');
     }
+
+    public function filters()
+    {
+        return $this->belongsToMany(Filter::class, 'category_filter');
+    }
+
+    public function subFilters()
+    {
+        return $this->belongsToMany(SubFilter::class, 'category_sub_filter');
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

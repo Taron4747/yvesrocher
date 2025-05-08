@@ -6,8 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    public function filterValues()
+    public function category()
     {
-        return $this->belongsToMany(FilterValue::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function filters()
+    {
+        return $this->belongsToMany(Filter::class, 'product_filter');
+    }
+
+    public function subFilters()
+    {
+        return $this->belongsToMany(SubFilter::class, 'product_sub_filter');
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Filter;
+use App\Models\FilterCategory;
+use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -37,6 +39,33 @@ class CategoriesController extends Controller
 
     public function create(): Response
     {
+
+
+        $category = Category::with(['filters.values'])->find(16);
+// dd( $category->filters);
+        $filtersWithCounts = $category->filters->map(function ($filter) use ($category) {
+            $valuesWithCount = $filter->values->map(function ($value) use ($category) {
+                $productCount = Product::where('category_id', $category->id)
+                    ->whereHas('filterValues', function ($q) use ($value) {
+                        $q->where('filter_value_id', $value->id);
+                    })
+                    ->count();
+        
+                return [
+                    'id' => $value->id,
+                    'name' => $value->name_arm,
+                    'product_count' => $productCount,
+                ];
+            });
+        
+            return [
+                'id' => $filter->id,
+                'name' => $filter->name_arm,
+                'values' => $valuesWithCount,
+            ];
+        });
+
+dd( $filtersWithCounts);
         $filters = Filter::with('values')->get();
         return Inertia::render('Categories/Create', [
            'filters'=> $filters->where('filterable',true)->values()->toArray(),
@@ -46,7 +75,7 @@ class CategoriesController extends Controller
 
     public function store(): RedirectResponse
     {
-        dd(Request::all());
+        // dd(Request::all());
         Request::validate([
             'name_en' => ['required', 'max:50'],
             'name_arm' => ['required', 'max:50'],
@@ -67,8 +96,35 @@ class CategoriesController extends Controller
             'image' => $url,
 
         ];
-        Category::create($insertdata) ;
+       $category = Category::create($insertdata) ;
+        if (isset($data['filters'])) {
+            foreach ($data['filters'] as $key => $filters) {
+                if ( $filters['type']==1) {
+                    foreach ($filters['values'] as $key => $filter) {
 
+                        if ($filter['type']==1) {
+                            $filterData =null;
+                            $filterData =[
+                                'category_id'=>$category->id,
+                                'filter_value_id'=>$filter['id'],
+                                'filter_id'=>$filters['id'],
+                            ];
+                            FilterCategory::create( $filterData);
+                        }
+                    }
+                }
+            }
+        }
+        if (isset($data['button_filters'])) {
+            foreach ($data['button_filters'] as $key => $button_filter) {
+                $filterData =null;
+                            $filterData =[
+                                'category_id'=>$category->id,
+                                'filter_id'=>$button_filter['id'],
+                            ];
+                            FilterCategory::create( $filterData);
+            }
+        }
         return Redirect::route('categories')->with('success', 'Category created.');
     }
 

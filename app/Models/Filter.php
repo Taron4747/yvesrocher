@@ -6,11 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Filter extends Model
 {
-    public function values()
+    public function categories()
     {
-        return $this->hasMany(FilterValue::class);
+        return $this->belongsToMany(Category::class, 'category_filter');
     }
 
+    public function subFilters()
+    {
+        return $this->hasMany(SubFilter::class);
+    }
+
+    public function products()
+    {
+        return $this->belongsToMany(Product::class, 'product_filter');
+    }
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {

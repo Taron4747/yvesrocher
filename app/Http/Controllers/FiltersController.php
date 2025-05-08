@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Filter;
-use App\Models\FilterValue;
+use App\Models\SubFilter;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -68,7 +68,7 @@ class FiltersController extends Controller
                     'name_ru' => $customData['name_ru'],
                     'filter_id'=>$filter->id,
                 ];
-                FilterValue::create($filterdata);
+                SubFilter::create($filterdata);
             }
         }
         return Redirect::route('filter')->with('success', 'Filter created.');
@@ -76,8 +76,9 @@ class FiltersController extends Controller
 
     public function edit(Filter $filter): Response
     {
+        // dd( $filter->load('subFilters'));
         return Inertia::render('Filters/Edit', [
-            'filter' => $filter->load('values'),
+            'filter' => $filter->load('subFilters'),
            
         ]);
     }
