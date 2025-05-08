@@ -8,29 +8,25 @@
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-      
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Арм" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Ру" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Анг" />
           <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="Фото" />
-         
         </div>
-
-
         <div class="w-full px-8 mt-6">
           <label class="block font-bold mb-4">Фильтры по значениям</label>
-          <div v-for="filter in filters" :key="filter.id" class="mb-4">
-            <p class="font-semibold mb-2">{{ filter.name_ru }}</p>
+          <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
+            <label class="custom_checkbox">{{filter.name_ru}}
+                <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
+                <span class="checkmark"></span>
+            </label>
             <div class="flex flex-wrap">
               <div v-for="value in filter.values" :key="value.id" class="mr-4 mb-2">
                 <label class="inline-flex items-center">
-                  <input
-                    type="checkbox"
-                    :value="value.id"
-                    v-model="value.id"
-                    class="form-checkbox"
-                  >
-                  <span class="ml-2">{{ value.name_ru }}</span>
+                  <label class="custom_checkbox">{{value.name_ru}}
+                      <input v-model="value.type" type="checkbox" checked="checked">
+                      <span class="checkmark"></span>
+                  </label>
                 </label>
               </div>
             </div>
@@ -46,8 +42,8 @@
           </select-input>
         </div> -->
         
-        <MultiSelect  v-model="form.button_filters" display="chip" :options="butonFiltersData" optionLabel="name_arm"
-        :maxSelectedLabels="3" class="w-full md:w-20rem" />
+        <!-- <MultiSelect  v-model="form.button_filters" display="chip" :options="butonFiltersData" optionLabel="name_arm"
+        :maxSelectedLabels="3" class="w-full md:w-20rem" /> -->
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать категорию</loading-button>
         </div>
@@ -84,6 +80,7 @@ export default {
   remember: 'form',
   data() {
     return {
+      dsadsadsa:"sfafsa",
       filtersData:this.filters,
       butonFiltersData:this.butonFilters,
       form: this.$inertia.form({
@@ -97,13 +94,29 @@ export default {
     }
   },
   mounted(){
-    console.log(this.butonFiltersData)
-    console.log(this.form.button_filters)
+    this.filtersData.forEach((filters) => {
+      filters.type = false;
+      filters.values.forEach((value) => {
+        value.type = false;
+      });
+    });
   },
   methods: {
     store() {
-      this.form.post('/categories')
+      console.log(this.filtersData);
+      // this.form.post('/categories')
     },
+    onFilterChange(filter){
+      if(filter.type == true){
+        this.filtersData.forEach((filters) => {
+        if(filters.id == filter.id){
+          filters.values.forEach((value) => {
+          value.type = true;
+        });
+        }
+      });
+      }
+    }
   },
 }
 </script>
