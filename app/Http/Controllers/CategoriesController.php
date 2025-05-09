@@ -39,9 +39,6 @@ class CategoriesController extends Controller
 
     public function create(): Response
     {
-
-
-     
         $filters = Filter::with('subFilters')->get();
         return Inertia::render('Categories/Create', [
            'filters'=> $filters->where('filterable',true)->values()->toArray(),

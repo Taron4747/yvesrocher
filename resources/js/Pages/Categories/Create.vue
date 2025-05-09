@@ -90,7 +90,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.butonFiltersData);
     this.filtersData.forEach((filters) => {
       filters.type = false;
       filters.sub_filters.forEach((value) => {

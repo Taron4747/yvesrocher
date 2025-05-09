@@ -22,6 +22,9 @@
           <text-input v-model="form.discount" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/4" label="Скидка" />
           <text-input v-model="form.count" :error="form.errors.count" class="pb-8 pr-6 w-full lg:w-1/4" label="Колличество" />
           <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/4" type="file" accept="image/*" label="Фото" />
+          <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/4" label="Категория">
+            <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_arm }}</option>
+          </SelectInput>          
           <label class="custom_checkbox">Есть в наличие
               <input v-model="form.is_exist" type="checkbox" checked="checked">
               <span class="checkmark"></span>
@@ -53,15 +56,16 @@
               </div>
             </div>
           </div>
-        </div>
-        <multiselect 
+          <multiselect 
           v-model="selected" 
           :options="butonFiltersData" 
           :multiple="true" 
           placeholder="Выберите фильтры" 
           label="name_arm"  
           track-by="id"  
+          class="width_30"
         />
+        </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать продукт</loading-button>
         </div>
@@ -75,9 +79,9 @@ import { Head, Link } from '@inertiajs/vue3'
 import Layout from '@/Shared/Layout.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import TextAreaInput from '@/Shared/TextareaInput.vue'
-import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import FileInput from '@/Shared/FileInput.vue'
+import SelectInput from '@/Shared/SelectInput.vue'
 import Multiselect from 'vue-multiselect'
 
 // import 'vue-multiselect/dist/vue-multiselect.min.css';
@@ -95,18 +99,16 @@ export default {
   },
   layout: Layout,
   props: {
-    organizations: Array,
-    // butonFilters: Array,
+    categories: Array,
+    filters: Array,
+    butonFilters: Array,
   },
   remember: 'form',
   data() {
     return {
-      filters:[],
-      butonFilters:[],
-      // filtersData:this.filters,
-      // butonFiltersData:this.butonFilters,
-      filtersData:[],
-      butonFiltersData:[],
+      categoriesData:this.categories,
+      filtersData:this.filters,
+      butonFiltersData:this.butonFilters,
       selected: [],
       form: this.$inertia.form({
         name_arm: '',
@@ -128,11 +130,18 @@ export default {
         image: null,
         filters: [], 
         button_filters: [], 
+        category_id:'',
       }),
     }
   },
   mounted(){
-    console.log(this.organizations);
+    console.log(this.categories);
+    this.filtersData.forEach((filters) => {
+      filters.type = false;
+      filters.sub_filters.forEach((value) => {
+        value.type = false;
+      });
+    });
   
   },
   methods: {
