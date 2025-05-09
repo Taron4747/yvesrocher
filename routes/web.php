@@ -298,6 +298,7 @@ Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'r
     ->name('product.restore')
     ->middleware('auth');
 
+
 });
 
  Route::get('/language/{language}', function ($language) {
