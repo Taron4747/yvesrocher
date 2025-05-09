@@ -32,7 +32,7 @@
           </div>
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать фильтр</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать категорию</loading-button>
         </div>
       </form>
     </div>

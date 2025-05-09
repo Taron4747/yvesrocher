@@ -6,17 +6,17 @@
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="mb-8 bg-white rounded-md shadow overflow-hidden">
-      <form @submit.prevent="store">
+      <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
       
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Арм" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Ру" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Анг" />
-          <label class="custom_checkbox">Добавить значение в фильтр
+          <label class="custom_checkbox">One
               <input v-model="form.filterable" type="checkbox" checked="checked">
               <span class="checkmark"></span>
           </label>
-          <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterable && form.name_arm && form.name_ru && form.name_en">
+          <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterable">
             <div v-for="key in countOfCustom" class="flex flex-wrap w-full -mb-8 -mr-6 p-8 relative">
               <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Арм" />
               <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Ру" />
@@ -32,7 +32,9 @@
           </div>
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать фильтр</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">
+  Сохранить фильтр
+</loading-button>
         </div>
       </form>
     </div>
@@ -58,37 +60,34 @@ export default {
   },
   layout: Layout,
   props: {
-    organizations: Array,
+    filter: Object,
+
   },
   remember: 'form',
   data() {
-    return {
-      form: this.$inertia.form({
-        name_arm: '',
-        name_ru: '',
-        name_en: '',
-        customData: [],
-        filterable: false,
-      }),
-      customData: [
-        {
-          name_arm: '',
-          name_ru: '',
-          name_en: '',
-        }
-      ],
-      countOfCustom:1,
-    }
-  },
+  return {
+    form: this.$inertia.form({
+      id: this.filter?.id || null,
+      name_arm: this.filter?.name_arm || '',
+      name_ru: this.filter?.name_ru || '',
+      name_en: this.filter?.name_en || '',
+      filterable: this.filter?.filterable || false,
+      customData: [],
+    }),
+    customData: this.filter?.sub_filters?.map(value => ({
+      id: value.id,
+      name_arm: value.name_arm,
+      name_ru: value.name_ru,
+      name_en: value.name_en,
+    })) || [],
+    countOfCustom: (this.filter?.sub_filters?.length || 1),
+  }
+},
   methods: {
-    // store() {
-    //   this.form.post('/categories')
-    // },
-    store() {
-      this.form.customData = this.customData;
-      this.form.post('/filter')
+    update() {
+      this.form.customData = this.customData
+      this.form.put(`/filter/${this.form.id}`) // метод PUT для обновления
     },
-    
     addValue(){
       var key = this.customData.length-1;
         if(this.customData[key].name_arm && this.customData[key].name_ru && this.customData[key].name_en

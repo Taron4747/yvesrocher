@@ -9,6 +9,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\FiltersController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -263,6 +264,38 @@ Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'r
 
     Route::put('filter/{filter}/restore', [FiltersController::class, 'restore'])
     ->name('filter.restore')
+    ->middleware('auth');
+
+
+
+    // Products
+
+    Route::get('product', [ProductController::class, 'index'])
+    ->name('product')
+    ->middleware('auth');
+
+    Route::get('product/create', [ProductController::class, 'create'])
+    ->name('product.create')
+    ->middleware('auth');
+
+    Route::post('product', [ProductController::class, 'store'])
+    ->name('product.store')
+    ->middleware('auth');
+
+    Route::get('product/{product}/edit', [ProductController::class, 'edit'])
+    ->name('product.edit')
+    ->middleware('auth');
+
+    Route::put('product/{product}', [ProductController::class, 'update'])
+    ->name('product.update')
+    ->middleware('auth');
+
+    Route::delete('product/{product}', [ProductController::class, 'destroy'])
+    ->name('product.destroy')
+    ->middleware('auth');
+
+    Route::put('product/{product}/restore', [ProductController::class, 'restore'])
+    ->name('product.restore')
     ->middleware('auth');
 
 });
