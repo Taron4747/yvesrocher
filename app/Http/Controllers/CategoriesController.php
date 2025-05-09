@@ -102,20 +102,48 @@ class CategoriesController extends Controller
 
     public function edit(Category $category): Response
     {
+        $categoryFilters =  $category->load('filters','subFilters');
+        $filters = Filter::with('subFilters')->get();
+        // $category = Category::with(['filters'])->findOrFail($categoryId);
+        // Получаем ID всех субфильтров, привязанных к категории
+        $categorySubFilterIds = $category->subFilters()->pluck('sub_filters.id');
+
+        // Формируем данные для ответа
+        $categoryfilters = $category->filters->map(function ($filter) use ($categorySubFilterIds) {
+            return [
+                'id' => $filter->id,
+                'name_arm' => $filter->name_arm,
+                'name_ru' => $filter->name_ru,
+                'name_en' => $filter->name_en,
+                'type' => $filter->type,
+                'sub_filters' => $filter->subFilters->whereIn('id', $categorySubFilterIds)->map(function ($subFilter) {
+                    return [
+                        'id' => $subFilter->id,
+                        'name_arm' => $subFilter->name_arm,
+                        'name_ru' => $subFilter->name_ru,
+                        'name_en' => $subFilter->name_en,
+                    ];
+                }),
+            ];
+        });
+
+
+
         return Inertia::render('Categories/Edit', [
             'category' => [
                 'id' => $category->id,
                 'name_arm' => $category->name_arm,
                 'name_ru' => $category->name_ru,
                 'name_en' => $category->name_en,
-              
+                // 'category_filters'=>  $categoryFilters->filters->where('filterable',true)->values()->toArray(),
+                // 'category_buton_filters'=>  $categoryFilters->filters->where('filterable',false)->values()->toArray(),
+                // 'category_sub_filters'=> $categoryFilters->subFilters->values()->toArray(),
+                'category_filters'=>$categoryfilters,
+                'filters'=> $filters->where('filterable',true)->values()->toArray(),
+                'buton_filters'=> $filters->where('filterable',false)->values()->toArray(),
                 'deleted_at' => $category->deleted_at,
             ],
-            'organizations' => Auth::user()->account->organizations()
-                ->orderBy('name')
-                ->get()
-                ->map
-                ->only('id', 'name'),
+          
         ]);
     }
 
