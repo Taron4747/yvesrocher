@@ -22,7 +22,6 @@
           <th class="pb-4 pt-6 px-6">Название Арм</th>
           <th class="pb-4 pt-6 px-6">Название Ру</th>
           <th class="pb-4 pt-6 px-6">Название Анг</th>
-          <th class="pb-4 pt-6 px-6">Фото</th>
         </tr>
         <tr v-for="filter in filters_data.data" :key="filter.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
@@ -39,11 +38,6 @@
           <td class="border-t">
             <Link class="flex items-center px-6 py-4" :href="`/filter/${filter.id}/edit`" tabindex="-1">
               {{ filter.name_en }}
-            </Link>
-          </td>
-          <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/filter/${filter.id}/edit`" tabindex="-1">
-              <img v-if="filter.image" class="block -my-2 mr-2 w-5 h-5 rounded-full" :src="filter.image" />
             </Link>
           </td>
           <td class="w-px border-t">

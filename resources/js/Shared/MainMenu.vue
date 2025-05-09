@@ -13,7 +13,7 @@
       <div :class="active ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Группировка товаров</div>
       <icon style="width: 20px;" :class="active ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" name="cheveron-down" />
     </div>
-    <div class="dropdown bg-indigo-600" v-if="active">
+    <div class="dropdown bg-indigo-700" v-if="active">
       <div class="margin_1">
         <Link class="group flex items-center py-3" href="/categories">
         <icon name="office" class="mr-2 w-4 h-4"
