@@ -32,15 +32,6 @@
             </div>
           </div>
         </div>
-        <!-- Мультиселект: buttonFilters -->
-        <!-- <div class="w-full px-8 mt-6">
-          <label class="block font-bold mb-2">Кнопочные фильтры (мультиселект)</label>
-          <select-input  v-model="form.button_filters" :error="form.errors.button_filters" class="pb-8 pr-6 w-full lg:w-1/2" label="Кнопочные фильтры (мультиселект)">
-            <option v-for="filter in butonFilters" :key="filter.id" :value="filter.id">
-              {{ filter.name_ru }}
-            </option>
-          </select-input>
-        </div> -->
         <multiselect 
           v-model="selected" 
           :options="butonFiltersData" 
@@ -49,8 +40,6 @@
           label="name_arm"  
           track-by="id"  
         />
-        <!-- <MultiSelect  v-model="form.button_filters" display="chip" :options="butonFiltersData" optionLabel="name_arm"
-        :maxSelectedLabels="3" class="w-full md:w-20rem" /> -->
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать категорию</loading-button>
         </div>
@@ -68,7 +57,6 @@ import LoadingButton from '@/Shared/LoadingButton.vue'
 import FileInput from '@/Shared/FileInput.vue'
 import Multiselect from 'vue-multiselect'
 
-// import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 export default {
   components: {
@@ -88,11 +76,9 @@ export default {
   remember: 'form',
   data() {
     return {
-      dsadsadsa:"sfafsa",
       filtersData:this.filters,
       butonFiltersData:this.butonFilters,
       selected: [],
-      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
       form: this.$inertia.form({
         name_arm: '',
         name_ru: '',
