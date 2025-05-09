@@ -89,12 +89,7 @@ class CategoriesController extends Controller
         }
         if (isset($data['button_filters'])) {
             foreach ($data['button_filters'] as $key => $button_filter) {
-                $filterData =null;
-                            $filterData =[
-                                'category_id'=>$category->id,
-                                'filter_id'=>$button_filter['id'],
-                            ];
-                            FilterCategory::create( $filterData);
+                $category->filters()->attach($button_filter['id']);
             }
         }
         return Redirect::route('categories')->with('success', 'Category created.');
