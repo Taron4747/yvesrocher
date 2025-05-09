@@ -95,7 +95,7 @@ export default {
   },
   layout: Layout,
   props: {
-    // filters: Array,
+    organizations: Array,
     // butonFilters: Array,
   },
   remember: 'form',
@@ -112,25 +112,32 @@ export default {
         name_arm: '',
         name_ru: '',
         name_en: '',
+        description_arm: '',
+        description_ru: '',
+        description_en: '',
+        composition_arm: '',
+        composition_ru: '',
+        composition_en: '',
+        price: '',
+        size: '',
+        discount: '',
+        count: '',
+        is_exist: '',
+        is_new: '',
+        is_bestseller: '',
         image: null,
-        filters: [], // selected filterable IDs (checkbox)
-        button_filters: [], // selected button filter IDs (multi-select)
+        filters: [], 
+        button_filters: [], 
       }),
     }
   },
   mounted(){
-    // this.filtersData.forEach((filters) => {
-    //   filters.type = false;
-    //   filters.sub_filters.forEach((value) => {
-    //     value.type = false;
-    //   });
-    // });
+    console.log(this.organizations);
+  
   },
   methods: {
     store() {
-      this.form.filters = this.filtersData
-      this.form.button_filters = this.selected      
-      this.form.post('/categories')
+      this.form.post('/product')
     },
     onFilterChange(filter){
       if(filter.type == true){
