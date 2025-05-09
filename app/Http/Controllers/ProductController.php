@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Filter;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -61,13 +63,12 @@ class ProductController extends Controller
 
     public function create(): Response
     {
+        $filters = Filter::with('subFilters')->get();
+      
         return Inertia::render('Products/Create', [
-            'organizations' => Auth::user()->account
-                ->organizations()
-                ->orderBy('name')
-                ->get()
-                ->map
-                ->only('id', 'name'),
+            'categories' =>Category::with('children.children')->get()->toArray(),
+            'filters'=> $filters->where('filterable',true)->values()->toArray(),
+            'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
         ]);
     }
 
