@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Contact" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/filter">Фильтр</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/product">Фильтр</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="mb-8 bg-white rounded-md shadow overflow-hidden">
@@ -86,7 +86,7 @@ export default {
   methods: {
     update() {
       this.form.customData = this.customData
-      this.form.put(`/filter/${this.form.id}`) // метод PUT для обновления
+      this.form.put(`/admin/product/${this.form.id}`) // метод PUT для обновления
     },
     addValue(){
       var key = this.customData.length-1;

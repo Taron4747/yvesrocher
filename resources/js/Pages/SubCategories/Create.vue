@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Contact" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/sub-category">Подкатегории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-categories">Подкатегории</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
@@ -58,7 +58,7 @@ export default {
   },
   methods: {
     store() {
-      this.form.post('/sub-categories')
+      this.form.post('/admin/sub-categories')
     },
   },
 }

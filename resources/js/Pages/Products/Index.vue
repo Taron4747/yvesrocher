@@ -11,7 +11,7 @@
           <option value="only">Только удаленные</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/product/create">
+      <Link class="btn-indigo" href="/admin/product/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp;Продукт</span>
       </Link>
@@ -26,28 +26,28 @@
         </tr>
         <tr v-for="product in products.data" :key="product.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/product/${product.id}/edit`">
+            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/product/${product.id}/edit`">
               {{ product.name_arm }}
               <icon v-if="product.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/product/${product.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
                 {{ product.name_ru }}
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/product/${product.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
               {{ product.name_en }}
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/product/${product.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
               <img v-if="product.image" class="block -my-2 mr-2 w-5 h-5 rounded-full" :src="product.image" />
             </Link>
           </td>
           <td class="w-px border-t">
-            <Link class="flex items-center px-4" :href="`/product/${product.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
             </Link>
           </td>

@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Sub sub category" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/sub-sub-category">Под Подкатегории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-sub-categories">Под Подкатегории</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
@@ -57,7 +57,7 @@ export default {
   },
   methods: {
     store() {
-      this.form.post('/sub-sub-categories')
+      this.form.post('/admin/sub-sub-categories')
     },
   },
 }

@@ -11,7 +11,7 @@
           <option value="only">Только удаленные</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/filter/create">
+      <Link class="btn-indigo" href="/admin/filter/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp;Фильтр</span>
       </Link>
@@ -25,23 +25,23 @@
         </tr>
         <tr v-for="filter in filters_data.data" :key="filter.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/filter/${filter.id}/edit`">
+            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/filter/${filter.id}/edit`">
               {{ filter.name_arm }}
               <icon v-if="filter.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/filter/${filter.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/filter/${filter.id}/edit`" tabindex="-1">
                 {{ filter.name_ru }}
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/filter/${filter.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/filter/${filter.id}/edit`" tabindex="-1">
               {{ filter.name_en }}
             </Link>
           </td>
           <td class="w-px border-t">
-            <Link class="flex items-center px-4" :href="`/filter/${filter.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-4" :href="`/admin/filter/${filter.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
             </Link>
           </td>
@@ -90,7 +90,7 @@ export default {
     form: {
       deep: true,
       handler: throttle(function () {
-        this.$inertia.get('/filters', pickBy(this.form), { preserveState: true })
+        this.$inertia.get('/admin/filters', pickBy(this.form), { preserveState: true })
       }, 150),
     },
   },

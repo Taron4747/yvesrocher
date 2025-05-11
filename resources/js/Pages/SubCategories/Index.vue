@@ -11,7 +11,7 @@
           <option value="only">Только удаленные</option>
         </select>
       </search-filter>
-      <Link class="btn-indigo" href="/sub-categories/create">
+      <Link class="btn-indigo" href="/admin/sub-categories/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp;Подкатегорию</span>
       </Link>
@@ -25,24 +25,24 @@
         </tr>
         <tr v-for="category in categories.data" :key="category.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/sub-categories/${category.id}/edit`">
+            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/sub-categories/${category.id}/edit`">
               {{ category.name_arm }}
               <icon v-if="category.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/sub-categories/${category.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/sub-categories/${category.id}/edit`" tabindex="-1">
                 {{ category.name_ru }}
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/sub-categories/${category.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/sub-categories/${category.id}/edit`" tabindex="-1">
               {{ category.name_en }}
             </Link>
           </td>
         
           <td class="w-px border-t">
-            <Link class="flex items-center px-4" :href="`/sub-categories/${category.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-4" :href="`/admin/sub-categories/${category.id}/edit`" tabindex="-1">
               <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
             </Link>
           </td>
@@ -91,7 +91,7 @@ export default {
     form: {
       deep: true,
       handler: throttle(function () {
-        this.$inertia.get('/sub-categories', pickBy(this.form), { preserveState: true })
+        this.$inertia.get('/admin/sub-categories', pickBy(this.form), { preserveState: true })
       }, 150),
     },
   },

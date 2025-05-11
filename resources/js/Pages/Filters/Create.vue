@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Contact" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/filter">Фильтр</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/filter">Фильтр</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="mb-8 bg-white rounded-md shadow overflow-hidden">
@@ -86,7 +86,7 @@ export default {
     // },
     store() {
       this.form.customData = this.customData;
-      this.form.post('/filter')
+      this.form.post('/admin/filter')
     },
     
     addValue(){

@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Contact" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/categories">Категории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Категории</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
@@ -101,7 +101,7 @@ export default {
     store() {
       this.form.filters = this.filtersData
       this.form.button_filters = this.selected      
-      this.form.post('/categories')
+      this.form.post('/admin/categories')
     },
     onFilterChange(filter){
         this.filtersData.forEach((filters) => {

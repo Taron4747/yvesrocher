@@ -2,7 +2,7 @@
   <div>
     <Head :title="`${form.name_arm} `" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/sub-categories">Подкатегории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-categories">Подкатегории</Link>
       <span class="text-indigo-400 font-medium">/</span>
       {{ form.name_arm }} 
     </h1>
@@ -63,16 +63,16 @@ export default {
   },
   methods: {
     update() {
-      this.form.put(`/sub-categories/${this.category.id}`)
+      this.form.put(`/admin/sub-categories/${this.category.id}`)
     },
     destroy() {
       if (confirm('Are you sure you want to delete this sub category?')) {
-        this.$inertia.delete(`/sub-categories/${this.category.id}`)
+        this.$inertia.delete(`/admin/sub-categories/${this.category.id}`)
       }
     },
     restore() {
       if (confirm('Are you sure you want to restore this sub  category?')) {
-        this.$inertia.put(`/sub-categories/${this.category.id}/restore`)
+        this.$inertia.put(`/admin/sub-categories/${this.category.id}/restore`)
       }
     },
   },
