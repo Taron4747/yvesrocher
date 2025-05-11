@@ -16,7 +16,7 @@
         <div class="w-full px-8 mt-6">
           <label class="block font-bold mb-4">Фильтры по значениям</label>
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
-            <label class="custom_checkbox">{{filter.name_ru}}
+            <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                 <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
                 <span class="checkmark"></span>
             </label>
@@ -104,15 +104,13 @@ export default {
       this.form.post('/categories')
     },
     onFilterChange(filter){
-      if(filter.type == true){
         this.filtersData.forEach((filters) => {
         if(filters.id == filter.id){
           filters.sub_filters.forEach((value) => {
-          value.type = true;
+          value.type = filter.type;
         });
         }
       });
-      }
     }
   },
 }
