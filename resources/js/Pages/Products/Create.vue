@@ -143,7 +143,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.categories);
     this.filtersData.forEach((filters) => {
       filters.type = false;
       filters.sub_filters.forEach((value) => {
@@ -154,6 +153,8 @@ export default {
   },
   methods: {
     store() {
+      this.form.button_filters = this.selected;
+      this.form.filters = this.filtersData;
       this.form.post('/admin/product')
     },
     onFilterChange(filter){

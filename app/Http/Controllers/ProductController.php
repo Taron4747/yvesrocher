@@ -74,6 +74,7 @@ class ProductController extends Controller
 
     public function store(): RedirectResponse
     {
+        dd(Request::all());
         Auth::user()->account->contacts()->create(
             Request::validate([
                 'first_name' => ['required', 'max:50'],
