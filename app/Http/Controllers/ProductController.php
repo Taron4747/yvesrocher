@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 
 class ProductController extends Controller
@@ -74,25 +76,28 @@ class ProductController extends Controller
 
     public function store(): RedirectResponse
     {
-        dd(Request::all());
-        Auth::user()->account->contacts()->create(
-            Request::validate([
-                'first_name' => ['required', 'max:50'],
-                'last_name' => ['required', 'max:50'],
-                'organization_id' => ['nullable', Rule::exists('organizations', 'id')->where(function ($query) {
-                    $query->where('account_id', Auth::user()->account_id);
-                })],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
-            ])
-        );
 
-        return Redirect::route('products')->with('success', 'Contact created.');
+        $data =Request::all();
+        dd($data);
+        $validator = Validator::make(Request::all(), [
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'name_en' => ['required', 'max:50'],
+                'description_arm' => ['required'],
+                'description_ru' => ['required'],
+                'description_en' => ['required'],
+                'composition_ru' => ['required'],
+                'composition_arm' => ['required'],
+                'composition_en' => ['required'],
+                'price' => ['required','integher'],
+        ]);
+        $validator->validate();
+        $path = Request::file('image')->store('images', 's3', 'public');
+        $image = Storage::disk('s3')->url($path);
+        $data['image'] =$image;
+        $product = Product::create($data);
+
+        return Redirect::route('admin/product')->with('success', 'Contact created.');
     }
 
     public function edit(Contact $contact): Response

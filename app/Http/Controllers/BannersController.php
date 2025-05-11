@@ -53,6 +53,8 @@ $validator = Validator::make(Request::all(), [
     'image_small' => ['max:500', 'required_if:type,2'],
     'type' => ['required'],
 ]);
+$validator->validate();
+
 if ($data['type'] ==1) {
    Banner::create($data);
 }else{
