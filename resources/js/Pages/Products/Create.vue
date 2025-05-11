@@ -22,7 +22,10 @@
           <text-input v-model="form.composition_ru" :error="form.errors.composition_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Состав Ру" />
           <text-input v-model="form.composition_en" :error="form.errors.composition_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Состав Анг" />
           <div class="title_big">Медиа</div>
-          <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" />
+          <!-- <image-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
+          <image-input v-model="form.image" :error="form.errors.image" label="Главное Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
+          <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 3 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="3"/>
+          <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <div class="title_big">Основные</div>
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
             <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_arm }}</option>
@@ -91,6 +94,7 @@ import LoadingButton from '@/Shared/LoadingButton.vue'
 import FileInput from '@/Shared/FileInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import Multiselect from 'vue-multiselect'
+import ImageInput from '@/Shared/ImageInput.vue'
 
 // import 'vue-multiselect/dist/vue-multiselect.min.css';
 
@@ -99,6 +103,7 @@ export default {
     Head,
     Link,
     FileInput,
+    ImageInput,
     LoadingButton,
     SelectInput,
     TextInput,
@@ -136,6 +141,7 @@ export default {
         is_new: '',
         is_bestseller: '',
         image: null,
+        images: [],
         filters: [], 
         button_filters: [], 
         category_id:'',
