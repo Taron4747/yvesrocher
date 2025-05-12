@@ -11,7 +11,8 @@
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Арм" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Ру" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Анг" />
-          <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="Фото" />
+          <image-input v-model="form.image" :error="form.errors.image" label="Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
+          <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="Фото" /> -->
         </div>
         <div class="w-full px-8 mt-6">
           <label class="block font-bold mb-4">Фильтры по значениям</label>
@@ -56,6 +57,7 @@ import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import FileInput from '@/Shared/FileInput.vue'
 import Multiselect from 'vue-multiselect'
+import ImageInput from '@/Shared/ImageInput.vue'
 
 
 export default {
@@ -67,6 +69,7 @@ export default {
     SelectInput,
     TextInput,
     Multiselect,
+    ImageInput,
   },
   layout: Layout,
   props: {

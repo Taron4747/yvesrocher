@@ -43,7 +43,6 @@ export default {
   layout: Layout,
   props: {
     category: Object,
-    organizations: Array,
   },
   remember: 'form',
   data() {
@@ -54,6 +53,9 @@ export default {
         name_en: this.category.name_en,
       }),
     }
+  },
+  mounted(){
+    console.log(this.category);
   },
   methods: {
     update() {
