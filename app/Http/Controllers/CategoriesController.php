@@ -109,7 +109,7 @@ class CategoriesController extends Controller
                 'name_arm' => $filter->name_arm,
                 'name_ru' => $filter->name_ru,
                 'name_en' => $filter->name_en,
-                'type' => $filter->type,
+                'filterable' => $filter->filterable,
                 'sub_filters' => $filter->subFilters->whereIn('id', $categorySubFilterIds)->map(function ($subFilter) {
                     return [
                         'id' => $subFilter->id,
@@ -129,6 +129,7 @@ class CategoriesController extends Controller
                 'name_arm' => $category->name_arm,
                 'name_ru' => $category->name_ru,
                 'name_en' => $category->name_en,
+                'image' => $category->image,
                 // 'category_filters'=>  $categoryFilters->filters->where('filterable',true)->values()->toArray(),
                 // 'category_buton_filters'=>  $categoryFilters->filters->where('filterable',false)->values()->toArray(),
                 // 'category_sub_filters'=> $categoryFilters->subFilters->values()->toArray(),
