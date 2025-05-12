@@ -30,6 +30,7 @@ return new class extends Migration
             $table->integer('is_new')->default(1);
             $table->integer('is_bestseller')->default(0);
             $table->integer('discount')->nullable();
+            $table->integer('count')->nullable();
             $table->timestamps();
         });
     }

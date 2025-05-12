@@ -77,9 +77,11 @@ class CategoriesController extends Controller
                 $category->filters()->attach($filters['id']);
 
                     foreach ($filters['sub_filters'] as $key => $filter) {
+                        if ( $filter['type']==1) {
 
-                $category->subFilters()->attach($filter['id']);
+                        $category->subFilters()->attach($filter['id']);
                        
+                    }
                     }
                 }
             }

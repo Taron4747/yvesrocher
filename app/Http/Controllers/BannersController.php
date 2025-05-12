@@ -22,12 +22,12 @@ class BannersController extends Controller
                 filter(Request::only('search', 'trashed'))
                 ->paginate(10)
                 ->withQueryString()
-                ->through(fn ($organization) => [
-                    'id' => $organization->id,
-                    'text_arm' => $organization->text_arm,
-                    'text_ru' => $organization->text_ru,
-                    'text_en' => $organization->text_en,
-                    'link' => $organization->link,
+                ->through(fn ($banner) => [
+                    'id' => $banner->id,
+                    'text_arm' => $banner->text_arm,
+                    'text_ru' => $banner->text_ru,
+                    'text_en' => $banner->text_en,
+                    'link' => $banner->link,
                   
                 ]),
         ]);
@@ -79,21 +79,21 @@ if ($data['type'] ==1) {
         return Redirect::route('banners')->with('success', 'Баннер создан ');
     }
 
-    public function edit(Organization $organization): Response
+    public function edit(Banner $banner): Response
     {
+        // dd($banner);
         return Inertia::render('Banners/Edit', [
-            'organization' => [
-                'id' => $organization->id,
-                'name' => $organization->name,
-                'email' => $organization->email,
-                'phone' => $organization->phone,
-                'address' => $organization->address,
-                'city' => $organization->city,
-                'region' => $organization->region,
-                'country' => $organization->country,
-                'postal_code' => $organization->postal_code,
-                'deleted_at' => $organization->deleted_at,
-                'contacts' => $organization->contacts()->orderByName()->get()->map->only('id', 'name', 'city', 'phone'),
+            'banner' => [
+                'id' => $banner->id,
+                'TYPE' => $banner->TYPE,
+                'text_arm' => $banner->text_arm,
+                'text_ru' => $banner->text_ru,
+                'text_en' => $banner->text_en,
+                'link' => $banner->link,
+                'image_big' => $banner->image_big,
+                'image_medium' => $banner->image_medium,
+                'image_small' => $banner->image_small,
+              
             ],
         ]);
     }

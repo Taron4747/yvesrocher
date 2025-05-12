@@ -314,19 +314,19 @@ Route::prefix('admin')->group(function () {
     ->name('banners.store')
     ->middleware('auth');
 
-    Route::get('banners/{organization}/edit', [BannersController::class, 'edit'])
+    Route::get('banners/{banner}/edit', [BannersController::class, 'edit'])
     ->name('banners.edit')
     ->middleware('auth');
 
-    Route::put('banners/{organization}', [BannersController::class, 'update'])
+    Route::put('banners/{banner}', [BannersController::class, 'update'])
     ->name('banners.update')
     ->middleware('auth');
 
-    Route::delete('banners/{organization}', [BannersController::class, 'destroy'])
+    Route::delete('banners/{banner}', [BannersController::class, 'destroy'])
     ->name('banners.destroy')
     ->middleware('auth');
 
-    Route::put('banners/{organization}/restore', [BannersController::class, 'restore'])
+    Route::put('banners/{banner}/restore', [BannersController::class, 'restore'])
     ->name('banners.restore')
     ->middleware('auth');
 

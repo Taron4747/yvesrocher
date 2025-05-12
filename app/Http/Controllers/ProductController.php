@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Filter;
+use App\Models\ProductImage;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -78,25 +79,60 @@ class ProductController extends Controller
     {
 
         $data =Request::all();
-        dd($data);
+        // dd($data);
+        $filters =isset($data['filters']) ?$data['filters'] :null;
+        $button_filters =isset($data['button_filters']) ?$data['button_filters'] :null;
+        unset($data['button_filters']);
+        unset($data['filters']);
+        unset($data['images']);
         $validator = Validator::make(Request::all(), [
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
+                'size' => ['required', 'max:50'],
                 'description_arm' => ['required'],
                 'description_ru' => ['required'],
                 'description_en' => ['required'],
                 'composition_ru' => ['required'],
                 'composition_arm' => ['required'],
                 'composition_en' => ['required'],
-                'price' => ['required','integher'],
+                'image' => ['required'],
+                'price' => ['required','integer'],
         ]);
         $validator->validate();
-        $path = Request::file('image')->store('images', 's3', 'public');
+        $path = Request::file('image')[0]->store('images', 's3', 'public');
         $image = Storage::disk('s3')->url($path);
         $data['image'] =$image;
+        
         $product = Product::create($data);
+        if (Request::file('images')) {
 
+            foreach (Request::file('images') as $key => $image) {
+                $path = Request::file('images')[ $key]->store('images', 's3', 'public');
+                $image = Storage::disk('s3')->url($path);
+                ProductImage::create(['product_id'=>$product->id,'path'=> $image]);
+            }
+        }
+        if (isset($filters)) {
+            
+            foreach ($filters as $key => $filters) {
+                if ( $filters['type']==1) {
+                $product->filters()->attach($filters['id']);
+
+                    foreach ($filters['sub_filters'] as $key => $filter) {
+                        if ( $filter['type']==1) {
+                            $product->subFilters()->attach($filter['id']);
+                       
+                        }
+                    }
+                }
+            }
+        }
+        if (isset($button_filters)) {
+            foreach ($button_filters as $key => $button_filter) {
+                $product->filters()->attach($button_filter['id']);
+            }
+        }
         return Redirect::route('admin/product')->with('success', 'Contact created.');
     }
 

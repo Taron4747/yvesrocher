@@ -15,7 +15,10 @@ class Product extends Model
     {
         return $this->belongsToMany(Filter::class, 'product_filter');
     }
-
+    public function images()
+    {
+        return $this->hasMany(ProductImage::class);
+    }
     public function subFilters()
     {
         return $this->belongsToMany(SubFilter::class, 'product_sub_filter');
