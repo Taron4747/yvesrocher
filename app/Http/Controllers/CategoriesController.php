@@ -56,7 +56,7 @@ class CategoriesController extends Controller
             'image' => ['required', 'image'],
         
         ]);
-        $path = Request::file('image')->store('images', 's3', 'public');
+        $path = Request::file('image')[0]->store('images', 's3', 'public');
         $url = \Storage::disk('s3')->url($path);
 
       
@@ -103,7 +103,7 @@ class CategoriesController extends Controller
         $categorySubFilterIds = $category->subFilters()->pluck('sub_filters.id');
 
         // Формируем данные для ответа
-        $categoryfilters = $category->filters->map(function ($filter) use ($categorySubFilterIds) {
+        $categoryfilters = $category->filters->where('filterable',1)->map(function ($filter) use ($categorySubFilterIds) {
             return [
                 'id' => $filter->id,
                 'name_arm' => $filter->name_arm,
@@ -121,7 +121,16 @@ class CategoriesController extends Controller
             ];
         });
 
-
+        $categorySubFilters = $category->filters->where('filterable',0)->map(function ($filter) use ($categorySubFilterIds) {
+            return [
+                'id' => $filter->id,
+                'name_arm' => $filter->name_arm,
+                'name_ru' => $filter->name_ru,
+                'name_en' => $filter->name_en,
+                'filterable' => $filter->filterable,
+               
+            ];
+        });
 
         return Inertia::render('Categories/Edit', [
             'category' => [
@@ -134,6 +143,7 @@ class CategoriesController extends Controller
                 // 'category_buton_filters'=>  $categoryFilters->filters->where('filterable',false)->values()->toArray(),
                 // 'category_sub_filters'=> $categoryFilters->subFilters->values()->toArray(),
                 'category_filters'=>$categoryfilters,
+                'category_sub_filters'=>$categorySubFilters,
                 'filters'=> $filters->where('filterable',true)->values()->toArray(),
                 'buton_filters'=> $filters->where('filterable',false)->values()->toArray(),
                 'deleted_at' => $category->deleted_at,
