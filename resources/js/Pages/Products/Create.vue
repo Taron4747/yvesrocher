@@ -10,39 +10,39 @@
         <!-- <div class="flex flex-wrap -mb-8 -mr-6 p-8"> -->
         <div class="-mb-8 -mr-6 p-8">
           <div class="title_big">Название</div>
-          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Арм" />
-          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Ру" />
-          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Анг" />
+          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
           <div class="title_big">Описание</div>
-          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Описание Арм"/>
-          <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Описание Ру"/>
-          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Описание Анг"/>
+          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն"/>
+          <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский"/>
+          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English"/>
           <div class="title_big">Состав</div>
           <text-input v-model="form.composition_arm" :error="form.errors.composition_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Состав Арм" />
-          <text-input v-model="form.composition_ru" :error="form.errors.composition_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Состав Ру" />
-          <text-input v-model="form.composition_en" :error="form.errors.composition_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Состав Анг" />
+          <text-input v-model="form.composition_ru" :error="form.errors.composition_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+          <text-input v-model="form.composition_en" :error="form.errors.composition_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
           <div class="title_big">Медиа</div>
           <!-- <image-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <image-input v-model="form.image" :error="form.errors.image" label="Главное Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
           <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 3 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="3"/>
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
-          <div class="title_big">Основные</div>
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
+            <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_arm }}</option>
-          </SelectInput>     
-          <text-input v-model="form.price" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
+          </SelectInput>    
+          <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория">
+            <option disabled value="">Выберите категорию</option>
+            <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_arm }}</option>
+          </SelectInput>  
+          <text-input v-model="form.price" placeholder="5700" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
           <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
-          <text-input v-model="form.discount" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/3" label="Скидка" />
-          <text-input v-model="form.count" :error="form.errors.count" class="pb-8 pr-6 w-full lg:w-1/3" label="Колличество" />     
-          <label class="custom_checkbox">Есть в наличие
-              <input v-model="form.is_exist" type="checkbox" checked="checked">
-              <span class="checkmark"></span>
-          </label>
-          <label class="custom_checkbox">Новинка
+          <text-input v-model="form.discount" placeholder="10" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/3" label="Скидка (%)" />
+          <text-input v-model="form.count" placeholder="4" :error="form.errors.count" class="pb-8 pr-6 w-full lg:w-1/3" label="Колличество" />     
+          <label class="custom_checkbox text_color">Новинка
               <input v-model="form.is_new" type="checkbox" checked="checked">
               <span class="checkmark"></span>
           </label>
-          <label class="custom_checkbox">Лучшие подажи
+          <label class="custom_checkbox text_color">Бестселлеры
               <input v-model="form.is_bestseller" type="checkbox" checked="checked">
               <span class="checkmark"></span>
           </label>
@@ -51,14 +51,14 @@
         <div class="w-full px-8 mt-6">
           <!-- <label class="block font-bold mb-4">Фильтры по значениям</label> -->
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
-            <label class="custom_checkbox custom_checkbox_bold">{{filter.name_arm}}
+            <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                 <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
                 <span class="checkmark"></span>
             </label>
             <div class="flex flex-wrap checkbox_border">
-              <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2">
+              <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2" @change="onFilterValueChange(filter.id)">
                 <label class="inline-flex items-center">
-                  <label class="custom_checkbox">{{value.name_arm}}
+                  <label class="custom_checkbox text_color">{{value.name_ru}}
                       <input v-model="value.type" type="checkbox" checked="checked">
                       <span class="checkmark"></span>
                   </label>
@@ -71,7 +71,7 @@
           :options="butonFiltersData" 
           :multiple="true" 
           placeholder="Выберите фильтры" 
-          label="name_arm"  
+          label="name_ru"  
           track-by="id"  
           class="width_30"
         />
@@ -145,6 +145,8 @@ export default {
         filters: [], 
         button_filters: [], 
         category_id:'',
+        sub_category_id:'',
+        sub_sub_category_id:'',
       }),
     }
   },
@@ -155,7 +157,7 @@ export default {
         value.type = false;
       });
     });
-  
+    console.log(this.categoriesData)
   },
   methods: {
     store() {
@@ -164,13 +166,18 @@ export default {
       this.form.post('/admin/product')
     },
     onFilterChange(filter){
+      if(!filter.type){
         this.filtersData.forEach((filters) => {
-        if(filters.id == filter.id){
-          filters.sub_filters.forEach((value) => {
-          value.type = filter.type;
+          if(filters.id == filter.id){
+            filters.sub_filters.forEach((value) => {
+            value.type = filter.type;
+          });
+          }
         });
-        }
-      });
+      }
+    },
+    onFilterValueChange(id){
+      console.log(this.filtersData)
     }
   },
 }

@@ -5,3 +5,13 @@
 @import 'form';
 
 @import 'tailwindcss/utilities';
+@layer utilities {
+    .text_color {
+        font-size: 18px;
+        font-weight: 600;
+        color: #014E2E; /* твой цвет */
+    }
+}
+body {
+    @apply font-sans;
+}

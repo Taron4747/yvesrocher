@@ -18,7 +18,7 @@
         width: 0;
     }
     input:checked ~ .checkmark {
-        background-color: #2196F3;
+        background-color: #014E2E;
     }
     input:checked ~ .checkmark:after {
     display: block;
@@ -49,21 +49,26 @@
     }
   }
   .custom_checkbox_bold{
-    border-bottom: 2px solid #000000;
+    border-bottom: 2px solid #014E2E;
     padding-bottom: 10px;
     width: fit-content;
+    color: #014E2E;
     font-size: 22px;
     font-weight: 800;
     padding-top: 0!important;
   }
   .checkbox_border{
     .custom_checkbox{
-      border: 1px solid #000000;
-      border-radius: 3px;
-      padding: 20px 5px 20px 45px;
+      border: 1px solid #014E2E;
+      color: #014E2E;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 100%;
+      border-radius: 15px;
+      padding: 10px 25px 10px 65px;
       .checkmark{
-        left: 5px;
-        top:15px;
+        left: 25px;
+        top:5px;
       }
     }
   }
@@ -94,7 +99,11 @@
     width: 30%!important;
   }
   .title_big{
-    font-size: 25px;
-    font-weight: 700;
+    font-size: 28px;
+    color: #014E2E;
+    font-weight: 600;
     margin: 25px 0;
+  }
+  .text_color{
+    color: #014E2E;
   }

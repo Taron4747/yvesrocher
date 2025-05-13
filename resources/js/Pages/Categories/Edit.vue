@@ -13,7 +13,35 @@
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Арм" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Ру" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Анг" />
+          <image-input v-model="form.image" :error="form.errors.image" label="Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
         </div>
+        <div class="w-full px-8 mt-6">
+          <label class="block font-bold mb-4">Фильтры по значениям</label>
+          <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
+            <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
+                <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
+                <span class="checkmark"></span>
+            </label>
+            <div class="flex flex-wrap">
+              <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2">
+                <label class="inline-flex items-center">
+                  <label class="custom_checkbox text_color">{{value.name_ru}}
+                      <input v-model="value.type" type="checkbox" checked="checked">
+                      <span class="checkmark"></span>
+                  </label>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <multiselect 
+          v-model="selected" 
+          :options="butonFiltersData" 
+          :multiple="true" 
+          placeholder="Выберите фильтры" 
+          label="name_arm"  
+          track-by="id"  
+        />
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить категорию</button>
           <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить категорию</loading-button>
@@ -30,6 +58,8 @@ import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import TrashedMessage from '@/Shared/TrashedMessage.vue'
+import Multiselect from 'vue-multiselect'
+import ImageInput from '@/Shared/ImageInput.vue'
 
 export default {
   components: {
@@ -39,6 +69,8 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    Multiselect,
+    ImageInput,
   },
   layout: Layout,
   props: {
@@ -47,15 +79,42 @@ export default {
   remember: 'form',
   data() {
     return {
+      filtersData:this.category.filters,
+      butonFiltersData:this.category.buton_filters,
+      selected: [],
       form: this.$inertia.form({
         name_arm: this.category.name_arm,
         name_ru: this.category.name_ru,
         name_en: this.category.name_en,
+        image: null,
+        filters: [], 
+        button_filters: [], 
       }),
     }
   },
   mounted(){
-    console.log(this.category);
+  const categoryFiltersArray = Object.values(this.category.category_filters);
+  this.filtersData.forEach((filter) => {
+    filter.type = false;
+    filter.sub_filters.forEach((sub) => sub.type = false);
+  });
+  console.log(categoryFiltersArray)
+  categoryFiltersArray.forEach((catFilter) => {
+    this.filtersData.forEach((filter) => {
+      if(catFilter.id === filter.id){
+        filter.type = true;
+        Object.values(catFilter.sub_filters).forEach((catSubFilter) => {
+          console.log(catSubFilter)
+          filter.sub_filters.forEach((subFilter) => {
+            if(subFilter.id === catSubFilter.id){
+              subFilter.type = true;
+              
+            }
+          });
+        });
+      }
+    });
+  });
   },
   methods: {
     update() {
@@ -71,6 +130,15 @@ export default {
         this.$inertia.put(`/admin/categories/${this.category.id}/restore`)
       }
     },
+    onFilterChange(filter){
+        this.filtersData.forEach((filters) => {
+        if(filters.id == filter.id){
+          filters.sub_filters.forEach((value) => {
+          value.type = filter.type;
+        });
+        }
+      });
+    }
   },
 }
 </script>

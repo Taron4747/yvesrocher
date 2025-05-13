@@ -53,7 +53,7 @@ class CategoriesController extends Controller
             'name_en' => ['required', 'max:50'],
             'name_arm' => ['required', 'max:50'],
             'name_ru' => ['required', 'max:50'],
-            'image' => ['required', 'image'],
+            'image' => ['required'],
         
         ]);
         $path = Request::file('image')[0]->store('images', 's3', 'public');

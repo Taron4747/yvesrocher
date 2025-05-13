@@ -17,7 +17,7 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['"Cerebri Sans"', ...defaultTheme.fontFamily.sans],
+        sans: ['"Avenir Next"', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
       },
     },
   },
