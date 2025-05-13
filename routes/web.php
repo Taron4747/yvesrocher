@@ -40,14 +40,14 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
 // Dashboard
-
+Route::get('/admin', [DashboardController::class, 'index'])
+->name('dashboard')
+->middleware('auth');
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::prefix('admin')->group(function () {
 
     Route::post('/search', [HomeController::class, 'search'])->name('search');
-        Route::get('/admin', [DashboardController::class, 'index'])
-        ->name('dashboard')
-        ->middleware('auth');
+     
     // Users
 
     Route::get('users', [UsersController::class, 'index'])
@@ -329,8 +329,13 @@ Route::prefix('admin')->group(function () {
     Route::put('banners/{banner}/restore', [BannersController::class, 'restore'])
     ->name('banners.restore')
     ->middleware('auth');
-
+    Route::get('category/filters/{id}', [CategoriesController::class, 'categoryFilters'])
+    ->name('category.filters')
+    ->middleware('auth');
     });
+
+    
+
 });
 
  Route::get('/language/{language}', function ($language) {

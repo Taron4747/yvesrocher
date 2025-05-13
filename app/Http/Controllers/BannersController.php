@@ -58,11 +58,11 @@ $validator->validate();
 if ($data['type'] ==1) {
    Banner::create($data);
 }else{
-    $path = Request::file('image_big')->store('images', 's3', 'public');
+    $path = Request::file('image_big')[0]->store('images', 's3', 'public');
     $image_big = Storage::disk('s3')->url($path);
-    $path = Request::file('image_medium')->store('images', 's3', 'public');
+    $path = Request::file('image_medium')[0]->store('images', 's3', 'public');
     $image_medium = Storage::disk('s3')->url($path);
-    $path = Request::file('image_small')->store('images', 's3', 'public');
+    $path = Request::file('image_small')[0]->store('images', 's3', 'public');
     $image_small = Storage::disk('s3')->url($path);
     $isnertData =[
         'link'=>$data['link'],
