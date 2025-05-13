@@ -79,7 +79,7 @@ class ProductController extends Controller
     {
 
         $data =Request::all();
-        // dd($data);
+
         $filters =isset($data['filters']) ?$data['filters'] :null;
         $button_filters =isset($data['button_filters']) ?$data['button_filters'] :null;
         unset($data['button_filters']);
