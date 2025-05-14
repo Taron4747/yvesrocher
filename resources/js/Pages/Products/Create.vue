@@ -28,11 +28,15 @@
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
             <option disabled value="">Выберите категорию</option>
-            <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_arm }}</option>
+            <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>    
-          <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория">
-            <option disabled value="">Выберите категорию</option>
-            <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_arm }}</option>
+          <SelectInput v-model="form.sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория" v-if="form.category_id">
+            <option disabled value="">Выберите подкатегорию</option>
+            <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
+          </SelectInput>  
+          <SelectInput v-model="form.sub_sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подподкатегория" v-if="form.sub_category_id">
+            <option disabled value="">Выберите подподкатегорию</option>
+            <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.sub_category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>  
           <text-input v-model="form.price" placeholder="5700" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
           <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
@@ -177,7 +181,8 @@ export default {
       }
     },
     onFilterValueChange(id){
-      console.log(this.filtersData)
+      const item = this.filtersData.find(item => item.id === id);
+      if (item) item.type = true;
     }
   },
 }
