@@ -332,10 +332,11 @@ Route::prefix('admin')->group(function () {
     Route::get('category/filters/{id}', [CategoriesController::class, 'categoryFilters'])
     ->name('category.filters')
     ->middleware('auth');
-    });
     Route::post('product-count-change', [ProductController::class, 'productCountChange'])
     ->name('product.count.change')
     ->middleware('auth');
+
+    });
 });
 
  Route::get('/language/{language}', function ($language) {
