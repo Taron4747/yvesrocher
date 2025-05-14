@@ -39,7 +39,7 @@
           <div class="title_big">Медиа</div>
           <!-- <image-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <image-input v-model="form.image" :error="form.errors.image" label="Главное Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
-          <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 3 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="3"/>
+          <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 9 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="9"/>
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <text-input v-model="form.price" placeholder="5700" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
           <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
@@ -128,7 +128,6 @@ export default {
       axios.get("/admin/category/filters/" + newVal).then((response) => {
         this.butonFiltersData = response.data.categorySubFilters;
         this.filtersData = response.data.categoryfilters;
-        console.log(response)
         this.setFilters()
       });
     }

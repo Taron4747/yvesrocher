@@ -19,10 +19,12 @@
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
         <tr class="text-left font-bold">
-          <th class="pb-4 pt-6 px-6">Название Арм</th>
-          <th class="pb-4 pt-6 px-6">Название Ру</th>
-          <th class="pb-4 pt-6 px-6">Название Анг</th>
-          <th class="pb-4 pt-6 px-6">Фото</th>
+          <th class="pb-4 pt-6 px-6">Հայերեն</th>
+          <th class="pb-4 pt-6 px-6">Русский</th>
+          <th class="pb-4 pt-6 px-6">English</th>
+          <th class="pb-4 pt-6 px-6">Цена</th>
+          <th class="pb-4 pt-6 px-6">Колличество</th>
+          <th class="pb-4 pt-6 px-6"></th>
         </tr>
         <tr v-for="product in products.data" :key="product.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
@@ -42,9 +44,15 @@
             </Link>
           </td>
           <td class="border-t">
-            <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
-              <img v-if="product.image" class="block -my-2 mr-2 w-5 h-5 rounded-full" :src="product.image" />
-            </Link>
+            <input type="number" class="width_30 number_input" v-model="product.price"/>
+          </td>
+          <td class="border-t">
+            <input type="number" class="width_30 number_input" v-model="product.count"/>
+          </td>
+          <td class="border-t">
+            <button class="btn-indigo" @click="changePriceCount(product)">
+              Изменить
+            </button>
           </td>
           <td class="w-px border-t">
             <Link class="flex items-center px-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
@@ -70,6 +78,7 @@ import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination.vue'
 import SearchFilter from '@/Shared/SearchFilter.vue'
+import TextInput from '@/Shared/TextInput.vue'
 
 export default {
   components: {
@@ -78,11 +87,15 @@ export default {
     Link,
     Pagination,
     SearchFilter,
+    TextInput,
   },
   layout: Layout,
   props: {
     filters: Object,
     products: Object,
+  },
+  mounted(){
+    console.log(this.products.data);
   },
   data() {
     return {
@@ -104,6 +117,9 @@ export default {
     reset() {
       this.form = mapValues(this.form, () => null)
     },
+    changePriceCount(product){
+      console.log(product)
+    }
   },
 }
 </script>

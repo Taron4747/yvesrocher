@@ -9,18 +9,18 @@
       <form @submit.prevent="update">
         <div class="flex flex-wrap -mb-8 -mr-6 p-8">
       
-          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Арм" />
-          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Ру" />
-          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Название Анг" />
+          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
           <label class="custom_checkbox text_color">One
               <input v-model="form.filterable" type="checkbox" checked="checked">
               <span class="checkmark"></span>
           </label>
           <div class="flex flex-wrap w-full -mb-8 -mr-6 p-8" v-if="form.filterable">
             <div v-for="key in countOfCustom" class="flex flex-wrap w-full -mb-8 -mr-6 p-8 relative">
-              <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Арм" />
-              <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Ру" />
-              <text-input v-model="customData[key-1].name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="Значение Анг" />
+              <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+              <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+              <text-input v-model="customData[key-1].name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
               <div v-if="countOfCustom != key" class="add_custom" @click="removeCustom(key)">
                 <img src="/images/trash.svg">
               </div>   

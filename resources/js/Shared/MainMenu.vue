@@ -17,46 +17,46 @@
       <div class="margin_1">
         <Link class="group flex items-center py-3" href="/admin/categories">
         <icon name="office" class="mr-2 w-4 h-4"
-          :class="isUrl('categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Категории</div>
+          :class="isUrl('admin/categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+        <div :class="isUrl('admin/categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Категории</div>
         </Link>
       </div>
       <div class="margin_1">
         <Link class="group flex items-center py-3" href="/admin/sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
-          :class="isUrl('sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Подкатегории
+          :class="isUrl('admin/sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+        <div :class="isUrl('admin/sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Подкатегории
         </div>
         </Link>
       </div>
       <div class="margin_1">
         <Link class="group flex items-center py-3" href="/admin/sub-sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
-          :class="isUrl('sub-sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Под Подкатегории</div>
+          :class="isUrl('admin/sub-sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+        <div :class="isUrl('admin/sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Под Подкатегории</div>
         </Link>
       </div>
     </div>
     <div class="margin_1">
       <Link class="group flex items-center py-3" href="/admin/filter">
       <icon name="printer" class="mr-2 w-4 h-4"
-        :class="isUrl('filters') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-      <div :class="isUrl('filters') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Фильтры</div>
+        :class="isUrl('admin/filters') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin/filters') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Фильтры</div>
       </Link>
     </div>
     <div class="margin_1">
       <Link class="group flex items-center py-3" href="/admin/product">
       <icon name="printer" class="mr-2 w-4 h-4"
-        :class="isUrl('product') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-      <div :class="isUrl('product') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Продукты</div>
+        :class="isUrl('admin/product') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin/product') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Продукты</div>
       </Link>
     </div>
 
     <div class="margin_1">
       <Link class="group flex items-center py-3" href="/admin/banners">
       <icon name="printer" class="mr-2 w-4 h-4"
-        :class="isUrl('banners') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-      <div :class="isUrl('banners') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Баннеры</div>
+        :class="isUrl('admin/banners') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin/banners') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Баннеры</div>
       </Link>
     </div>
     <!-- <dropdown class="mt-1" placement="bottom-end">

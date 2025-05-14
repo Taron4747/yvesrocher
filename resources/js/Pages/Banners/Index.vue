@@ -21,9 +21,9 @@
         <thead>
           <tr class="text-left font-bold">
           <th class="pb-4 pt-6 px-6">ID</th>
-          <th class="pb-4 pt-6 px-6">Название Арм</th>
-          <th class="pb-4 pt-6 px-6">Название Ру</th>
-          <th class="pb-4 pt-6 px-6">Название Анг</th>
+          <th class="pb-4 pt-6 px-6">Հայերեն</th>
+          <th class="pb-4 pt-6 px-6">Русский</th>
+          <th class="pb-4 pt-6 px-6">English</th>
           <th class="pb-4 pt-6 px-6">Фото</th>
         </tr>
         </thead>
