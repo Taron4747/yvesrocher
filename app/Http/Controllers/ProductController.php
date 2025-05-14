@@ -174,6 +174,9 @@ class ProductController extends Controller
                
             ];
         });
+        $filters = Filter::with('subFilters')->get();
+      
+            
         return Inertia::render('Products/Edit', [
             'product' => [
                 'id' => $product->id,
@@ -200,6 +203,9 @@ class ProductController extends Controller
             ],
             'categoryfilters'=>$categoryfilters->values()->toArray(),
             'buttonFilters'=>$buttonFilters->values()->toArray(),
+            'categories' =>Category::with('children.children')->get()->toArray(),
+            'filters'=> $filters->where('filterable',true)->values()->toArray(),
+            'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
         ]);
     }
 
