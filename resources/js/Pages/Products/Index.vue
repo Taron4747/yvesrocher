@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="filters" />
-    <h1 class="mb-8 text-3xl font-bold">Фильтры</h1>
+    <h1 class="mb-8 text-3xl font-bold">Продукты</h1>
     <div class="flex items-center justify-between mb-6">
       <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Удалить:</label>

@@ -16,7 +16,7 @@ class HomeController extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('Organizations/Index', [
+        return Inertia::render('Home/Index', [
             'categories' =>Category::with('children.children')->whereNull('parent_id')->get()
         ]);
     }
