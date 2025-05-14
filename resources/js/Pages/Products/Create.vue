@@ -128,6 +128,7 @@ export default {
       axios.get("/admin/category/filters/" + newVal).then((response) => {
         this.butonFiltersData = response.data.categorySubFilters;
         this.filtersData = response.data.categoryfilters;
+        console.log(response)
         this.setFilters()
       });
     }
