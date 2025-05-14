@@ -10,7 +10,7 @@
         <!-- <div class="flex flex-wrap -mb-8 -mr-6 p-8"> -->
         <div class="-mb-8 -mr-6 p-8">
           <div class="title_big">Код Продукта</div>
-          <text-input v-model="form.code" :error="form.errors.code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
+          <text-input v-model="form.product_code" :error="form.errors.product_code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
           <div class="title_big">Категория</div>
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
             <option disabled value="">Выберите категорию</option>
@@ -152,7 +152,7 @@ export default {
         size: '',
         discount: '',
         count: '',
-        is_exist: '',
+        product_code: '',
         is_new: '',
         is_bestseller: '',
         image: null,
