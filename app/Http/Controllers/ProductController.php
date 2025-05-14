@@ -137,28 +137,33 @@ class ProductController extends Controller
         return Redirect::route('product')->with('success', 'Contact created.');
     }
 
-    public function edit(Contact $contact): Response
+    public function edit(Product $product): Response
     {
+        $product->load('filters','subFilters');
         return Inertia::render('Products/Edit', [
-            'contact' => [
-                'id' => $contact->id,
-                'first_name' => $contact->first_name,
-                'last_name' => $contact->last_name,
-                'organization_id' => $contact->organization_id,
-                'email' => $contact->email,
-                'phone' => $contact->phone,
-                'address' => $contact->address,
-                'city' => $contact->city,
-                'region' => $contact->region,
-                'country' => $contact->country,
-                'postal_code' => $contact->postal_code,
-                'deleted_at' => $contact->deleted_at,
+            'product' => [
+                'id' => $product->id,
+                'name_arm' => $product->name_arm,
+                'name_ru' => $product->name_ru,
+                'name_en' => $product->name_en,
+                'size' => $product->size,
+                'description_arm' => $product->description_arm,
+                'description_ru' => $product->description_ru,
+                'description_en' => $product->description_en,
+                'composition_ru' => $product->composition_ru,
+                'composition_arm' => $product->composition_arm,
+                'composition_en' => $product->composition_en,
+                'product_code' => $product->product_code,
+                'image' => $product->image,
+                'price' => $product->price,
+                'category_id' => $product->category_id,
+                'sub_category_id' => $product->sub_category_id,
+                'filters' => $product->filters->where('filterefilterable',1)->values()->toArray(),
+                'butonFilters' => $product->filters->where('filterefilterable',0)->values()->toArray(),
+                'sub_sub_category_id' => $product->sub_sub_category_id,
+                'sub_sub_category_id' => $product->sub_sub_category_id,
             ],
-            'organizations' => Auth::user()->account->organizations()
-                ->orderBy('name')
-                ->get()
-                ->map
-                ->only('id', 'name'),
+           
         ]);
     }
 
@@ -197,5 +202,13 @@ class ProductController extends Controller
         $contact->restore();
 
         return Redirect::back()->with('success', 'Contact restored.');
+    }
+
+
+    function productCountChange() {
+        $data =Request::all();
+        Product::where('id',$data['id'])->update(['count'=>$data['count'],'price'=>$data['price']]);
+        return response()->json(['success'=>true]);
+        
     }
 }
