@@ -23,7 +23,7 @@
                     <span class="checkmark"></span>
                 </label>
                 <div class="flex flex-wrap checkbox_border">
-                  <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2">
+                  <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2" @change="onFilterValueChange(filter.id)">
                     <label class="inline-flex items-center">
                       <label class="custom_checkbox text_color">{{value.name_ru}}
                           <input v-model="value.type" type="checkbox" checked="checked">
@@ -110,13 +110,19 @@ export default {
       this.form.post('/admin/categories')
     },
     onFilterChange(filter){
+      if(!filter.type){
         this.filtersData.forEach((filters) => {
-        if(filters.id == filter.id){
-          filters.sub_filters.forEach((value) => {
-          value.type = filter.type;
+          if(filters.id == filter.id){
+            filters.sub_filters.forEach((value) => {
+            value.type = filter.type;
+          });
+          }
         });
-        }
-      });
+      }
+    },
+    onFilterValueChange(id){
+      const item = this.filtersData.find(item => item.id === id);
+      if (item) item.type = true;
     }
   },
 }
