@@ -79,6 +79,7 @@ import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination.vue'
 import SearchFilter from '@/Shared/SearchFilter.vue'
 import TextInput from '@/Shared/TextInput.vue'
+import axios from "axios";
 
 export default {
   components: {
@@ -118,7 +119,14 @@ export default {
       this.form = mapValues(this.form, () => null)
     },
     changePriceCount(product){
-      console.log(product)
+      let formData = new FormData
+      formData.set('id', product.id)
+      formData.set('count', product.count)
+      formData.set('price', product.price)
+      axios.post('/admin/product-count-change', formData,
+            ).then(response => {
+              
+            })
     }
   },
 }
