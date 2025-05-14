@@ -334,8 +334,6 @@ Route::prefix('admin')->group(function () {
     ->middleware('auth');
     });
 
-    
-
 });
 
  Route::get('/language/{language}', function ($language) {

@@ -9,10 +9,12 @@
       <form @submit.prevent="store">
         <!-- <div class="flex flex-wrap -mb-8 -mr-6 p-8"> -->
         <div class="-mb-8 -mr-6 p-8">
+          <div class="title_big">Код Продукта</div>
+          <text-input v-model="form.code" :error="form.errors.code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
           <div class="title_big">Категория</div>
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
             <option disabled value="">Выберите категорию</option>
-            <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
+            <option v-for="opt in categoriesData.filter(cat => !cat.parent_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>    
           <SelectInput v-model="form.sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория" v-if="form.category_id">
             <option disabled value="">Выберите подкатегорию</option>
@@ -53,7 +55,16 @@
           </label>
         
         <div class="title_big">Фильтры</div>
-        <div class="w-full px-8 mt-6">
+        <multiselect 
+          v-model="selected" 
+          :options="butonFiltersData" 
+          :multiple="true" 
+          placeholder="Выберите фильтры" 
+          label="name_ru"  
+          track-by="id"  
+          class="width_30"
+        />
+        <div class="w-full mt-6">
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                 <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
@@ -70,15 +81,6 @@
               </div>
             </div>
           </div>
-          <multiselect 
-          v-model="selected" 
-          :options="butonFiltersData" 
-          :multiple="true" 
-          placeholder="Выберите фильтры" 
-          label="name_ru"  
-          track-by="id"  
-          class="width_30"
-        />
       </div>
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
@@ -99,7 +101,7 @@ import FileInput from '@/Shared/FileInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import Multiselect from 'vue-multiselect'
 import ImageInput from '@/Shared/ImageInput.vue'
-
+import axios from "axios";
 // import 'vue-multiselect/dist/vue-multiselect.min.css';
 
 export default {
@@ -121,6 +123,15 @@ export default {
     butonFilters: Array,
   },
   remember: 'form',
+  watch: {
+    'form.category_id'(newVal) {
+      axios.get("/admin/category/filters/" + newVal).then((response) => {
+        this.butonFiltersData = response.data.categorySubFilters;
+        this.filtersData = response.data.categoryfilters;
+        this.setFilters()
+      });
+    }
+  },
   data() {
     return {
       categoriesData:this.categories,
@@ -155,15 +166,17 @@ export default {
     }
   },
   mounted(){
-    this.filtersData.forEach((filters) => {
+    this.setFilters()
+  },
+  methods: {
+    setFilters(){
+      this.filtersData.forEach((filters) => {
       filters.type = false;
       filters.sub_filters.forEach((value) => {
         value.type = false;
       });
     });
-    console.log(this.categoriesData)
-  },
-  methods: {
+    },
     store() {
       this.form.button_filters = this.selected;
       this.form.filters = this.filtersData;
