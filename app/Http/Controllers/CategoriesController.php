@@ -327,7 +327,7 @@ class CategoriesController extends Controller
     public function editSubSub(Category $category): Response
     {
        
-        return Inertia::render('SubCategories/Edit', [
+        return Inertia::render('SubSubCategories/Edit', [
             'category' => [
                 'id' => $category->id,
                 'name_arm' => $category->name_arm,

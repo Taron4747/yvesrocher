@@ -9,20 +9,21 @@
     <trashed-message v-if="category.deleted_at" class="mb-6" @restore="restore"> This category has been deleted. </trashed-message>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
-        <div class="flex flex-wrap -mb-8 -mr-6 p-8">
-          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Арм" />
-          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Ру" />
-          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="Название Анг" />
+        <div class="-mb-8 -mr-6 p-8">
+          <div class="title_big">Название</div>
+          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Հայերեն" />
+          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Русский" />
+          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
+          <div class="title_big">Медиа</div>
           <image-input v-model="form.image" :error="form.errors.image" label="Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
-        </div>
-        <div class="w-full px-8 mt-6">
-          <label class="block font-bold mb-4">Фильтры по значениям</label>
+          <div class="w-full mt-6">
+          <div class="title_big">Фильтры</div>
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                 <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
                 <span class="checkmark"></span>
             </label>
-            <div class="flex flex-wrap">
+            <div class="flex flex-wrap checkbox_border">
               <div v-for="value in filter.sub_filters" :key="value.id" class="mr-4 mb-2">
                 <label class="inline-flex items-center">
                   <label class="custom_checkbox text_color">{{value.name_ru}}
@@ -41,7 +42,10 @@
           placeholder="Выберите фильтры" 
           label="name_arm"  
           track-by="id"  
+           class="width_30"
         />
+        </div>
+       
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить категорию</button>
           <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить категорию</loading-button>

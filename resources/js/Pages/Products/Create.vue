@@ -9,23 +9,7 @@
       <form @submit.prevent="store">
         <!-- <div class="flex flex-wrap -mb-8 -mr-6 p-8"> -->
         <div class="-mb-8 -mr-6 p-8">
-          <div class="title_big">Название</div>
-          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
-          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
-          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
-          <div class="title_big">Описание</div>
-          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն"/>
-          <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский"/>
-          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English"/>
-          <div class="title_big">Состав</div>
-          <text-input v-model="form.composition_arm" :error="form.errors.composition_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Состав Арм" />
-          <text-input v-model="form.composition_ru" :error="form.errors.composition_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
-          <text-input v-model="form.composition_en" :error="form.errors.composition_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
-          <div class="title_big">Медиа</div>
-          <!-- <image-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
-          <image-input v-model="form.image" :error="form.errors.image" label="Главное Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
-          <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 3 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="3"/>
-          <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
+          <div class="title_big">Категория</div>
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
             <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
@@ -38,6 +22,23 @@
             <option disabled value="">Выберите подподкатегорию</option>
             <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.sub_category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>  
+          <div class="title_big">Название</div>
+          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
+          <div class="title_big">Описание</div>
+          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն"/>
+          <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский"/>
+          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English"/>
+          <div class="title_big">Состав</div>
+          <text-input v-model="form.composition_arm" :error="form.errors.composition_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+          <text-input v-model="form.composition_ru" :error="form.errors.composition_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+          <text-input v-model="form.composition_en" :error="form.errors.composition_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
+          <div class="title_big">Медиа</div>
+          <!-- <image-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
+          <image-input v-model="form.image" :error="form.errors.image" label="Главное Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
+          <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 3 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="3"/>
+          <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <text-input v-model="form.price" placeholder="5700" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
           <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
           <text-input v-model="form.discount" placeholder="10" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/3" label="Скидка (%)" />
@@ -53,7 +54,6 @@
         
         <div class="title_big">Фильтры</div>
         <div class="w-full px-8 mt-6">
-          <!-- <label class="block font-bold mb-4">Фильтры по значениям</label> -->
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                 <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
