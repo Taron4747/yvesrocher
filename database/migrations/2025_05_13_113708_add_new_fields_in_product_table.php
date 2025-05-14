@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::table('products', function (Blueprint $table) {
             $table->integer('sub_category_id');
             $table->integer('sub_sub_category_id');
+            $table->string('product_code')->unique();
             $table->dropColumn('is_exist');
 
         });
