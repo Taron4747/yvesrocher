@@ -199,11 +199,11 @@ Route::prefix('admin')->group(function () {
     ->middleware('auth');
 
     Route::put('sub-categories/{category}', [CategoriesController::class, 'updateSub'])
-    ->name('categories.update')
+    ->name('sub-categories.update')
     ->middleware('auth');
 
     Route::delete('sub-categories/{category}', [CategoriesController::class, 'destroySub'])
-    ->name('categories.destroy')
+    ->name('sub-categories.destroy')
     ->middleware('auth');
 
     Route::put('sub-categories/{category}/restore', [CategoriesController::class, 'restoreSub'])
@@ -228,11 +228,11 @@ Route::prefix('admin')->group(function () {
     ->middleware('auth');
     
     Route::put('sub-sub-categories/{category}', [CategoriesController::class, 'updateSubSub'])
-    ->name('categories.update')
+    ->name('sub-sub-categories.update')
     ->middleware('auth');
     
     Route::delete('sub-sub-categories/{category}', [CategoriesController::class, 'destroySubSub'])
-    ->name('categories.destroy')
+    ->name('sub-sub-categories.destroy')
     ->middleware('auth');
     
     Route::put('sub-sub-categories/{category}/restore', [CategoriesController::class, 'restoreSubSub'])

@@ -134,7 +134,7 @@ class ProductController extends Controller
                 $product->filters()->attach($button_filter['id']);
             }
         }
-        return Redirect::route('admin/product')->with('success', 'Contact created.');
+        return Redirect::route('product')->with('success', 'Contact created.');
     }
 
     public function edit(Contact $contact): Response
