@@ -1,28 +1,66 @@
 <template>
-  <div class="banner_top">
-    <PromoBanner :messages="banners" />
-  </div>
-  <div class="banner_middle">
-    <div class="banner_middle_left">
-      <a href="/">
-        <img src="/images/new_logo-2020.svg">
-      </a>
+  <div class="header">
+    <div class="banner_top">
+      <PromoBanner :messages="banners" />
     </div>
-    <div class="banner_middle_center">
-      <div class="search_content">
-        <img src="/images/search_green.svg">
-        <span>ПОИСК</span>
+    <div class="banner_middle">
+      <div class="banner_middle_content">
+        <div class="banner_middle_left">
+          <a href="/">
+            <img src="/images/new_logo-2020.svg">
+          </a>
+        </div>
+        <div class="banner_middle_center">
+          <div class="search_content">
+            <img src="/images/search_green.svg">
+            <span>ПОИСК</span>
+          </div>
+        </div>
+        <div class="banner_middle_right">
+            <img src="/images/shops.svg">
+            <img class="bottom" src="/images/account.svg">
+            <img src="/images/cart.svg">
+        </div>
       </div>
     </div>
-    <div class="banner_middle_right">
-      <img src="/images/shops.svg">
-      <img class="bottom" src="/images/account.svg">
-      <img src="/images/cart.svg">
+    <div class="banner_bottom" >
+      <div class="banner_bottom_content" @mouseleave="showHide(false,0)">
+        <div class="categores_data relative">
+          <div
+            class="categores_data_item"
+            v-for="item in categoriesData"
+            :key="item.id"
+            :class="{ border_underline: choosedCategory == item.id}"
+            @mouseenter="showHide(true,item.id)"
+          >
+           <span>{{ item.name_ru }}</span>
+          </div>
+          <div class="categores_data_item old_green">НОВИНКИ</div>
+          <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
+          <div class="categores_data_item"></div>
+          <div class="categores_data_item"></div>
+          <div
+              v-if="showDropdown === true"
+              class="absolute dropdown_content"
+              @mouseleave="showHide(false,0)"
+            >
+            <div class="dropdown_content_left">
+              <div class="subcategories_content" :key="item1.id" v-for="item1 in subCategoriesData">
+                <div class="title">{{ item1.name_ru }}</div>
+                <div class="text" v-for="item2 in item1.children">
+                  {{ item2.name_ru }}
+                </div>
+              </div>
+            </div>
+            <div class="dropdown_content_right">
+              <img :src="image">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="banner_bottom">
-
-  </div>
+  
 </template>
 
 <script>
@@ -37,6 +75,11 @@ export default {
   },
   data() {
     return {
+      image:null,
+      showDropdown:false,
+      choosedCategory:0,
+      categoriesData:this.categories,
+      subCategoriesData:[],
       banners : [
         'The selection of the moment <strong>in promotion and free delivery from 20€!</strong> Code: <strong>BIENV20</strong>',
         '🌟 New arrivals just in! <strong>Free gift</strong> on orders over 30€',
@@ -45,74 +88,165 @@ export default {
     }
   },
   mounted() {
-    console.log(this.categories);
+    console.log(this.categoriesData)
+  },
+  methods: {
+    showHide(type,id){
+      if(type){
+        this.categoriesData.forEach((categories) => {
+          if(categories.id == id){
+            this.subCategoriesData = categories.children;
+            this.image = categories.image;
+          }
+        });
+        this.choosedCategory = id
+      }else{
+        this.choosedCategory = 0
+      }
+      this.showDropdown = type;
+    }
   },
 }
 </script>
 <style scoped lang="scss">
-.banner_top {
-  background: #014E2E;
+.header{
+  position: fixed;
+  z-index: 5000;
+  background: #FFFFFF;
   width: 100%;
-  height: 46px;
-}
-.banner_middle{
-  display: flex;
-  align-items: center;
-  padding: 0 150px;
-  height: 65px;
-  .banner_middle_left,.banner_middle_center,.banner_middle_right{
-    display: flex;
-    width: calc(100% / 3);
-    height: 100%;
+  .banner_top {
+    background: #014E2E;
+    width: 100%;
+    height: 46px;
   }
-  .banner_middle_left{
-    align-items: center;
-    justify-content: flex-start;
-  }
-  .banner_middle_center{
-    align-items: center;
-    justify-content: flex-start;
-    .search_content{
+  .banner_middle{
+     width: 100%;
+    .banner_middle_content{
       display: flex;
       align-items: center;
-      cursor: pointer;
-      width: 302px;
-      height: 35px;
-      border-bottom: 1px solid #014E2E;
-      padding-left: 11px;
+      max-width: 1140px;
+      margin: 0 auto;
+      height: 65px;
+      .banner_middle_left,.banner_middle_center,.banner_middle_right{
+        display: flex;
+        width: calc(100% / 3);
+        height: 100%;
+      }
+      .banner_middle_left{
+        align-items: center;
+        justify-content: flex-start;
+      }
+      .banner_middle_center{
+        align-items: center;
+        justify-content: flex-start;
+        .search_content{
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          width: 302px;
+          height: 35px;
+          border-bottom: 1px solid #014E2E;
+          padding-left: 11px;
+          img{
+            width: 23px;
+            height: 20px;
+            margin-right: 20px;
+          }
+          span{
+            font-size: 14px;
+            color: #014E2E;
+            line-height: 100%;
+          }
+        }
+    }
+    .banner_middle_right{
+      align-items: center;
+      justify-content: flex-end;
       img{
-        width: 23px;
-        height: 20px;
-        margin-right: 20px;
+        cursor: pointer;
+        margin-left: 24px;
       }
-      span{
-        font-size: 14px;
-        color: #014E2E;
-        line-height: 100%;
+      img:last-child{
+        margin-left: 17.6px;
+      }
+      .bottom{
+        margin-bottom: -9px;
       }
     }
-
+    }
   }
-  .banner_middle_right{
-    align-items: center;
-    justify-content: flex-end;
-    img{
-      cursor: pointer;
-      margin-left: 24px;
-    }
-    img:last-child{
-      margin-left: 17.6px;
-    }
-    .bottom{
-      margin-bottom: -9px;
+  .banner_bottom{
+     width: 100%;
+     box-shadow: 0 .25rem .375rem 0 rgba(0, 0, 0, .1);
+    .banner_bottom_content{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      max-width: 1140px;
+      height: 65px;
+      .categores_data{
+        display: flex;
+        align-items: center;
+        width: 100%;
+        justify-content: space-between;
+        .categores_data_item{
+          font-size: 12px;
+          line-height: 13.8px;
+          cursor: pointer;
+        }
+        .dropdown_content{
+          display: flex;
+          justify-content: space-between;
+          width: 1200px;
+          height: 500px;
+          box-shadow: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+          background: #FFFFFF;
+          top: 40px;
+          left: -30px;
+          padding:10px;
+            .dropdown_content_left{
+              display: flex;
+              .subcategories_content{
+              display: flex;
+              flex-direction: column;
+              padding: 15px;
+              .title{
+                font-weight: 400;
+                font-size: 1.0625rem;
+                margin-bottom: .3125rem;
+                cursor: pointer;
+              }
+              .title:hover{
+                text-decoration: underline;
+              }
+              .text{
+                padding: .625rem 0;
+                font-size: .8125rem;
+                cursor: pointer;
+              }
+              .text:hover{
+                text-decoration: underline;
+              }
+            }
+          }
+          .dropdown_content_right{
+            img{
+              width: 180px;
+              object-fit: cover;
+              border-radius: .4rem;
+            }
+          }
+        }
+      }
     }
   }
 }
-.banner_bottom{
-  display: flex;
-  align-items: center;
-  padding: 0 150px;
-  height: 65px;
-  box-shadow: 0 .25rem .375rem 0 rgba(0, 0, 0, .1);
+.old_green{
+  color: #939956;
+  font-weight: 600;
+}
+.border_underline{
+  border-bottom: 2px solid #000000;
 }
 </style>
