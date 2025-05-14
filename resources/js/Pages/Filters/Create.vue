@@ -110,7 +110,6 @@ export default {
     removeCustom(key){
         this.customData.splice(key-1, 1);
         this.countOfCustom --;
-        console.log(this.customData)
     },
   },
 }

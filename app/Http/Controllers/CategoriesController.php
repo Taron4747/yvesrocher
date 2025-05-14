@@ -449,7 +449,7 @@ class CategoriesController extends Controller
                
             ];
         });
-        return response()->json(['categorySubFilters' =>$categorySubFilters->toArray(),'categoryfilters'=>$categoryfilters->toArray()]);
+        return response()->json(['categorySubFilters' =>$categorySubFilters->values()->toArray(),'categoryfilters'=>$categoryfilters->values()->toArray()]);
 
     }
 

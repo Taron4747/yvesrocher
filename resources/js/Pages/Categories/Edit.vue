@@ -102,7 +102,6 @@ export default {
     filter.type = false;
     filter.sub_filters.forEach((sub) => sub.type = false);
   });
-  console.log(categoryFiltersArray)
   categoryFiltersArray.forEach((catFilter) => {
     this.filtersData.forEach((filter) => {
       if(catFilter.id === filter.id){
@@ -122,6 +121,8 @@ export default {
   },
   methods: {
     update() {
+      this.form.filters = this.filtersData
+      this.form.button_filters = this.selected   
       this.form.put(`/admin/categories/${this.category.id}`)
     },
     destroy() {
