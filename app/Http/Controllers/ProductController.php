@@ -140,6 +140,40 @@ class ProductController extends Controller
     public function edit(Product $product): Response
     {
         $product->load('filters','subFilters');
+        $category =Category::where('id', $product->category_id)->first();
+        $categoryFilters =  $category->load('filters','subFilters');
+        $filters = Filter::with('subFilters')->get();
+       
+        $categorySubFilterIds = $category->subFilters()->pluck('sub_filters.id');
+
+        $categoryfilters = $category->filters->where('filterable',1)->map(function ($filter) use ($categorySubFilterIds) {
+            return [
+                'id' => $filter->id,
+                'name_arm' => $filter->name_arm,
+                'name_ru' => $filter->name_ru,
+                'name_en' => $filter->name_en,
+                'filterable' => $filter->filterable,
+                'sub_filters' => $filter->subFilters->whereIn('id', $categorySubFilterIds)->map(function ($subFilter) {
+                    return [
+                        'id' => $subFilter->id,
+                        'name_arm' => $subFilter->name_arm,
+                        'name_ru' => $subFilter->name_ru,
+                        'name_en' => $subFilter->name_en,
+                    ];
+                })->toArray(),
+            ];
+        });
+
+        $buttonFilters = $category->filters->where('filterable',0)->map(function ($filter) use ($categorySubFilterIds) {
+            return [
+                'id' => $filter->id,
+                'name_arm' => $filter->name_arm,
+                'name_ru' => $filter->name_ru,
+                'name_en' => $filter->name_en,
+                'filterable' => $filter->filterable,
+               
+            ];
+        });
         return Inertia::render('Products/Edit', [
             'product' => [
                 'id' => $product->id,
@@ -159,11 +193,13 @@ class ProductController extends Controller
                 'category_id' => $product->category_id,
                 'sub_category_id' => $product->sub_category_id,
                 'filters' => $product->filters->where('filterefilterable',1)->values()->toArray(),
+                'filters' => $product->subFilters->values()->toArray(),
                 'butonFilters' => $product->filters->where('filterefilterable',0)->values()->toArray(),
                 'sub_sub_category_id' => $product->sub_sub_category_id,
                 'sub_sub_category_id' => $product->sub_sub_category_id,
             ],
-           
+            'categoryfilters'=>$categoryfilters->values()->toArray(),
+            'buttonFilters'=>$buttonFilters->values()->toArray(),
         ]);
     }
 

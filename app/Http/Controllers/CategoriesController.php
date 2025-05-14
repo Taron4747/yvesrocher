@@ -416,11 +416,9 @@ class CategoriesController extends Controller
         $category =Category::where('id',$id)->first();
         $categoryFilters =  $category->load('filters','subFilters');
         $filters = Filter::with('subFilters')->get();
-        // $category = Category::with(['filters'])->findOrFail($categoryId);
-        // Получаем ID всех субфильтров, привязанных к категории
+       
         $categorySubFilterIds = $category->subFilters()->pluck('sub_filters.id');
 
-        // Формируем данные для ответа
         $categoryfilters = $category->filters->where('filterable',1)->map(function ($filter) use ($categorySubFilterIds) {
             return [
                 'id' => $filter->id,
