@@ -108,14 +108,14 @@ class FiltersController extends Controller
         foreach ($request->customData as $item) {
             if (!empty($item['id'])) {
                 // Обновить существующее значение
-                FilterValue::where('id', $item['id'])->update([
+                SubFilter::where('id', $item['id'])->update([
                     'name_en' => $item['name_en'],
                     'name_arm' => $item['name_arm'],
                     'name_ru' => $item['name_ru'],
                 ]);
             } else {
                 // Добавить новое значение
-                FilterValue::create([
+                SubFilter::create([
                     'name_en' => $item['name_en'],
                     'name_arm' => $item['name_arm'],
                     'name_ru' => $item['name_ru'],
@@ -129,14 +129,14 @@ class FiltersController extends Controller
     }
     
 
-    public function destroy(Category $filter): RedirectResponse
+    public function destroy(Filter $filter): RedirectResponse
     {
         $filter->delete();
 
         return Redirect::back()->with('success', 'Category deleted.');
     }
 
-    public function restore(Category $filter): RedirectResponse
+    public function restore(Filter $filter): RedirectResponse
     {
         $filter->restore();
 

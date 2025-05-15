@@ -86,11 +86,7 @@ class CategoriesController extends Controller
                 }
             }
         }
-        if (isset($data['button_filters'])) {
-            foreach ($data['button_filters'] as $key => $button_filter) {
-                $category->filters()->attach($button_filter['id']);
-            }
-        }
+       
         return Redirect::route('categories')->with('success', 'Category created.');
     }
 
@@ -437,17 +433,8 @@ class CategoriesController extends Controller
             ];
         });
 
-        $categorySubFilters = $category->filters->where('filterable',0)->map(function ($filter) use ($categorySubFilterIds) {
-            return [
-                'id' => $filter->id,
-                'name_arm' => $filter->name_arm,
-                'name_ru' => $filter->name_ru,
-                'name_en' => $filter->name_en,
-                'filterable' => $filter->filterable,
-               
-            ];
-        });
-        return response()->json(['categorySubFilters' =>$categorySubFilters->values()->toArray(),'categoryfilters'=>$categoryfilters->values()->toArray()]);
+     
+        return response()->json(['categoryfilters'=>$categoryfilters->values()->toArray()]);
 
     }
 

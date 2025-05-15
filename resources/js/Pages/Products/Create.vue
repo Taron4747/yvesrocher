@@ -55,15 +55,7 @@
           </label>
         
         <div class="title_big">Фильтры</div>
-        <multiselect 
-          v-model="selected" 
-          :options="butonFiltersData" 
-          :multiple="true" 
-          placeholder="Выберите фильтры" 
-          label="name_ru"  
-          track-by="id"  
-          class="width_30"
-        />
+      
         <div class="w-full mt-6">
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
@@ -126,7 +118,6 @@ export default {
   watch: {
     'form.category_id'(newVal) {
       axios.get("/admin/category/filters/" + newVal).then((response) => {
-        this.butonFiltersData = response.data.categorySubFilters;
         this.filtersData = response.data.categoryfilters;
         this.setFilters()
       });

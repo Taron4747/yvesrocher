@@ -71,7 +71,6 @@ class ProductController extends Controller
         return Inertia::render('Products/Create', [
             'categories' =>Category::with('children.children')->get()->toArray(),
             'filters'=> $filters->where('filterable',true)->values()->toArray(),
-            'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
         ]);
     }
 
@@ -81,8 +80,6 @@ class ProductController extends Controller
         $data =Request::all();
 
         $filters =isset($data['filters']) ?$data['filters'] :null;
-        $button_filters =isset($data['button_filters']) ?$data['button_filters'] :null;
-        unset($data['button_filters']);
         unset($data['filters']);
         unset($data['images']);
         $validator = Validator::make(Request::all(), [
@@ -129,11 +126,7 @@ class ProductController extends Controller
                 }
             }
         }
-        if (isset($button_filters)) {
-            foreach ($button_filters as $key => $button_filter) {
-                $product->filters()->attach($button_filter['id']);
-            }
-        }
+       
         return Redirect::route('product')->with('success', 'Contact created.');
     }
 
@@ -164,16 +157,7 @@ class ProductController extends Controller
             ];
         });
 
-        $buttonFilters = $category->filters->where('filterable',0)->map(function ($filter) use ($categorySubFilterIds) {
-            return [
-                'id' => $filter->id,
-                'name_arm' => $filter->name_arm,
-                'name_ru' => $filter->name_ru,
-                'name_en' => $filter->name_en,
-                'filterable' => $filter->filterable,
-               
-            ];
-        });
+      
         $filters = Filter::with('subFilters')->get();
       
             
@@ -202,14 +186,13 @@ class ProductController extends Controller
                 'sub_sub_category_id' => $product->sub_sub_category_id,
             ],
             'categoryfilters'=>$categoryfilters->values()->toArray(),
-            'buttonFilters'=>$buttonFilters->values()->toArray(),
             'categories' =>Category::with('children.children')->get()->toArray(),
             'filters'=> $filters->where('filterable',true)->values()->toArray(),
             'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
         ]);
     }
 
-    public function update(Contact $contact): RedirectResponse
+    public function update(Product $product): RedirectResponse
     {
         $contact->update(
             Request::validate([
@@ -232,14 +215,14 @@ class ProductController extends Controller
         return Redirect::back()->with('success', 'Contact updated.');
     }
 
-    public function destroy(Contact $contact): RedirectResponse
+    public function destroy(Product $product): RedirectResponse
     {
         $contact->delete();
 
         return Redirect::back()->with('success', 'Contact deleted.');
     }
 
-    public function restore(Contact $contact): RedirectResponse
+    public function restore(Product $product): RedirectResponse
     {
         $contact->restore();
 

@@ -11,13 +11,15 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\URL;
 use Inertia\Response;
 use App\Models\Category;
+use App\Models\Banner;
 
 class HomeController extends Controller
 {
     public function index(): Response
     {
         return Inertia::render('Home/Index', [
-            'categories' =>Category::with('children.children')->whereNull('parent_id')->get()
+            'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+            'banners' =>Banner::all()
         ]);
     }
     public function search(Request $request)
