@@ -127,6 +127,7 @@ export default {
           color: #FFFFFF;
           border-radius: 20px;
           font-weight: 600;
+          margin-bottom: 20px;
         }
       }
     }
