@@ -86,7 +86,7 @@ class ProductController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
-                'size' => ['required', 'max:50'],
+                'size' => ['required', 'max:5000'],
                 'description_arm' => ['required'],
                 'description_ru' => ['required'],
                 'description_en' => ['required'],
