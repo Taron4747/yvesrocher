@@ -37,8 +37,7 @@
           </div>
           <div class="categores_data_item old_green">НОВИНКИ</div>
           <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
-          <div class="categores_data_item"></div>
-          <div class="categores_data_item"></div>
+          <div class="categores_data_item old_green">АКЦИИ</div>
           <div
               v-if="showDropdown === true"
               class="absolute dropdown_content"
