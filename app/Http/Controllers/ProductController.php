@@ -101,7 +101,8 @@ class ProductController extends Controller
         $path = Request::file('image')[0]->store('images', 's3', 'public');
         $image = Storage::disk('s3')->url($path);
         $data['image'] =$image;
-        
+        $data['is_new'] =$data['is_new']===null?0:$data['is_new'];
+        $data['is_bestseller'] =$data['is_bestseller']===null?0:$data['is_bestseller'];
         $product = Product::create($data);
         if (Request::file('images')) {
 
