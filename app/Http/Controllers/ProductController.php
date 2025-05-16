@@ -117,12 +117,12 @@ class ProductController extends Controller
         if (isset($filters)) {
             
             foreach ($filters as $key => $filter) {
-                if ( $filters['type']==1) {
+                if ( $filter['type']==1) {
                 $product->filters()->attach($filter['id']);
 
-                    foreach ($filter['sub_filters'] as $key => $filter) {
-                        if ( $filter['type']==1) {
-                            $product->subFilters()->attach($filter['id']);
+                    foreach ($filter['sub_filters'] as $key => $sub_filter) {
+                        if ( $sub_filter['type']==1) {
+                            $product->subFilters()->attach($sub_filter['id']);
                        
                         }
                     }
