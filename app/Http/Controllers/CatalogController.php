@@ -53,12 +53,101 @@ class CatalogController extends Controller
                 'filtersWithCounts' =>$filtersWithCounts,
             ]);
     }
-   
+    public function getBySubCategory($id)
+    {
+        $subCategory =Category::where('id',$id)->first();
+        $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
+        $filtersWithCounts = $category->filters->map(function ($filter) {
+            $filterProductCount = $filter->products()->count();
+
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
+                return [
+                    'id' => $subFilter->id,
+                    'name' => $subFilter->name,
+                    'product_count' => $subFilter->products()->count(),
+                ];
+            });
+
+            return [
+                'id' => $filter->id,
+                'name' => $filter->name,
+                'type' => $filter->type,
+                'product_count' => $filterProductCount,
+                'sub_filters' => $subFiltersWithCounts,
+            ];
+        });
+    
+        $products = Product::where('sub_category_id',$id)->where('count','!=',0)
+            ->paginate(20);
+            return Inertia::render('Home/Index', [
+                'category' =>$category,
+                'products' =>$products,
+                'filtersWithCounts' =>$filtersWithCounts,
+            ]);
+    }
 
    
 
-   
+    public function getBySubSubCategory($id)
+    {
+        $subSubCategory =Category::where('id',$id)->first();
+        $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
+        $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
+        $filtersWithCounts = $category->filters->map(function ($filter) {
+            $filterProductCount = $filter->products()->count();
+
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
+                return [
+                    'id' => $subFilter->id,
+                    'name' => $subFilter->name,
+                    'product_count' => $subFilter->products()->count(),
+                ];
+            });
+
+            return [
+                'id' => $filter->id,
+                'name' => $filter->name,
+                'type' => $filter->type,
+                'product_count' => $filterProductCount,
+                'sub_filters' => $subFiltersWithCounts,
+            ];
+        });
+    
+        $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0)
+            ->paginate(20);
+            return Inertia::render('Home/Index', [
+                'category' =>$category,
+                'products' =>$products,
+                'filtersWithCounts' =>$filtersWithCounts,
+            ]);
    
 
    
+    }
+    public function product($id)  {
+        $product = Product::where('id',$id)->where('count','!=',0)->with('images')->first();
+        return Inertia::render('Home/Index', [
+            'product' =>$product,
+        ]);
+    }
+
+    public function products()  {
+        $data =Request::all();
+
+        $product = Product::with('images');
+        if (isset($data['is_new'])) {
+            $product = $product->where('is_new',1);
+        }
+        if (isset($data['is_bestseller'])) {
+            $product = $product->where('is_bestseller',1);
+        }
+        if (isset($data['discount'])) {
+            $product = $product->where('discount','>',0);
+        }
+        $product = $product->paginate(20);
+        return Inertia::render('Home/Index', [
+            'products' =>$product,
+        ]);
+    }
+
 }

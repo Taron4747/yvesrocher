@@ -15,7 +15,22 @@
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Русский" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
           <div class="title_big">Медиа</div>
-          <image-input v-model="form.image" :error="form.errors.image" label="Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
+          <image-input v-model="form.image" :error="form.errors.image" label="Фото в меню (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
+          <div class="grid grid-cols-2 gap-2 mt-2">
+          <img
+            :src="image"
+            alt="Preview"
+            class="max-h-48 object-contain border rounded"
+          />
+        </div>
+          <image-input v-model="form.second_image" :error="form.errors.second_image" label="Фото в каталоге(только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
+          <div class="grid grid-cols-2 gap-2 mt-2">
+          <img
+            :src="second_image"
+            alt="Preview"
+            class="max-h-48 object-contain border rounded"
+          />
+        </div>
           <div class="w-full mt-6">
           <div class="title_big">Фильтры</div>
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
@@ -90,10 +105,13 @@ export default {
         name_arm: this.category.name_arm,
         name_ru: this.category.name_ru,
         name_en: this.category.name_en,
-        image: null,
+        image:  null,
+        second_image: null,
         filters: [], 
         button_filters: [], 
       }),
+      image:  this.category.image,
+      second_image: this.category.second_image,
     }
   },
   mounted(){

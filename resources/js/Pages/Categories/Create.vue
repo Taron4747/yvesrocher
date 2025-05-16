@@ -12,8 +12,9 @@
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Հայերեն" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Русский" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
-          <div class="title_big">Медиа</div>
-          <image-input v-model="form.image" :error="form.errors.image" label="Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
+          <div class="title_big">Медиа</div>  
+          <image-input v-model="form.image" :error="form.errors.image" label="Фото в меню (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
+          <image-input v-model="form.second_image" :error="form.errors.second_image" label="Фото в каталоге(только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="Фото" /> -->
           <div class="w-full mt-6">
             <div class="title_big">Фильтры</div>
@@ -90,6 +91,7 @@ export default {
         name_ru: '',
         name_en: '',
         image: null,
+        second_image: null,
         filters: [], // selected filterable IDs (checkbox)
         button_filters: [], // selected button filter IDs (multi-select)
       }),

@@ -78,7 +78,7 @@ class ProductController extends Controller
     {
 
         $data =Request::all();
-
+// dd($data);
         $filters =isset($data['filters']) ?$data['filters'] :null;
         unset($data['filters']);
         unset($data['images']);
@@ -86,14 +86,16 @@ class ProductController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
-                'size' => ['required', 'max:50'],
+                'size' => ['required', 'max:5000'],
                 'description_arm' => ['required'],
                 'description_ru' => ['required'],
                 'description_en' => ['required'],
                 'composition_ru' => ['required'],
                 'composition_arm' => ['required'],
                 'composition_en' => ['required'],
-                'product_code' => ['required'],
+                // 'product_code' => ['required|unique:products'],
+                'product_code' => ['required', 'unique:products'], 
+
                 'image' => ['required'],
                 'price' => ['required','integer'],
         ]);
@@ -101,7 +103,8 @@ class ProductController extends Controller
         $path = Request::file('image')[0]->store('images', 's3', 'public');
         $image = Storage::disk('s3')->url($path);
         $data['image'] =$image;
-        
+        $data['is_new'] =$data['is_new']===null?0:$data['is_new'];
+        $data['is_bestseller'] =$data['is_bestseller']===null?0:$data['is_bestseller'];
         $product = Product::create($data);
         if (Request::file('images')) {
 
@@ -113,16 +116,18 @@ class ProductController extends Controller
         }
         if (isset($filters)) {
             
-            foreach ($filters as $key => $filters) {
-                if ( $filters['type']==1) {
-                $product->filters()->attach($filters['id']);
-
-                    foreach ($filters['sub_filters'] as $key => $filter) {
-                        if ( $filter['type']==1) {
-                            $product->subFilters()->attach($filter['id']);
-                       
+            foreach ($filters as $key => $filter) {
+                if (isset($filter['type'])&& $filter['type']==1) {
+                $product->filters()->attach($filter['id']);
+                    if (isset($filter['sub_filters'])) {
+                        foreach ($filter['sub_filters'] as $key => $sub_filter) {
+                            if ( $sub_filter['type']==1) {
+                                $product->subFilters()->attach($sub_filter['id']);
+                           
+                            }
                         }
                     }
+                   
                 }
             }
         }

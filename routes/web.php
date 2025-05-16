@@ -345,6 +345,17 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
     });
     Route::get('category/{id}', [CatalogController::class, 'getByCategory'])
     ->name('category');
+
+    Route::get('subcategory/{id}', [CatalogController::class, 'getBySubCategory'])
+    ->name('subcategory');
+    Route::get('sub-category/{id}', [CatalogController::class, 'getBySubSubCategory'])
+    ->name('subsubcategory');
+
+    Route::get('product/{id}', [CatalogController::class, 'product'])
+    ->name('productbyid');
+
+    Route::get('products', [CatalogController::class, 'products'])
+    ->name('products');
 });
    
    
