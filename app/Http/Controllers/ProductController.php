@@ -93,7 +93,7 @@ class ProductController extends Controller
                 'composition_ru' => ['required'],
                 'composition_arm' => ['required'],
                 'composition_en' => ['required'],
-                'product_code' => ['required'],
+                'product_code' => ['required|unique:products,product_code'],
                 'image' => ['required'],
                 'price' => ['required','integer'],
         ]);
@@ -118,7 +118,7 @@ class ProductController extends Controller
                 if ( $filters['type']==1) {
                 $product->filters()->attach($filters['id']);
 
-                    foreach ($filters['sub_filters'] as $key => $filter) {
+                    foreach ($filters[$key]['sub_filters'] as $key => $filter) {
                         if ( $filter['type']==1) {
                             $product->subFilters()->attach($filter['id']);
                        
