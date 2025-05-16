@@ -353,6 +353,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('product/{id}', [CatalogController::class, 'product'])
     ->name('productbyid');
+
+    Route::get('products', [CatalogController::class, 'products'])
+    ->name('products');
 });
    
    

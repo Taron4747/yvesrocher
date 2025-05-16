@@ -78,7 +78,7 @@ class ProductController extends Controller
     {
 
         $data =Request::all();
-
+// dd($data);
         $filters =isset($data['filters']) ?$data['filters'] :null;
         unset($data['filters']);
         unset($data['images']);
@@ -117,7 +117,7 @@ class ProductController extends Controller
         if (isset($filters)) {
             
             foreach ($filters as $key => $filter) {
-                if ( $filter['type']==1) {
+                if (isset($filter['type'])&& $filter['type']==1) {
                 $product->filters()->attach($filter['id']);
                     if (isset($filter['sub_filters'])) {
                         foreach ($filter['sub_filters'] as $key => $sub_filter) {
