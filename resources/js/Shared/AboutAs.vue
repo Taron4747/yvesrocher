@@ -77,6 +77,7 @@ export default {
       text-align: center;
       color: #FFFFFF;
       padding: 24px;
+      border-radius: 15px;
       .title{
         font-size: 18px;
         margin-bottom: 4px;

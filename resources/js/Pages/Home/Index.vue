@@ -8,6 +8,7 @@
     <CurrentOffers />
     <WithYou />
     <AboutAs />
+    <Footer />
   </div>
 </template>
 
@@ -19,6 +20,7 @@ import ImageBanner from '@/Shared/ImageBanner.vue'
 import CurrentOffers from '@/Shared/CurrentOffers.vue'
 import WithYou from '@/Shared/WithYou.vue'
 import AboutAs from '@/Shared/AboutAs.vue'
+import Footer from '@/Shared/Footer.vue'
 
 export default {
   components: {
@@ -29,6 +31,7 @@ export default {
     CurrentOffers,
     WithYou,
     AboutAs,
+    Footer,
   },
   props: {
     categories: Object,
