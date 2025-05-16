@@ -93,7 +93,7 @@ class ProductController extends Controller
                 'composition_ru' => ['required'],
                 'composition_arm' => ['required'],
                 'composition_en' => ['required'],
-                'product_code' => ['required|unique:products,product_code'],
+                'product_code' => ['required|unique:products'],
                 'image' => ['required'],
                 'price' => ['required','integer'],
         ]);
