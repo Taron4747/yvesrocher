@@ -14,6 +14,7 @@ use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Storage;
 
 class CategoriesController extends Controller
 {
@@ -54,12 +55,14 @@ class CategoriesController extends Controller
             'name_arm' => ['required', 'max:50'],
             'name_ru' => ['required', 'max:50'],
             'image' => ['required'],
+            'second_image' => ['required'],
         
         ]);
         $path = Request::file('image')[0]->store('images', 's3', 'public');
-        $url = \Storage::disk('s3')->url($path);
+        $url = Storage::disk('s3')->url($path);
 
-      
+        $path = Request::file('second_image')[0]->store('images', 's3', 'public');
+        $secondurl = Storage::disk('s3')->url($path);
 
         $data =Request::all();
         $insertdata = [
@@ -67,6 +70,7 @@ class CategoriesController extends Controller
             'name_arm' => $data['name_arm'],
             'name_ru' => $data['name_ru'],
             'image' => $url,
+            'second_image' => $secondurl,
 
         ];
        $category = Category::create($insertdata) ;
@@ -135,6 +139,7 @@ class CategoriesController extends Controller
                 'name_ru' => $category->name_ru,
                 'name_en' => $category->name_en,
                 'image' => $category->image,
+                'second_image' => $category->second_image,
                 // 'category_filters'=>  $categoryFilters->filters->where('filterable',true)->values()->toArray(),
                 // 'category_buton_filters'=>  $categoryFilters->filters->where('filterable',false)->values()->toArray(),
                 // 'category_sub_filters'=> $categoryFilters->subFilters->values()->toArray(),
@@ -157,7 +162,19 @@ class CategoriesController extends Controller
                 'name_en' => ['required', 'max:50'],
             ])
         );
+        if (isset(Request::file('image')[0])) {
+            $path = Request::file('image')[0]->store('images', 's3', 'public');
+            $url = \Storage::disk('s3')->url($path);
+            $category->update(['image'=>$url ]);
+        }
+        if (isset(Request::file('second_image')[0])) {
+            $path = Request::file('second_image')[0]->store('images', 's3', 'public');
+            $secondurl = \Storage::disk('s3')->url($path);
+            $category->update(['second_image'=>$secondurl ]);
 
+        }
+
+      
         return Redirect::back()->with('success', 'Category updated.');
     }
 
