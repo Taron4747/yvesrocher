@@ -175,7 +175,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         ->name('categories.edit')
         ->middleware('auth');
 
-        Route::put('categories/{category}', [CategoriesController::class, 'update'])
+        Route::post('categories/{category}', [CategoriesController::class, 'update'])
         ->name('categories.update')
         ->middleware('auth');
 
@@ -295,7 +295,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
             ->name('product.edit')
             ->middleware('auth');
 
-            Route::put('product/{product}', [ProductController::class, 'update'])
+            Route::post('product/{product}', [ProductController::class, 'update'])
             ->name('product.update')
             ->middleware('auth');
 

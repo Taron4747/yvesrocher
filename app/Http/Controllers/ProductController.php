@@ -78,7 +78,6 @@ class ProductController extends Controller
     {
 
         $data =Request::all();
-// dd($data);
         $filters =isset($data['filters']) ?$data['filters'] :null;
         unset($data['filters']);
         unset($data['images']);
@@ -180,7 +179,10 @@ class ProductController extends Controller
                 'composition_arm' => $product->composition_arm,
                 'composition_en' => $product->composition_en,
                 'product_code' => $product->product_code,
+                'is_new' => $product->is_new,
+                'is_bestseller' => $product->is_bestseller,
                 'image' => $product->image,
+                'images' => $product->images,
                 'price' => $product->price,
                 'category_id' => $product->category_id,
                 'sub_category_id' => $product->sub_category_id,
@@ -199,21 +201,21 @@ class ProductController extends Controller
 
     public function update(Product $product): RedirectResponse
     {
-        $contact->update(
+        $product->update(
             Request::validate([
-                'first_name' => ['required', 'max:50'],
-                'last_name' => ['required', 'max:50'],
-                'organization_id' => [
-                    'nullable',
-                    Rule::exists('organizations', 'id')->where(fn ($query) => $query->where('account_id', Auth::user()->account_id)),
-                ],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'name_arm' => ['required', 'max:50'],
+                'name_ru' => ['required', 'max:50'],
+                'name_en' => ['required', 'max:50'],
+                'size' => ['required', 'max:5000'],
+                'description_arm' => ['required'],
+                'description_ru' => ['required'],
+                'description_en' => ['required'],
+                'composition_ru' => ['required'],
+                'composition_arm' => ['required'],
+                'composition_en' => ['required'],
+                'product_code' => ['required'], 
+
+                'price' => ['required','integer'],
             ])
         );
 

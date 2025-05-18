@@ -35,13 +35,17 @@ class CatalogController extends Controller
             $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
                 return [
                     'id' => $subFilter->id,
-                    'name' => $subFilter->name,
+                    'name_ru' => $subFilter->name_ru,
+                    'name_arm' => $subFilter->name_arm,
+                    'name_en' => $subFilter->name_en,
                     'product_count' => $subFilter->products()->count(),
                 ];
             });
             return [
                 'id' => $filter->id,
-                'name' => $filter->name,
+                'name_ru' => $filter->name_ru,
+                'name_arm' => $filter->name_arm,
+                'name_en' => $filter->name_en,
                 'type' => $filter->type,
                 'product_count' => $filterProductCount,
                 'sub_filters' => $subFiltersWithCounts,
@@ -72,14 +76,18 @@ class CatalogController extends Controller
             $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
                 return [
                     'id' => $subFilter->id,
-                    'name' => $subFilter->name,
+                   'name_ru' => $subFilter->name_ru,
+                    'name_arm' => $subFilter->name_arm,
+                    'name_en' => $subFilter->name_en,
                     'product_count' => $subFilter->products()->count(),
                 ];
             });
 
             return [
                 'id' => $filter->id,
-                'name' => $filter->name,
+                'name_ru' => $filter->name_ru,
+                'name_arm' => $filter->name_arm,
+                'name_en' => $filter->name_en,
                 'type' => $filter->type,
                 'product_count' => $filterProductCount,
                 'sub_filters' => $subFiltersWithCounts,
@@ -114,14 +122,18 @@ class CatalogController extends Controller
             $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
                 return [
                     'id' => $subFilter->id,
-                    'name' => $subFilter->name,
+                   'name_ru' => $subFilter->name_ru,
+                    'name_arm' => $subFilter->name_arm,
+                    'name_en' => $subFilter->name_en,
                     'product_count' => $subFilter->products()->count(),
                 ];
             });
 
             return [
                 'id' => $filter->id,
-                'name' => $filter->name,
+                'name_ru' => $filter->name_ru,
+                'name_arm' => $filter->name_arm,
+                'name_en' => $filter->name_en,
                 'type' => $filter->type,
                 'product_count' => $filterProductCount,
                 'sub_filters' => $subFiltersWithCounts,

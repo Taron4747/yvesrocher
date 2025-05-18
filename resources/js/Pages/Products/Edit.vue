@@ -39,31 +39,36 @@
           <div class="title_big">Медиа</div>
           <!-- <image-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <image-input v-model="form.image" :error="form.errors.image" label="Главное Фото (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="1"/>
+          <img
+            :src="image"
+            alt="Preview"
+            class="max-h-48 object-contain border rounded"
+          />
           <image-input v-model="form.images" :error="form.errors.images" label="Осталные фото (максимум 9 фото)" class="pb-8 pr-6 w-full lg:w-1/3" accept="image/*" :max-files="9"/>
+        
+    <img
+    v-for="(image, index) in images"
+    :key="index"
+    :src="image.path"
+            alt="Preview"
+            class="max-h-48 object-contain border rounded"
+          />
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <text-input v-model="form.price" placeholder="5700" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
           <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
           <text-input v-model="form.discount" placeholder="10" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/3" label="Скидка (%)" />
           <text-input v-model="form.count" placeholder="4" :error="form.errors.count" class="pb-8 pr-6 w-full lg:w-1/3" label="Колличество" />     
           <label class="custom_checkbox text_color">Новинка
-              <input v-model="form.is_new" type="checkbox" checked="checked">
+              <input v-model="form.is_new" type="checkbox" :true-value="1" :false-value="0">
               <span class="checkmark"></span>
           </label>
           <label class="custom_checkbox text_color">Бестселлеры
-              <input v-model="form.is_bestseller" type="checkbox" checked="checked">
+              <input v-model="form.is_bestseller" type="checkbox" :true-value="1" :false-value="0">
               <span class="checkmark"></span>
           </label>
         
-        <div class="title_big">Фильтры</div>
-        <multiselect 
-          v-model="selected" 
-          :options="butonFiltersData" 
-          :multiple="true" 
-          placeholder="Выберите фильтры" 
-          label="name_ru"  
-          track-by="id"  
-          class="width_30"
-        />
+        <!-- <div class="title_big">Фильтры</div>
+     
         <div class="w-full mt-6">
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
@@ -81,7 +86,7 @@
               </div>
             </div>
           </div>
-      </div>
+      </div> -->
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать продукт</loading-button>
@@ -121,6 +126,7 @@ export default {
     categories: Array,
     filters: Array,
     butonFilters: Array,
+    product: Object,
   },
   remember: 'form',
   watch: {
@@ -139,30 +145,32 @@ export default {
       butonFiltersData:this.butonFilters,
       selected: [],
       form: this.$inertia.form({
-        name_arm: '',
-        name_ru: '',
-        name_en: '',
-        description_arm: '',
-        description_ru: '',
-        description_en: '',
-        composition_arm: '',
-        composition_ru: '',
-        composition_en: '',
-        price: '',
-        size: '',
-        discount: '',
-        count: '',
-        product_code: '',
-        is_new: '',
-        is_bestseller: '',
+        name_arm:  this.product.name_arm,
+        name_ru: this.product.name_ru,
+        name_en: this.product.name_en,
+        description_arm: this.product.description_arm,
+        description_ru: this.product.description_ru,
+        description_en: this.product.description_en,
+        composition_arm: this.product.composition_arm,
+        composition_ru: this.product.composition_ru,
+        composition_en: this.product.composition_en,
+        price: this.product.price,
+        size: this.product.size,
+        discount: this.product.discount,
+        count: this.product.count,
+        product_code: this.product.product_code,
+        is_new: this.product.is_new,
+        is_bestseller: this.product.is_bestseller,
         image: null,
         images: [],
         filters: [], 
         button_filters: [], 
-        category_id:'',
-        sub_category_id:'',
-        sub_sub_category_id:'',
+        category_id:this.product.category_id,
+        sub_category_id:this.product.sub_category_id,
+        sub_sub_category_id:this.product.sub_sub_category_id,
       }),
+      image:this.product.image,
+      images:this.product.images,
     }
   },
   mounted(){
