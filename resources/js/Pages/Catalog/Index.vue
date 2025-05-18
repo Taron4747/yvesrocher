@@ -38,11 +38,9 @@ export default {
     textBanners: Object,
   },
   mounted(){
-    console.log(this.products)
+    // console.log(this.products)
     console.log(this.categories)
-    console.log(this.category)
     console.log(this.filtersWithCounts)
-    console.log(this.textBanners)
   },
   data() {
     return {
