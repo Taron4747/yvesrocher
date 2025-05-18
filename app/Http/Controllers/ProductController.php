@@ -15,7 +15,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -199,25 +199,54 @@ class ProductController extends Controller
         ]);
     }
 
-    public function update(Product $product): RedirectResponse
+    public function update(Request $request,Product $product): RedirectResponse
     {
-        $product->update(
-            Request::validate([
-                'name_arm' => ['required', 'max:50'],
-                'name_ru' => ['required', 'max:50'],
-                'name_en' => ['required', 'max:50'],
-                'size' => ['required', 'max:5000'],
-                'description_arm' => ['required'],
-                'description_ru' => ['required'],
-                'description_en' => ['required'],
-                'composition_ru' => ['required'],
-                'composition_arm' => ['required'],
-                'composition_en' => ['required'],
-                'product_code' => ['required'], 
+        $request = Request::instance();
+        // dd($product->id, $request->product_code);
 
-                'price' => ['required','integer'],
-            ])
-        );
+        $validated = $request->validate([
+            'name_arm'        => ['required', 'max:50'],
+            'name_ru'         => ['required', 'max:50'],
+            'name_en'         => ['required', 'max:50'],
+            'size'            => ['required', 'max:5000'],
+            'description_arm' => ['required'],
+            'description_ru'  => ['required'],
+            'description_en'  => ['required'],
+            'composition_ru'  => ['required'],
+            'composition_arm' => ['required'],
+            'composition_en'  => ['required'],
+            'product_code'    => [
+                'required',
+                // ⬇️ игнорируем текущую запись по её id
+                Rule::unique('products', 'product_code')->ignore($product->id),
+            ],
+            'price'           => ['required', 'integer'],
+        ]);
+
+        // 2) обновляем модель
+        $product->update($validated);
+        // $product->update(
+        //     Request::validate([
+        //         'name_arm' => ['required', 'max:50'],
+        //         'name_ru' => ['required', 'max:50'],
+        //         'name_en' => ['required', 'max:50'],
+        //         'size' => ['required', 'max:5000'],
+        //         'description_arm' => ['required'],
+        //         'description_ru' => ['required'],
+        //         'description_en' => ['required'],
+        //         'composition_ru' => ['required'],
+        //         'composition_arm' => ['required'],
+        //         'composition_en' => ['required'],
+        //     //   'product_code' => [
+        //         'product_code'    => [
+        //             'required',
+        //             // ⬇️ игнорируем текущую запись по её id
+        //             \Rule::unique('products', 'product_code')->ignore($product->id),
+        //         ],
+
+        //         'price' => ['required','integer'],
+        //     ])
+        // );
 
         return Redirect::back()->with('success', 'Contact updated.');
     }

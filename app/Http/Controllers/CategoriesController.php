@@ -49,7 +49,6 @@ class CategoriesController extends Controller
 
     public function store(): RedirectResponse
     {
-        // dd(Request::all());
         Request::validate([
             'name_en' => ['required', 'max:50'],
             'name_arm' => ['required', 'max:50'],
@@ -75,17 +74,15 @@ class CategoriesController extends Controller
         ];
        $category = Category::create($insertdata) ;
         if (isset($data['filters'])) {
-            
             foreach ($data['filters'] as $key => $filters) {
                 if ( $filters['type']==1) {
                 $category->filters()->attach($filters['id']);
 
                     foreach ($filters['sub_filters'] as $key => $filter) {
                         if ( $filter['type']==1) {
-
-                        $category->subFilters()->attach($filter['id']);
+                            $category->subFilters()->attach($filter['id']);
                        
-                    }
+                        }
                     }
                 }
             }
@@ -155,6 +152,8 @@ class CategoriesController extends Controller
 
     public function update(Category $category): RedirectResponse
     {
+        // dd(Request::all());
+        $data =Request::all();
         $category->update(
             Request::validate([
                 'name_arm' => ['required', 'max:50'],
@@ -173,7 +172,29 @@ class CategoriesController extends Controller
             $category->update(['second_image'=>$secondurl ]);
 
         }
+        $filterIds = [];
+        $subFilterIds = [];
+        
+        if (isset($data['filters'])) {
+            foreach ($data['filters'] as $filters) {
+        // dd($filters);
 
+                if ($filters['type'] == 1 || $filters['type'] == true) {
+                    $filterIds[] = $filters['id'];
+        // dd(77);
+                    foreach ($filters['sub_filters'] as $filter) {
+                        if ($filter['type'] == 1 ||  $filter['type'] == true) {
+                            $subFilterIds[] = $filter['id'];
+                        }
+                    }
+                }
+            }
+        }
+        // dd($filterIds,$subFilterIds);
+        
+        // Обновим связи: удалим старые, добавим новые
+        $category->filters()->sync($filterIds);
+        $category->subFilters()->sync($subFilterIds);
       
         return Redirect::back()->with('success', 'Category updated.');
     }
