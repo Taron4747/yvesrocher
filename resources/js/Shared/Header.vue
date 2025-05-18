@@ -35,7 +35,7 @@
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <span v-if="!item.image">{{ item.name_ru }}</span>
+           <a :href="'/category/'+item.id" v-if="!item.image">{{ item.name_ru }}</a>
           </div>
           <div class="categores_data_item old_green">НОВИНКИ</div>
           <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
@@ -56,10 +56,10 @@
             >
           <div class="dropdown_content_left">
             <div class="subcategories_content" :key="item1.id" v-for="item1 in subCategoriesData">
-                <div class="title" v-if="!item1.image_medium">{{ item1.name_ru }}</div>
-                <div class="text" v-if="!item1.image_medium" v-for="item2 in item1.children">
+                <a :href="'/subcategory/'+item1.id"  class="title" v-if="!item1.image_medium">{{ item1.name_ru }}</a>
+                <a :href="'/subsubcategory/'+item2.id" class="text" v-if="!item1.image_medium" v-for="item2 in item1.children">
                   {{ item2.name_ru }}
-                </div>
+                </a>
                 <div class="" v-if="item1.image_medium">
                   <div class="image_banner" >
                     <img :src="item1.image_medium">

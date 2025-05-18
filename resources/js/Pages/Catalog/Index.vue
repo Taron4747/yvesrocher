@@ -107,7 +107,7 @@ export default {
 <style scoped lang="scss">
 .subacategory_content{
   width: 1140px;
-  margin: 25px auto 32px auto;
+  margin: 25px auto 0 auto;
   display: flex;
   .subacategory_content_item{
     display: flex;
@@ -126,6 +126,7 @@ export default {
   justify-content: space-between;
   width: 1140px;
   margin: 0 auto;
+  margin-top: 32px;
   .product_filters{
     width: 270px;
     .title{
@@ -173,6 +174,7 @@ export default {
             width: 100%;
             height: 100%;
             border-radius: 5px 5px 0 0;
+            object-fit: cover;
           }
         }
         .product_text{
