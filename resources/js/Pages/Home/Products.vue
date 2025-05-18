@@ -173,7 +173,7 @@ export default {
     .text_cotent{
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: space-evenly;
       height: 135px;
       padding: 0 10px;
       .title{
