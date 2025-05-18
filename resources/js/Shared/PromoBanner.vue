@@ -41,7 +41,7 @@ const currentMessage = computed(() => {
   const banner = props.banners[currentIndex.value]
   
   if (banner && banner.text_ru && banner.type == 1) {
-    return banner.text_ru
+    return banner.text_ru + ' - ' +banner.proposition_ru
   } else {
     return 'No message available'
   }

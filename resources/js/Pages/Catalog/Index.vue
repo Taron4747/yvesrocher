@@ -6,7 +6,11 @@
   />
   <div class="page_content">
     <CategoryInfo :category="category"/>
-
+    <div class="subacategory_content" v-if="category.children"> 
+      <div class="subacategory_content_item" v-for="item in category.children">
+        <a :href="'/subcategory/'+item.id">{{ item.name_ru }}</a>
+      </div>
+    </div>
     <!-- <ImageBanner :imageBanners="imageBanners"/>
     <CurrentOffers :imageBanners="imageBanners" />
     <AboutAs /> -->
@@ -53,3 +57,21 @@ export default {
   },
 }
 </script>
+<style scoped lang="scss">
+.subacategory_content{
+  width: 1140px;
+  margin: 25px auto 32px auto;
+  display: flex;
+  .subacategory_content_item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 12px;
+    border-radius: 20px;
+    color: #FFFFFF;
+    background: #014E2E;
+    padding: 0 25px;
+    height: 40px;
+  }
+}
+</style>
