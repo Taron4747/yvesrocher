@@ -35,7 +35,6 @@ class CatalogController extends Controller
                     'product_count' => $subFilter->products()->count(),
                 ];
             });
-
             return [
                 'id' => $filter->id,
                 'name' => $filter->name,
@@ -145,9 +144,9 @@ class CatalogController extends Controller
             $product = $product->where('discount','>',0);
         }
         $product = $product->paginate(20);
-        return Inertia::render('Home/Index', [
+        return [
             'products' =>$product,
-        ]);
+        ];
     }
 
 }

@@ -55,9 +55,9 @@ export default {
   },
   created(){
     this.images =  Object.values(this.imageBanners);
-    console.log(this.images[0]['image_medium'])
+    // console.log(this.images[0]['image_medium'])
     // console.log(this.images[1]['image_medium'])
-    console.log(this.images[2]['image_medium'])
+    // console.log(this.images[2]['image_medium'])
   },
   data() {
     return {
