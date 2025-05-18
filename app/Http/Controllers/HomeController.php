@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index(): Response
     {
 
-            $banners = Banner::where('is_active',1)->orderby('position','asc')->get()   ;  
+            $banners = Banner::where('is_active',1)->orderby('position','asc')->get();  
             $textBanners = $banners->filter(function ($banner) {
                 return $banner->type == 1; // type == 1 для текстовых баннеров
             });

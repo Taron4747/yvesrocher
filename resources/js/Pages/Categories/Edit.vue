@@ -141,7 +141,7 @@ export default {
     update() {
       this.form.filters = this.filtersData
       this.form.button_filters = this.selected   
-      this.form.put(`/admin/categories/${this.category.id}`)
+      this.form.post(`/admin/categories/${this.category.id}`)
     },
     destroy() {
       if (confirm('Are you sure you want to delete this category?')) {
