@@ -30,7 +30,7 @@ export default {
     category:Object
   },
   mounted(){
-    console.log(this.category)
+    // console.log(this.category)
   },
   data() {
     return {

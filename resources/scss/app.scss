@@ -48,6 +48,20 @@
         transform: rotate(45deg);
     }
   }
+  .custom_checkbox_small{
+    padding-left: 30px;
+    padding-top: 0;
+    .checkmark {
+        height: 16px;
+        width: 16px;
+    }
+    .checkmark:after{
+      left: 6px;
+      top: 0;
+      width: 5px;
+      height: 13px;
+    }
+  }
   .custom_checkbox_bold{
     border-bottom: 2px solid #014E2E;
     padding-bottom: 10px;
