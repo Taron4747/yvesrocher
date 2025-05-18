@@ -82,6 +82,7 @@ import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
 import TrashedMessage from '@/Shared/TrashedMessage.vue'
 import ImageInput from '@/Shared/ImageInput.vue'
+import TextAreaInput from '@/Shared/TextareaInput.vue'
 
 export default {
   components: {
@@ -93,6 +94,7 @@ export default {
     TextInput,
     TrashedMessage,
     ImageInput,
+    TextareaInput,
   },
   layout: Layout,
   props: {
