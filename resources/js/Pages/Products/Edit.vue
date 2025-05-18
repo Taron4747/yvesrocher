@@ -188,7 +188,9 @@ export default {
     store() {
       this.form.button_filters = this.selected;
       this.form.filters = this.filtersData;
-      this.form.post('/admin/product')
+      // this.form.post('/admin/product/')
+      this.form.post(`/admin/product/${this.product.id}`)
+
     },
     onFilterChange(filter){
       if(!filter.type){
