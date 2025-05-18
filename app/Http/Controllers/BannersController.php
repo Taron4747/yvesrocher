@@ -135,6 +135,7 @@ class BannersController extends Controller
                 'proposition_ru' => ['required', 'max:500'],
                 'proposition_en' => ['required', 'max:500'],
                 'link' => ['required', 'max:500'],
+                'is_active' => ['required'],
             ])
         );
         if (isset(Request::file('image_big')[0])) {
@@ -161,17 +162,17 @@ class BannersController extends Controller
         return Redirect::back()->with('success', 'Баннер редактирован ');
     }
 
-    public function destroy(Organization $organization): RedirectResponse
+    public function destroy(Banner $banner): RedirectResponse
     {
-        $organization->delete();
+        $banner->delete();
 
-        return Redirect::back()->with('success', 'Organization deleted.');
+        return Redirect::back()->with('success', 'Баннер удален.');
     }
 
-    public function restore(Organization $organization): RedirectResponse
+    public function restore(Banner $banner): RedirectResponse
     {
-        $organization->restore();
+        $banner->restore();
 
-        return Redirect::back()->with('success', 'Organization restored.');
+        return Redirect::back()->with('success', 'Баннер восстановлен.');
     }
 }

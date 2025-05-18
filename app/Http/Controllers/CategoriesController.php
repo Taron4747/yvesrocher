@@ -88,7 +88,7 @@ class CategoriesController extends Controller
             }
         }
        
-        return Redirect::route('categories')->with('success', 'Category created.');
+        return Redirect::route('categories')->with('success', 'Категория создана .');
     }
 
     public function edit(Category $category): Response
@@ -196,21 +196,21 @@ class CategoriesController extends Controller
         $category->filters()->sync($filterIds);
         $category->subFilters()->sync($subFilterIds);
       
-        return Redirect::back()->with('success', 'Category updated.');
+        return Redirect::back()->with('success', 'Категория обновлена.');
     }
 
     public function destroy(Category $category): RedirectResponse
     {
         $category->delete();
 
-        return Redirect::back()->with('success', 'Category deleted.');
+        return Redirect::back()->with('success', 'Категория  удалена .');
     }
 
     public function restore(Category $category): RedirectResponse
     {
         $category->restore();
 
-        return Redirect::back()->with('success', 'Category restored.');
+        return Redirect::back()->with('success', 'Категория  восстановлена.');
     }
 
 

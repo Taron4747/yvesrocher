@@ -4,7 +4,7 @@
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Категории</Link>
       <span class="text-indigo-400 font-medium">/</span>
-      {{ form.name_arm }} 
+      {{ form.name_ru }} 
     </h1>
     <trashed-message v-if="category.deleted_at" class="mb-6" @restore="restore"> This category has been deleted. </trashed-message>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">

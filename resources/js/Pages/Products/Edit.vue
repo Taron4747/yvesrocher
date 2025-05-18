@@ -3,7 +3,7 @@
     <Head title="Create Product" />
     <h1 class="mb-8 text-3xl font-bold">
       <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/product">Продукт</Link>
-      <span class="text-indigo-400 font-medium">/</span> Создать
+      <span class="text-indigo-400 font-medium">/</span> {{ form.name_ru }}
     </h1>
     <div class=" bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
@@ -89,7 +89,7 @@
       </div> -->
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать продукт</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Обновить продукт</loading-button>
         </div>
       </form>
     </div>

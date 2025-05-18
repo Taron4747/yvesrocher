@@ -85,7 +85,7 @@ class ProductController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
-                'size' => ['required', 'max:5000'],
+                'size' => ['required', 'numeric'],
                 'description_arm' => ['required'],
                 'description_ru' => ['required'],
                 'description_en' => ['required'],
@@ -172,6 +172,8 @@ class ProductController extends Controller
                 'name_ru' => $product->name_ru,
                 'name_en' => $product->name_en,
                 'size' => $product->size,
+                'discount' => $product->discount,
+                'count' => $product->count,
                 'description_arm' => $product->description_arm,
                 'description_ru' => $product->description_ru,
                 'description_en' => $product->description_en,
@@ -202,19 +204,21 @@ class ProductController extends Controller
     public function update(Request $request,Product $product): RedirectResponse
     {
         $request = Request::instance();
-        // dd($product->id, $request->product_code);
+        // dd($product->id, $request->all());
 
         $validated = $request->validate([
             'name_arm'        => ['required', 'max:50'],
             'name_ru'         => ['required', 'max:50'],
             'name_en'         => ['required', 'max:50'],
-            'size'            => ['required', 'max:5000'],
+            'size'            => ['required', 'numeric'],
             'description_arm' => ['required'],
             'description_ru'  => ['required'],
             'description_en'  => ['required'],
             'composition_ru'  => ['required'],
             'composition_arm' => ['required'],
             'composition_en'  => ['required'],
+            'is_new'  => ['required'],
+            'is_bestseller'  => ['required'],
             'product_code'    => [
                 'required',
                 // ⬇️ игнорируем текущую запись по её id
@@ -223,32 +227,23 @@ class ProductController extends Controller
             'price'           => ['required', 'integer'],
         ]);
 
-        // 2) обновляем модель
+      
         $product->update($validated);
-        // $product->update(
-        //     Request::validate([
-        //         'name_arm' => ['required', 'max:50'],
-        //         'name_ru' => ['required', 'max:50'],
-        //         'name_en' => ['required', 'max:50'],
-        //         'size' => ['required', 'max:5000'],
-        //         'description_arm' => ['required'],
-        //         'description_ru' => ['required'],
-        //         'description_en' => ['required'],
-        //         'composition_ru' => ['required'],
-        //         'composition_arm' => ['required'],
-        //         'composition_en' => ['required'],
-        //     //   'product_code' => [
-        //         'product_code'    => [
-        //             'required',
-        //             // ⬇️ игнорируем текущую запись по её id
-        //             \Rule::unique('products', 'product_code')->ignore($product->id),
-        //         ],
+        if (isset(Request::file('image')[0])) {
+            $path = Request::file('image')[0]->store('images', 's3', 'public');
+            $image = Storage::disk('s3')->url($path);
+            $product->update(['image'=>$image]);
+        }
+        if (Request::file('images')) {
 
-        //         'price' => ['required','integer'],
-        //     ])
-        // );
+            foreach (Request::file('images') as $key => $image) {
+                $path = Request::file('images')[ $key]->store('images', 's3', 'public');
+                $image = Storage::disk('s3')->url($path);
+                ProductImage::create(['product_id'=>$product->id,'path'=> $image]);
+            }
+        }
 
-        return Redirect::back()->with('success', 'Contact updated.');
+        return Redirect::back()->with('success', 'Продукт обновлен.');
     }
 
     public function destroy(Product $product): RedirectResponse
