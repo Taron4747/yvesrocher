@@ -78,6 +78,7 @@ export default {
       color: #FFFFFF;
       padding: 24px;
       border-radius: 15px;
+      background-position: top;
       .title{
         font-size: 18px;
         margin-bottom: 4px;
@@ -96,16 +97,16 @@ export default {
       }
     }
     .content_item_1{
-      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_1.svg");
+      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_us_1.webp");
     }
     .content_item_2{
-      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_2.svg");
+      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_us_2.webp");
     }
     .content_item_3{
-      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_3.svg");
+      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_us_3.webp");
     }
     .content_item_4{
-      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_4.svg");
+      background-image: linear-gradient(to bottom, rgba(0,0,0, 0),rgba(0,0,0, 100)),url("/images/about_us_4.webp");
     }
   }
  
