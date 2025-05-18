@@ -94,7 +94,7 @@ export default {
     TextInput,
     TrashedMessage,
     ImageInput,
-    TextareaInput,
+    TextAreaInput,
   },
   layout: Layout,
   props: {
