@@ -24,6 +24,10 @@ class CatalogController extends Controller
     }
     public function getByCategory($id)
     {
+        $banners = Banner::all()   ;         
+            $textBanners = $banners->filter(function ($banner) {
+                return $banner->type == 1; // type == 1 для текстовых баннеров
+            });
         $category = Category::with(['filters.subFilters'])->findOrFail($id);
         $filtersWithCounts = $category->filters->map(function ($filter) {
             $filterProductCount = $filter->products()->count();
@@ -46,7 +50,9 @@ class CatalogController extends Controller
     
         $products = Product::where('category_id',$id)->where('count','!=',0)
             ->paginate(20);
-            return Inertia::render('Home/Index', [
+            return Inertia::render('Catalog/Index', [
+                'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+                'textBanners' =>$textBanners,
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
@@ -54,6 +60,10 @@ class CatalogController extends Controller
     }
     public function getBySubCategory($id)
     {
+        $banners = Banner::all()   ;         
+            $textBanners = $banners->filter(function ($banner) {
+                return $banner->type == 1; // type == 1 для текстовых баннеров
+            });
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
         $filtersWithCounts = $category->filters->map(function ($filter) {
@@ -78,7 +88,9 @@ class CatalogController extends Controller
     
         $products = Product::where('sub_category_id',$id)->where('count','!=',0)
             ->paginate(20);
-            return Inertia::render('Home/Index', [
+            return Inertia::render('Catalog/Index', [
+                'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+                'textBanners' =>$textBanners,
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
@@ -89,6 +101,10 @@ class CatalogController extends Controller
 
     public function getBySubSubCategory($id)
     {
+        $banners = Banner::all()   ;         
+            $textBanners = $banners->filter(function ($banner) {
+                return $banner->type == 1; // type == 1 для текстовых баннеров
+            });
         $subSubCategory =Category::where('id',$id)->first();
         $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
@@ -114,7 +130,9 @@ class CatalogController extends Controller
     
         $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0)
             ->paginate(20);
-            return Inertia::render('Home/Index', [
+            return Inertia::render('Catalog/Index', [
+                'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+                'textBanners' =>$textBanners,
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
@@ -144,6 +162,7 @@ class CatalogController extends Controller
             $product = $product->where('discount','>',0);
         }
         $product = $product->paginate(20);
+        
         return [
             'products' =>$product,
         ];

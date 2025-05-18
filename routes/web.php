@@ -348,7 +348,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('subcategory/{id}', [CatalogController::class, 'getBySubCategory'])
     ->name('subcategory');
-    Route::get('sub-category/{id}', [CatalogController::class, 'getBySubSubCategory'])
+    Route::get('subsubcategory/{id}', [CatalogController::class, 'getBySubSubCategory'])
     ->name('subsubcategory');
 
     Route::get('product/{id}', [CatalogController::class, 'product'])

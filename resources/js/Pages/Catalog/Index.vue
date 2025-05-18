@@ -5,11 +5,10 @@
     :banners="textBanners"
   />
   <div class="page_content">
-    <ImageBanner :imageBanners="imageBanners"/>
-    <Products :categories="categories"/>
+    <!-- <ImageBanner :imageBanners="imageBanners"/>
+    <WithYou :categories="category"/>
     <CurrentOffers :imageBanners="imageBanners" />
-    <WithYou />
-    <AboutAs />
+    <AboutAs /> -->
     <Footer />
   </div>
 </template>
@@ -21,7 +20,6 @@ import Header from '@/Shared/Header.vue'
 import ImageBanner from '@/Shared/ImageBanner.vue'
 import CurrentOffers from '@/Shared/CurrentOffers.vue'
 import WithYou from '@/Shared/WithYou.vue'
-import Products from '@/Shared/Products.vue'
 import AboutAs from '@/Shared/AboutAs.vue'
 import Footer from '@/Shared/Footer.vue'
 
@@ -33,17 +31,18 @@ export default {
     ImageBanner,
     CurrentOffers,
     WithYou,
-    Products,
     AboutAs,
     Footer,
   },
   props: {
+    products: Object,
     categories: Object,
+    category: Object,
+    filtersWithCounts: Object,
     textBanners: Object,
-    imageBanners: Object,
   },
   mounted(){
- 
+    // console.log(this.category)
   },
   data() {
     return {
