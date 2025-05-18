@@ -18,7 +18,7 @@ class HomeController extends Controller
     public function index(): Response
     {
 
-            $banners = Banner::all()   ;         
+            $banners = Banner::where('is_active',1)->orderby('position','asc')->get()   ;  
             $textBanners = $banners->filter(function ($banner) {
                 return $banner->type == 1; // type == 1 для текстовых баннеров
             });
@@ -28,8 +28,8 @@ class HomeController extends Controller
             });
         return Inertia::render('Home/Index', [
             'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
-            'textBanners' =>$textBanners,
-            'imageBanners' =>$imageBanners,
+            'textBanners' =>$banners,
+            'imageBanners' =>$banners,
         ]);
     }
     public function search(Request $request)

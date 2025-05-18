@@ -324,7 +324,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         ->name('banners.edit')
         ->middleware('auth');
 
-        Route::put('banners/{banner}', [BannersController::class, 'update'])
+        Route::post('banners/{banner}', [BannersController::class, 'update'])
         ->name('banners.update')
         ->middleware('auth');
 
