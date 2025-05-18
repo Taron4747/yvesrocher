@@ -28,7 +28,7 @@ class CatalogController extends Controller
             $textBanners = $banners->filter(function ($banner) {
                 return $banner->type == 1; // type == 1 для текстовых баннеров
             });
-        $category = Category::with(['filters.subFilters'])->findOrFail($id);
+        $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
         $filtersWithCounts = $category->filters->map(function ($filter) {
             $filterProductCount = $filter->products()->count();
 
