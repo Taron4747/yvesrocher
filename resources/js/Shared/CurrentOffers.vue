@@ -5,7 +5,7 @@
     <div class="data_content">
       <div class="data">
         <div class="data_top">
-          <img src="/images/current_1.svg"/>
+          <img :src="images[0]['image_medium']"/>
         </div>
         <div class="data_middle">
           <div class="title">Купите 1, получите 1 со скидкой 50% на уход за лицом + макияж*</div>
@@ -17,7 +17,7 @@
       </div>
       <div class="data">
         <div class="data_top">
-          <img src="/images/current_2.svg"/>
+          <img :src="images[1]['image_medium']"/>
         </div>
         <div class="data_middle">
           <div class="title">праздничная коллекция</div>
@@ -29,7 +29,7 @@
       </div>
       <div class="data">
         <div class="data_top">
-          <img src="/images/current_3.svg"/>
+          <img :src="images[2]['image_medium']"/>
         </div>
         <div class="data_middle">
           <div class="title">3-х этапная программа ухода за телом</div>
@@ -51,12 +51,17 @@ export default {
 
   },
   props: {
+    imageBanners:Object
   },
-  mounted(){
-    
+  created(){
+    this.images =  Object.values(this.imageBanners);
+    console.log(this.images[0]['image_medium'])
+    // console.log(this.images[1]['image_medium'])
+    console.log(this.images[2]['image_medium'])
   },
   data() {
     return {
+      images:[],
       form: {
       },
     }
@@ -101,6 +106,8 @@ export default {
       margin-right: 9px;
       .data_top{
         img{
+          width: 100%;
+          height: 202px;
           border-radius: 8px 8px 0 0;
         }
       }

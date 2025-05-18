@@ -1,7 +1,9 @@
 <template>
   <div class="header">
     <div class="banner_top">
-      <PromoBanner :messages="banners" />
+      <PromoBanner 
+      :banners="banners"
+       />
     </div>
     <div class="banner_middle">
       <div class="banner_middle_content">
@@ -33,25 +35,40 @@
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <span>{{ item.name_ru }}</span>
+           <span v-if="!item.image">{{ item.name_ru }}</span>
           </div>
           <div class="categores_data_item old_green">НОВИНКИ</div>
           <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
           <div class="categores_data_item old_green">АКЦИИ</div>
           <div
+            class="categores_data_item old_green"
+            v-for="item in categoriesData.filter(item => item.image)"
+            :key="item.id"
+            :class="{ border_underline: choosedCategory == item.id}"
+            @mouseenter="showHide(true,item.id)"
+          >
+           <span v-if="item.image">{{ item.name_ru }}</span>
+          </div>
+          <div
               v-if="showDropdown === true"
               class="absolute dropdown_content"
               @mouseleave="showHide(false,0)"
             >
-            <div class="dropdown_content_left">
-              <div class="subcategories_content" :key="item1.id" v-for="item1 in subCategoriesData">
-                <div class="title">{{ item1.name_ru }}</div>
-                <div class="text" v-for="item2 in item1.children">
+          <div class="dropdown_content_left">
+            <div class="subcategories_content" :key="item1.id" v-for="item1 in subCategoriesData">
+                <div class="title" v-if="!item1.image_medium">{{ item1.name_ru }}</div>
+                <div class="text" v-if="!item1.image_medium" v-for="item2 in item1.children">
                   {{ item2.name_ru }}
+                </div>
+                <div class="" v-if="item1.image_medium">
+                  <div class="image_banner" >
+                    <img :src="item1.image_medium">
+                    <div class="banner_text">{{ item1.title }}</div>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="dropdown_content_right">
+            <div class="dropdown_content_right" v-if="image">
               <img :src="image">
             </div>
           </div>
@@ -71,6 +88,7 @@ export default {
   },
   props: {
     categories: Object,
+    banners: Object,
   },
   data() {
     return {
@@ -78,26 +96,63 @@ export default {
       showDropdown:false,
       choosedCategory:0,
       categoriesData:this.categories,
+      aboutImageBanners: [
+        {
+            id:1,
+            title: 'Кто мы?',
+            image_medium:'/images/about_us_1.webp',
+        },
+        {
+            id:2,
+            title: 'Наша Растительная Экспертиза',
+            image_medium:'/images/about_us_2.webp',
+        },
+        {
+            id:3,
+            title: 'Наши обязательства',
+            image_medium:'/images/about_us_3.webp',
+        },
+        {
+            id:4,
+            title: 'Наши сертификаты и партнеры',
+            image_medium:'/images/about_us_4.webp',
+        },
+      ],
       subCategoriesData:[],
-      banners : [
-        'The selection of the moment <strong>in promotion and free delivery from 20€!</strong> Code: <strong>BIENV20</strong>',
-        '🌟 New arrivals just in! <strong>Free gift</strong> on orders over 30€',
-        '💚 Don’t miss our <strong>eco-friendly</strong> bestsellers!'
-      ]
     }
   },
   mounted() {
-    console.log(this.categoriesData)
+    this.categoriesData.forEach((categories) => {
+      categories.image = false;
+    });
+    // const cleanImageBanners = JSON.parse(JSON.stringify(this.imageBanners));
+    // this.cleanImageBanners = cleanImageBanners;
+// console.log(cleanImageBanners)
+    const newCategory = {
+      id:1000,
+      name_ru: "О МАРКЕ",  
+      children: this.aboutImageBanners,
+      image: true, 
+    };
+
+    this.categoriesData.push(newCategory);
+//     console.log(this.categoriesData)
+
   },
   methods: {
     showHide(type,id){
       if(type){
-        this.categoriesData.forEach((categories) => {
-          if(categories.id == id){
-            this.subCategoriesData = categories.children;
-            this.image = categories.image;
-          }
-        });
+        if(id != 1000){
+          this.categoriesData.forEach((categories) => {
+            if(categories.id == id){
+              this.subCategoriesData = categories.children;
+              this.image = categories.image;
+            }
+          });
+        }else{
+          this.subCategoriesData = this.aboutImageBanners;
+        }
+   
         this.choosedCategory = id
       }else{
         this.choosedCategory = 0
@@ -226,6 +281,26 @@ export default {
               }
               .text:hover{
                 text-decoration: underline;
+              }
+              .image_banner{
+                position: relative;
+                margin: 0 5px;
+                img{
+                  border-radius: 5px
+                  // position: absolute;
+                  // height: 100%;
+                  // width: 100%;
+                }
+                .banner_text{
+                  bottom: 0;
+                  border-radius: 0 0 5px 5px;
+                  padding: 10px;
+                  position: absolute;
+                  background: #000000;
+                  width: 100%;
+                  opacity: 0.5;
+                  color: #FFFFFF;
+                }
               }
             }
           }

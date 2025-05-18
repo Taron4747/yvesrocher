@@ -19,9 +19,9 @@
         
         
           <text-input v-model="form.link" :error="form.errors.link" class="pb-8 pr-6 w-full " label="Ссылка" />
-          <image-input v-if="form.type ==2" v-model="form.image_big" :error="form.errors.image_big" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Больше" />
-          <image-input v-if="form.type ==2" v-model="form.image_medium" :error="form.errors.image_medium" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Среднее" />
-          <image-input v-if="form.type ==2" v-model="form.image_small" :error="form.errors.image_small" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Маленькое" />
+          <image-input v-if="form.type ==2" :max-files="1" v-model="form.image_big" :error="form.errors.image_big" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Больше" />
+          <image-input v-if="form.type ==2" :max-files="1" v-model="form.image_medium" :error="form.errors.image_medium" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Среднее" />
+          <image-input v-if="form.type ==2" :max-files="1" v-model="form.image_small" :error="form.errors.image_small" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Маленькое" />
 
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">

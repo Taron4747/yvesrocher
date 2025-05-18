@@ -1,18 +1,21 @@
 <template>
   <div class="bg-green-900 text-white px-6 py-2 relative overflow-hidden flex items-center h-10">
-    <button @click="prev" class="text-white text-xl z-10 px-2 left_button"><img src="/images/vector.svg"></button>
+    <button @click="prev" class="text-white text-xl z-10 px-2 left_button">
+      <img src="/images/vector.svg">
+    </button>
 
     <div class="relative flex-1 overflow-hidden mx-4">
-      <transition
-        name="slide-out"
-        mode="out-in"
-      >
+      <transition name="slide-out" mode="out-in">
         <div :key="currentIndex" class="text-center font-medium">
-          <span v-html="currentMessage" />
+          <span v-html="currentMessage || 'No message available'" />
         </div>
       </transition>
     </div>
-    <button @click="next" class="text-white text-xl z-10 px-2 right_button"><img src="/images/vector.svg"></button>
+
+    <button @click="next" class="text-white text-xl z-10 px-2 right_button">
+      <img src="/images/vector.svg">
+    </button>
+
     <img class="cross" src="/images/cross.svg">
   </div>
 </template>
@@ -21,7 +24,7 @@
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 
 const props = defineProps({
-  messages: {
+  banners: {
     type: Array,
     required: true,
   },
@@ -32,21 +35,39 @@ const props = defineProps({
 })
 
 const currentIndex = ref(0)
-const currentMessage = computed(() => props.messages[currentIndex.value])
+
+// Для того чтобы отобразить нужное сообщение на основе языка
+const currentMessage = computed(() => {
+  const banner = props.banners[currentIndex.value]
+  
+  if (banner && banner.text_ru && banner.type == 1) {
+    return banner.text_ru
+  } else {
+    return 'No message available'
+  }
+})
+
 let timer = null
 
+// Функция для перехода к следующему баннеру
 const next = () => {
-  currentIndex.value = (currentIndex.value + 1) % props.messages.length
+  currentIndex.value = (currentIndex.value + 1) % props.banners.length
 }
 
+// Функция для перехода к предыдущему баннеру
 const prev = () => {
-  currentIndex.value = (currentIndex.value - 1 + props.messages.length) % props.messages.length
+  currentIndex.value = (currentIndex.value - 1 + props.banners.length) % props.banners.length
 }
 
+// Запуск интервала на автоматическое переключение баннеров
 onMounted(() => {
-  timer = setInterval(() => {
-    next()
-  }, props.interval + 500) // учёт времени на анимацию
+  if (props.banners.length > 0) {
+    timer = setInterval(() => {
+      next()
+    }, props.interval) // Интервал теперь 3 секунды (3000 ms)
+  } else {
+    console.error('Banners are empty!')
+  }
 })
 
 onBeforeUnmount(() => {
@@ -79,16 +100,20 @@ onBeforeUnmount(() => {
   transform: translateX(-100%);
   opacity: 0;
 }
-.left_button{
+
+.left_button {
   margin-left: 20%;
 }
-.right_button{
+
+.right_button {
   margin-right: calc(20% - 45px);
-  img{
-    transform: rotate(180deg);
-  }
 }
-.cross{
+
+.right_button img {
+  transform: rotate(180deg);
+}
+
+.cross {
   cursor: pointer;
   width: 10px;
   height: 10px;

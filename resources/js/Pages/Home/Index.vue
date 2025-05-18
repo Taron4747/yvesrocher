@@ -2,10 +2,11 @@
   <Head title="Интернет-магазин растительной косметики и парфюмерии из Франции с доставкой — Yves Rocher" />
   <Header
     :categories="categories"
+    :banners="textBanners"
   />
   <div class="page_content">
-    <ImageBanner />
-    <CurrentOffers />
+    <ImageBanner :imageBanners="imageBanners"/>
+    <CurrentOffers :imageBanners="imageBanners" />
     <WithYou />
     <AboutAs />
     <Footer />
@@ -35,15 +36,15 @@ export default {
   },
   props: {
     categories: Object,
+    textBanners: Object,
+    imageBanners: Object,
   },
   mounted(){
-    
-    // console.log(this.categories);
+ 
   },
   data() {
     return {
-      form: {
-      },
+      
     }
   },
   

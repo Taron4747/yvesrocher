@@ -10,7 +10,7 @@
         :key="index"
         class="w-full flex-shrink-0"
       >
-        <img :src="slide.image" alt="Slide image" class="w-full h-[400px]" />
+        <img :src="slide.image_big" alt="Slide image" class="w-full h-[400px]" />
       </div>
     </div>
 
@@ -19,7 +19,7 @@
       <button
         v-for="(slide, index) in slides"
         :key="index"
-        class="w-3 h-3 rounded-full "
+        class="w-3 h-3 rounded-full"
         :class="currentIndex === index ? 'dark' : 'light'"
         @click="goToSlide(index)"
       ></button>
@@ -30,29 +30,49 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-const slides = ref([
-  { image: 'https://medias.yves-rocher.ru/medias/2504-05-HP4-FACE-CARE-AAG-Slider-D-20.jpg?context=bWFzdGVyfHJvb3R8MjIxMzkzfGltYWdlL2pwZWd8c3lzX21hc3Rlci9yb290L2g1ZC9oNjIvMTAwNTQxOTEwNTQ4NzgvMjUwNC0wNS1IUDQtRkFDRS1DQVJFLUFBRy1TbGlkZXItRC0yMC5qcGd8OTk1MzRhOWM5ZDU2Y2I0MjY1ZTZkZDQ3OGNhZjI4NjQ3NDU1MzU1ZGI0OThmZDg5YTAzOTMxMDg0MWVkOGI3Ng&twic=v1/resize=1710/background=white' },
-  { image: 'https://medias.yves-rocher.ru/medias/2504-05-HP1-Nutrition-Slider-D.jpg?context=bWFzdGVyfHJvb3R8MzQyMTExfGltYWdlL2pwZWd8c3lzX21hc3Rlci9yb290L2hmZS9oYmEvMTAwNTQxOTA1NjMzNTgvMjUwNC0wNS1IUDEtTnV0cml0aW9uLVNsaWRlci1ELmpwZ3xjYWE3NTBhZWViZDkyY2Y5Yjg1ZGNhYTkxN2RjMmQwZjE5YmZmM2JhODNmMGU3YjMzOTRlOGJhMjZiZDUwNzYw&twic=v1/resize=1710/background=white' },
-  { image: 'https://medias.yves-rocher.ru/medias/2504-05-OPENSET-MIX-Slider-D.jpg?context=bWFzdGVyfHJvb3R8NDgwNjQxfGltYWdlL2pwZWd8c3lzX21hc3Rlci9yb290L2g1Yy9oOTcvMTAwNTk2ODIzNDkwODYvMjUwNC0wNS1PUEVOU0VULU1JWC1TbGlkZXItRC5qcGd8MDkxNGI0MTU3N2E2MjBhNDk4MzkwYjQxNzQxN2EyY2I1ZTQ1NGU4M2E2MDNlNDkyOTQ2OWI2YzZmYTcwODg5OA&twic=v1/resize=1710/background=white' },
-])
+// Пропс для получения данных баннеров
+const props = defineProps({
+  imageBanners: {
+    type: [Array, Object], // Принять как объект или массив
+    required: true,
+  },
+})
 
+const slides = ref([])  // Массив слайдов
 const currentIndex = ref(0)
 let interval = null
 
+// Инициализация слайдов из props
+const initSlides = () => {
+  // Преобразуем объект в массив, если это объект
+  const bannersArray = Array.isArray(props.imageBanners)
+    ? props.imageBanners
+    : Object.values(props.imageBanners)
+
+  slides.value = bannersArray.map(banner => ({
+    image_big: banner.image_big, // Используем image_big для слайдов
+  }))
+}
+
+// Функция для автоматического переключения слайдов
 const startSlider = () => {
   interval = setInterval(() => {
     currentIndex.value = (currentIndex.value + 1) % slides.value.length
-  }, 5000)
+  }, 5000) // Переключение каждые 5 секунд
 }
 
+// Переход к слайду по индексу
 const goToSlide = (index) => {
   currentIndex.value = index
 }
 
+// Инициализация слайдов после монтирования компонента
 onMounted(() => {
+  initSlides()
   startSlider()
 })
 
+// Очистка интервала при размонтировании компонента
 onBeforeUnmount(() => {
   clearInterval(interval)
 })
@@ -62,10 +82,12 @@ onBeforeUnmount(() => {
 .image_banner {
   max-width: 1140px;
   margin: 35px auto;
-  .light{
+
+  .light {
     background: #e8ecbc;
   }
-  .dark{
+
+  .dark {
     background: #143616;
   }
 }
