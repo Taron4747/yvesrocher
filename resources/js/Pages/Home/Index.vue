@@ -18,11 +18,11 @@
 import { Head } from '@inertiajs/vue3'
 import Icon from '@/Shared/Icon.vue'
 import Header from '@/Shared/Header.vue'
-import ImageBanner from '@/Shared/ImageBanner.vue'
-import CurrentOffers from '@/Shared/CurrentOffers.vue'
-import WithYou from '@/Shared/WithYou.vue'
-import Products from '@/Shared/Products.vue'
-import AboutAs from '@/Shared/AboutAs.vue'
+import ImageBanner from '../Home/ImageBanner.vue'
+import CurrentOffers from '../Home/CurrentOffers.vue'
+import WithYou from '../Home/WithYou.vue'
+import Products from '../Home/Products.vue'
+import AboutAs from '../Home/AboutAs.vue'
 import Footer from '@/Shared/Footer.vue'
 
 export default {

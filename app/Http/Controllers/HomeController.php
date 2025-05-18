@@ -26,6 +26,7 @@ class HomeController extends Controller
             $imageBanners = $banners->filter(function ($banner) {
                 return $banner->type != 1; // Все остальные баннеры для изображений
             });
+            
         return Inertia::render('Home/Index', [
             'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
             'textBanners' =>$banners,

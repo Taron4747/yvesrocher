@@ -3,19 +3,19 @@
     <div class="title">Текущие <b>предложения</b></div>
     <div class="title_small"><span>Войдите в свою учетную запись, чтобы воспользоваться скидкой 35% на 3 продукта + бесплатный подарок!*</span></div>
     <div class="data_content">
-      <div class="data">
+      <div class="data" v-for="item in imageBanners.slice().reverse().slice(0, 3)">
         <div class="data_top">
-          <img :src="images[0]['image_medium']"/>
+          <img :src="item['image_medium']"/>
         </div>
         <div class="data_middle">
-          <div class="title">Купите 1, получите 1 со скидкой 50% на уход за лицом + макияж*</div>
-          <div class="text">Сначала кожа, потом макияж! Улучшите свой уход за лицом с помощью нашей акции «смешай и подбери».</div>
+          <div class="title">{{ item.title_ru }}</div>
+          <div class="text">{{ item.proposition_ru  }}</div>
         </div>
         <div class="data_bottom">
           <button>Воспользуйтесь преимуществом</button>
         </div>
       </div>
-      <div class="data">
+      <!-- <div class="data">
         <div class="data_top">
           <img :src="images[1]['image_medium']"/>
         </div>
@@ -38,7 +38,7 @@
         <div class="data_bottom">
           <button>Узнать больше</button>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -55,7 +55,6 @@ export default {
   },
   created(){
     this.images =  Object.values(this.imageBanners);
-    // console.log(this.images[0]['image_medium'])
     // console.log(this.images[1]['image_medium'])
     // console.log(this.images[2]['image_medium'])
   },

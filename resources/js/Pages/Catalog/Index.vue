@@ -5,8 +5,9 @@
     :banners="textBanners"
   />
   <div class="page_content">
+    <CategoryInfo :category="category"/>
+
     <!-- <ImageBanner :imageBanners="imageBanners"/>
-    <WithYou :categories="category"/>
     <CurrentOffers :imageBanners="imageBanners" />
     <AboutAs /> -->
     <Footer />
@@ -17,10 +18,7 @@
 import { Head } from '@inertiajs/vue3'
 import Icon from '@/Shared/Icon.vue'
 import Header from '@/Shared/Header.vue'
-import ImageBanner from '@/Shared/ImageBanner.vue'
-import CurrentOffers from '@/Shared/CurrentOffers.vue'
-import WithYou from '@/Shared/WithYou.vue'
-import AboutAs from '@/Shared/AboutAs.vue'
+import CategoryInfo from '../Catalog/CategoryInfo.vue'
 import Footer from '@/Shared/Footer.vue'
 
 export default {
@@ -28,10 +26,8 @@ export default {
     Head,
     Icon,
     Header,
-    ImageBanner,
-    CurrentOffers,
-    WithYou,
-    AboutAs,
+    CategoryInfo,
+   
     Footer,
   },
   props: {
@@ -42,7 +38,11 @@ export default {
     textBanners: Object,
   },
   mounted(){
-    // console.log(this.category)
+    console.log(this.products)
+    console.log(this.categories)
+    console.log(this.category)
+    console.log(this.filtersWithCounts)
+    console.log(this.textBanners)
   },
   data() {
     return {
