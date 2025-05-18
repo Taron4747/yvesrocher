@@ -42,38 +42,46 @@ class BannersController extends Controller
     {
 
         $data =Request::all();
+// dd($data);
+    $validator = Validator::make(Request::all(), [
+        'text_arm' => ['required', 'max:500'],
+        'text_ru' => ['required', 'max:500'],
+        'text_en' => ['required', 'max:500'],
+        'title_arm' => ['required', 'max:500'],
+        'title_ru' => ['required', 'max:500'],
+        'title_en' => ['required', 'max:500'],
+        'position' => ['required', 'integer'],
 
-$validator = Validator::make(Request::all(), [
-    'text_arm' => ['required_if:type,1', 'max:500'],
-    'text_ru' => ['required_if:type,1', 'max:500'],
-    'text_en' => ['required_if:type,1', 'max:500'],
-    'link' => ['required', 'max:500'],
-    'image_big' => ['max:500', 'required_if:type,2'],
-    'image_medium' => ['max:500', 'required_if:type,2'],
-    'image_small' => ['max:500', 'required_if:type,2'],
-    'type' => ['required'],
-]);
-$validator->validate();
+        'proposition_arm' => ['required', 'max:500'],
+        'proposition_ru' => ['required', 'max:500'],
+        'proposition_en' => ['required', 'max:500'],
+        'link' => ['required', 'max:500'],
+        'image_big' => ['required' ],
+        'image_medium' => ['required' ],
+        'image_small' => ['required' ],
+        'bottom_image' => ['required' ],
+    ]);
+    $validator->validate();
 
-if ($data['type'] ==1) {
-   Banner::create($data);
-}else{
+
+//    Banner::create($data);
+
     $path = Request::file('image_big')[0]->store('images', 's3', 'public');
     $image_big = Storage::disk('s3')->url($path);
     $path = Request::file('image_medium')[0]->store('images', 's3', 'public');
     $image_medium = Storage::disk('s3')->url($path);
     $path = Request::file('image_small')[0]->store('images', 's3', 'public');
     $image_small = Storage::disk('s3')->url($path);
-    $isnertData =[
-        'link'=>$data['link'],
-        'type'=>$data['type'],
-        'image_small'=>$image_small,
-        'image_medium'=>$image_medium,
-        'image_big'=>$image_big,
+    $path = Request::file('bottom_image')[0]->store('images', 's3', 'public');
+    $bottom_image = Storage::disk('s3')->url($path);
+    $data['image_small']= $image_small;
+    $data['image_medium']= $image_medium;
+    $data['image_big']= $image_big;
+    $data['bottom_image']= $bottom_image;
 
-    ];
-    Banner::create($isnertData);
-}
+   
+    Banner::create($data);
+
 
 
         return Redirect::route('banners')->with('success', 'Баннер создан ');
@@ -85,35 +93,72 @@ if ($data['type'] ==1) {
         return Inertia::render('Banners/Edit', [
             'banner' => [
                 'id' => $banner->id,
-                'TYPE' => $banner->TYPE,
+                'type' => $banner->type,
                 'text_arm' => $banner->text_arm,
                 'text_ru' => $banner->text_ru,
                 'text_en' => $banner->text_en,
+
+                'title_arm' => $banner->title_arm,
+                'title_ru' => $banner->title_ru,
+                'title_en' => $banner->title_en,
+
+                'proposition_arm' => $banner->proposition_arm,
+                'proposition_ru' => $banner->proposition_ru,
+                'proposition_en' => $banner->proposition_en,
+
                 'link' => $banner->link,
                 'image_big' => $banner->image_big,
                 'image_medium' => $banner->image_medium,
                 'image_small' => $banner->image_small,
+                'bottom_image' => $banner->bottom_image,
+                'is_active' => $banner->is_active,
+                'position' => $banner->position,
               
             ],
         ]);
     }
 
-    public function update(Organization $organization): RedirectResponse
+    public function update(Banner $banner): RedirectResponse
     {
-        $organization->update(
+        $data =Request::all();
+        $banner->update(
             Request::validate([
-                'name' => ['required', 'max:100'],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'text_arm' => ['required', 'max:500'],
+                'text_ru' => ['required', 'max:500'],
+                'text_en' => ['required', 'max:500'],
+                'title_arm' => ['required', 'max:500'],
+                'title_ru' => ['required', 'max:500'],
+                'title_en' => ['required', 'max:500'],
+                'position' => ['required', 'integer'],
+        
+                'proposition_arm' => ['required', 'max:500'],
+                'proposition_ru' => ['required', 'max:500'],
+                'proposition_en' => ['required', 'max:500'],
+                'link' => ['required', 'max:500'],
             ])
         );
+        if (isset(Request::file('image_big')[0])) {
+            $path = Request::file('image_big')[0]->store('images', 's3', 'public');
+            $image_big = Storage::disk('s3')->url($path);
+            $banner->update(['image_big'=>$image_big]);
+        }
+        if (isset(Request::file('image_small')[0])) {
+            $path = Request::file('image_small')[0]->store('images', 's3', 'public');
+            $image_small = Storage::disk('s3')->url($path);
+            $banner->update(['image_small'=>$image_small]);
+        }
+        if (isset(Request::file('image_medium')[0])) {
+            $path = Request::file('image_medium')[0]->store('images', 's3', 'public');
+            $image_medium = Storage::disk('s3')->url($path);
+            $banner->update(['image_medium'=>$image_medium]);
+        }
+        if (isset(Request::file('bottom_image')[0])) {
+            $path = Request::file('bottom_image')[0]->store('images', 's3', 'public');
+            $bottom_image = Storage::disk('s3')->url($path);
+            $banner->update(['bottom_image'=>$bottom_image]);
+        }
 
-        return Redirect::back()->with('success', 'Organization updated.');
+        return Redirect::back()->with('success', 'Баннер редактирован ');
     }
 
     public function destroy(Organization $organization): RedirectResponse
