@@ -52,7 +52,7 @@
               </div>
             </div>
             <button>
-              В Карзину
+              В Кoрзину
             </button>
           </div>  
         </div>

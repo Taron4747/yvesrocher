@@ -203,7 +203,7 @@ export default {
         font-size: 1.0625rem;
         height: 60px;
         color: #FFF;
-        background: #ba1051;
+        background: #014e2e;
         margin-bottom: 10px;
         font-weight: 700;
         text-transform: uppercase;

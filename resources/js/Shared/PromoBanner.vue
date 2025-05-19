@@ -7,7 +7,7 @@
     <div class="relative flex-1 overflow-hidden mx-4">
       <transition name="slide-out" mode="out-in">
         <div :key="currentIndex" class="text-center font-medium">
-          <span v-html="currentMessage || 'No message available'" />
+          <span v-html="currentMessage" />
         </div>
       </transition>
     </div>
