@@ -7,7 +7,7 @@
     <div class="relative flex-1 overflow-hidden mx-4">
       <transition name="slide-out" mode="out-in">
         <div :key="currentIndex" class="text-center font-medium">
-          <span v-html="currentMessage " />
+          <span v-html="currentMessage || 'No message available'" />
         </div>
       </transition>
     </div>
@@ -40,7 +40,7 @@ const currentIndex = ref(0)
 const currentMessage = computed(() => {
   const banner = props.banners[currentIndex.value]
   
-  if (banner && banner.text_ru ) {
+  if (banner && banner.text_ru && banner.type == 1) {
     return banner.text_ru + ' - ' +banner.proposition_ru
   } else {
     return 'No message available'
@@ -110,7 +110,11 @@ onBeforeUnmount(() => {
 }
 
 .right_button img {
-  transform: rotate(180deg);
+  transform: rotate(270deg);
+}
+.left_button img {
+  transform: rotate(90deg);
+
 }
 
 .cross {
