@@ -12,6 +12,14 @@
         color: #014E2E; /* твой цвет */
     }
 }
-body {
-    @apply font-sans;
-}
+@font-face {
+    font-family: 'Avenir Next';
+    src: url('/resources/fonts/AvenirNext-Regular.woff2') format('woff2'),
+         url('/resources/fonts/AvenirNext-Regular.ttf') format('ttf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+  body {
+    font-family: 'Avenir Next', sans-serif;
+  }
