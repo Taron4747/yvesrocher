@@ -216,7 +216,7 @@ export default {
           margin: 0 auto;
         }
       }
-      .product_data_item:nth-child(4){
+      .product_data_item:nth-child(4n){
         margin-right: 0;
       }
     }
