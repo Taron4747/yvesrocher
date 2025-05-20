@@ -1,4 +1,3 @@
-import defaultTheme from 'tailwindcss/defaultTheme'
 
 export default {
   content: ['./resources/**/*.{js,vue,blade.php}'],
@@ -16,9 +15,7 @@ export default {
           900: '#143616',
         },
       },
-      fontFamily: {
-        sans: ['"Avenir Next"', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
-      },
+      
     },
   },
 }

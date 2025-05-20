@@ -1,7 +1,7 @@
 <template>
   <div class="bg-green-900 text-white px-6 py-2 relative overflow-hidden flex items-center h-10">
     <button @click="prev" class="text-white text-xl z-10 px-2 left_button">
-      <img src="/images/vector.svg">
+      <img src="/images/vector_banner.svg">
     </button>
 
     <div class="relative flex-1 overflow-hidden mx-4">
@@ -13,7 +13,7 @@
     </div>
 
     <button @click="next" class="text-white text-xl z-10 px-2 right_button">
-      <img src="/images/vector.svg">
+      <img src="/images/vector_banner.svg">
     </button>
 
     <img class="cross" src="/images/cross.svg">
@@ -108,13 +108,12 @@ onBeforeUnmount(() => {
 .right_button {
   margin-right: calc(20% - 45px);
 }
+/* .left_button img {
+  transform: rotate(90deg);
+} */
 
 .right_button img {
-  transform: rotate(270deg);
-}
-.left_button img {
-  transform: rotate(90deg);
-
+  transform: rotate(180deg);
 }
 
 .cross {
