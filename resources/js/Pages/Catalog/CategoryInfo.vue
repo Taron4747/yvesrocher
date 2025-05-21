@@ -10,7 +10,7 @@
         <div class="text">96 item(s) found</div>
       </div>
       <div class="content_middle_right">
-        <img :src="category.image">
+        <img :src="category.second_image">
       </div>
     </div>
     <div class="category_info_content_bottom">

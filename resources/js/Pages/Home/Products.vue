@@ -85,7 +85,6 @@ export default {
     if(id == 1){
       axios.get("/products?is_bestseller=1").then((response) => {
         this.products = response.data.products.data.slice(0, 5);
-        console.log(this.products)
       });
     }else{
       axios.get("/products?is_new=1").then((response) => {

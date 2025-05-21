@@ -35,7 +35,7 @@
                 </div>
               </div>
           </div>
-          <multiselect 
+          <!-- <multiselect 
             v-model="selected" 
             :options="butonFiltersData" 
             :multiple="true" 
@@ -43,7 +43,7 @@
             label="name_arm"  
             track-by="id"  
             class="width_30"
-          />
+          /> -->
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
           <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать категорию</loading-button>
@@ -84,8 +84,8 @@ export default {
   data() {
     return {
       filtersData:this.filters,
-      butonFiltersData:this.butonFilters,
-      selected: [],
+      // butonFiltersData:this.butonFilters,
+      // selected: [],
       form: this.$inertia.form({
         name_arm: '',
         name_ru: '',
@@ -93,7 +93,7 @@ export default {
         image: null,
         second_image: null,
         filters: [], // selected filterable IDs (checkbox)
-        button_filters: [], // selected button filter IDs (multi-select)
+        // button_filters: [], // selected button filter IDs (multi-select)
       }),
     }
   },
@@ -108,7 +108,7 @@ export default {
   methods: {
     store() {
       this.form.filters = this.filtersData
-      this.form.button_filters = this.selected      
+      // this.form.button_filters = this.selected      
       this.form.post('/admin/categories')
     },
     onFilterChange(filter){

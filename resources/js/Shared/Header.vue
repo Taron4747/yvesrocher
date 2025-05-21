@@ -35,14 +35,14 @@
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <a :href="'/category/'+item.id" v-if="!item.image">{{ item.name_ru }}</a>
+           <a :href="'/category/'+item.id" v-if="!item.hasImage">{{ item.name_ru }}</a>
           </div>
           <div class="categores_data_item old_green">НОВИНКИ</div>
           <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
           <div class="categores_data_item old_green">АКЦИИ</div>
           <div
             class="categores_data_item old_green"
-            v-for="item in categoriesData.filter(item => item.image)"
+            v-for="item in categoriesData.filter(item => item.hasImage)"
             :key="item.id"
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
@@ -123,7 +123,7 @@ export default {
   },
   mounted() {
     this.categoriesData.forEach((categories) => {
-      categories.image = false;
+      categories.hasImage = false;
     });
     // const cleanImageBanners = JSON.parse(JSON.stringify(this.imageBanners));
     // this.cleanImageBanners = cleanImageBanners;
@@ -132,7 +132,7 @@ export default {
       id:1000,
       name_ru: "О МАРКЕ",  
       children: this.aboutImageBanners,
-      image: true, 
+      hasImage: true, 
     };
 
     this.categoriesData.push(newCategory);
@@ -147,6 +147,7 @@ export default {
             if(categories.id == id){
               this.subCategoriesData = categories.children;
               this.image = categories.image;
+              console.log(categories)
             }
           });
         }else{
