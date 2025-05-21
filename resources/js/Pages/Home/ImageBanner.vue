@@ -2,7 +2,8 @@
   <div class="relative overflow-hidden w-full h-[420px] pb-6 image_banner">
     <!-- Слайды -->
     <div
-      class="flex transition-transform duration-700 ease-in-out"
+       class="flex"
+      :class="{ 'transition-transform duration-700 ease-in-out': isTransitionEnabled }"
       :style="{ transform: `translateX(-${currentIndex * 100}%)` }"
     >
       <div
@@ -21,10 +22,10 @@
     <!-- Кнопки снизу -->
     <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 flex gap-2">
       <button
-        v-for="(slide, index) in slides"
+         v-for="(slide, index) in slides.slice(0, -1)"
         :key="index"
         class="w-3 h-3 rounded-full"
-        :class="currentIndex === index ? 'dark' : 'light'"
+        :class="displayedIndex === index ? 'dark' : 'light'"
         @click="goToSlide(index)"
       ></button>
     </div>
@@ -33,7 +34,13 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { computed } from 'vue'
 
+const displayedIndex = computed(() => {
+  return currentIndex.value === slides.value.length - 1
+    ? 0
+    : currentIndex.value
+})
 // Пропс для получения данных баннеров
 const props = defineProps({
   imageBanners: {
@@ -41,6 +48,7 @@ const props = defineProps({
     required: true,
   },
 })
+const isTransitionEnabled = ref(true)
 
 const slides = ref([])  // Массив слайдов
 const currentIndex = ref(0)
@@ -62,13 +70,30 @@ const initSlides = () => {
     image_big: banner.image_big, // Используем image_big для слайдов
     link: banner.link, // Используем image_big для слайдов
   }))
+    // Добавим клон первого слайда в конец
+  if (slides.value.length > 0) {
+    slides.value.push({ ...slides.value[0] })
+  }
 }
 
-// Функция для автоматического переключения слайдов
 const startSlider = () => {
+  stopSlider()
   interval = setInterval(() => {
-    currentIndex.value = (currentIndex.value + 1) % slides.value.length
-  }, 5000) // Переключение каждые 5 секунд
+    if (currentIndex.value < slides.value.length - 1) {
+      currentIndex.value++
+    } else {
+      // Последний слайд (клон первого) -> быстро вернёмся к index 0
+      isTransitionEnabled.value = false
+      currentIndex.value = 0
+
+      // Принудительно включаем transition обратно на след. кадр
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          isTransitionEnabled.value = true
+        })
+      })
+    }
+  }, 5000)
 }
 
 // Переход к слайду по индексу
