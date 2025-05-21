@@ -9,8 +9,12 @@
         v-for="(slide, index) in slides"
         :key="index"
         class="w-full flex-shrink-0"
-      >
-        <img :src="slide.image_big" alt="Slide image" class="w-full h-[400px]" />
+        @mouseenter="stopSlider"
+        @mouseleave="startSlider"
+      > <a :href="slide.link">
+        
+          <img :src="slide.image_big" alt="Slide image" class="w-full h-[400px]" />
+        </a>
       </div>
     </div>
 
@@ -41,7 +45,12 @@ const props = defineProps({
 const slides = ref([])  // Массив слайдов
 const currentIndex = ref(0)
 let interval = null
-
+const stopSlider = () => {
+  if (interval) {
+    clearInterval(interval)
+    interval = null
+  }
+}
 // Инициализация слайдов из props
 const initSlides = () => {
   // Преобразуем объект в массив, если это объект
@@ -51,6 +60,7 @@ const initSlides = () => {
 
   slides.value = bannersArray.map(banner => ({
     image_big: banner.image_big, // Используем image_big для слайдов
+    link: banner.link, // Используем image_big для слайдов
   }))
 }
 

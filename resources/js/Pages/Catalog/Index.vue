@@ -58,9 +58,6 @@
         </div>
       </div>
     </div>
-    <!-- <ImageBanner :imageBanners="imageBanners"/>
-    <CurrentOffers :imageBanners="imageBanners" />
-    <AboutAs /> -->
     <Footer />
   </div>
 </template>
