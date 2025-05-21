@@ -14,7 +14,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BannersController;
 use App\Http\Controllers\CatalogController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Http\Request;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,12 +28,39 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Auth
+Route::middleware('guest')->group(function () {
+    Route::get('/register', [AuthenticatedSessionController::class, 'register'])->name('register');
+    Route::post('/register', [AuthenticatedSessionController::class, 'postRegister']);
+    Route::get('/forgot-password', [AuthenticatedSessionController::class, 'forgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AuthenticatedSessionController::class, 'postForgotPassword'])->name('password.email');
+
+    // форма сброса пароля
+    Route::get('/reset-password/{token}', [AuthenticatedSessionController::class, 'resetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AuthenticatedSessionController::class, 'postResetPasswordre'])->name('password.update');
+});
+Route::get('/email/verify', function () {
+    return response()->json(['message' => 'Verify your email address.']);
+})->middleware('auth')->name('verification.notice');
+
+// Email verification handler
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+    return response()->json(['message' => 'Email verified successfully.']);
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+// Resend verification email
+Route::post('/email/resend', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+    return response()->json(['message' => 'Verification email resent.']);
+})->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
+
 Route::get('/language/{language}', function ($language) {
     Session()->put('locale', $language);
     return redirect()->back();
 })->name('language');
 Route::middleware(['setLocale'])->group(function () {
-
+    
+    Route::get('test', [CatalogController::class, 'test']);
 Route::get('login', [AuthenticatedSessionController::class, 'create'])
     ->name('login')
     ->middleware('guest');

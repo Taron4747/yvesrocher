@@ -180,4 +180,14 @@ class CatalogController extends Controller
         ];
     }
 
+    public function test()  {
+        $data=[];
+        \Mail::send('welcome', $data, function($message)use($data) {
+            $message->to('tarongyulumyan@gmail.com', 'Welcome')
+                    ->subject('Welcome');
+            $message->from('armeniayvesrocher@gmail.com', 'Welcome');
+       });
+
+    }
+
 }
