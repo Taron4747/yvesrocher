@@ -56,6 +56,10 @@
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/3" type="file" accept="image/*" label="Фото" /> -->
           <text-input v-model="form.price" placeholder="5700" :error="form.errors.price" class="pb-8 pr-6 w-full lg:w-1/3" label="Цена" />
           <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
+          <SelectInput v-model="form.size_type_id" class="pb-8 pr-6  lg:w-1/3" label="Выберите тип">
+            <option disabled value="">Выберите тип </option>
+            <option v-for="opt in types" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option> 
+          </SelectInput>   
           <text-input v-model="form.discount" placeholder="10" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/3" label="Скидка (%)" />
           <text-input v-model="form.count" placeholder="4" :error="form.errors.count" class="pb-8 pr-6 w-full lg:w-1/3" label="Колличество" />     
           <label class="custom_checkbox text_color">Новинка
@@ -126,6 +130,7 @@ export default {
     categories: Array,
     filters: Array,
     butonFilters: Array,
+    types: Array,
     product: Object,
   },
   remember: 'form',
@@ -143,6 +148,7 @@ export default {
       categoriesData:this.categories,
       filtersData:this.filters,
       butonFiltersData:this.butonFilters,
+      types:this.types,
       selected: [],
       form: this.$inertia.form({
         name_arm:  this.product.name_arm,
@@ -161,6 +167,7 @@ export default {
         product_code: this.product.product_code,
         is_new: this.product.is_new,
         is_bestseller: this.product.is_bestseller,
+        size_type_id: this.product.size_type_id,
         image: null,
         images: [],
         filters: [], 

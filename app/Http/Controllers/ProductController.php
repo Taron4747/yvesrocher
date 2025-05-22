@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Filter;
 use App\Models\ProductImage;
+use App\Models\SizeType;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -70,6 +71,7 @@ class ProductController extends Controller
       
         return Inertia::render('Products/Create', [
             'categories' =>Category::with('children.children')->get()->toArray(),
+            'types' =>SizeType::all()->toArray(),
             'filters'=> $filters->where('filterable',true)->values()->toArray(),
         ]);
     }
@@ -198,6 +200,8 @@ class ProductController extends Controller
             'categories' =>Category::with('children.children')->get()->toArray(),
             'filters'=> $filters->where('filterable',true)->values()->toArray(),
             'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
+            'types' =>SizeType::all()->toArray(),
+
         ]);
     }
 
@@ -225,6 +229,7 @@ class ProductController extends Controller
                 Rule::unique('products', 'product_code')->ignore($product->id),
             ],
             'price'           => ['required', 'integer'],
+            'size_type_id'           => ['integer'],
         ]);
 
       
