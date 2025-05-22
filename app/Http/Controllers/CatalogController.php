@@ -173,7 +173,7 @@ class CatalogController extends Controller
         if (isset($data['discount'])) {
             $product = $product->where('discount','>',0);
         }
-        $product = $product->paginate(20);
+        $product = $product->paginate(10);
         
         return [
             'products' =>$product,
@@ -188,6 +188,14 @@ class CatalogController extends Controller
             $message->from('armeniayvesrocher@gmail.com', 'Welcome');
        });
 
+    }
+
+    public function randomCategories()  {
+        $categories =Category::where('parent_id',null)->inRandomOrder()->limit(4)->get();
+        
+        return Inertia::render('Home/Index', [
+            'categories' =>$categories,
+        ]);
     }
 
 }

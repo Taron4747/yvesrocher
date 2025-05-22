@@ -388,6 +388,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
     Route::get('products', [CatalogController::class, 'products'])
     ->name('products');
+    Route::get('random-categories', [CatalogController::class, 'randomCategories']);
+
 });
    
    
