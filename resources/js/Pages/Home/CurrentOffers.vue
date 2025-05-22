@@ -101,7 +101,7 @@ export default {
       border-radius: 8px;
       background: #6F7E0D1A;
       height: 426px;
-      max-width: 369px;
+      width: 369px;
       margin-right: 9px;
       .data_top{
         img{

@@ -29,8 +29,12 @@
           <img src="/images/stars.png">
           <div>(100)</div>
         </div>
+        <div class="size">
+          <span>{{ item.size }}</span>
+        </div>
         <div class="price">
-          {{ item.price }} դ
+          <span class="big">{{ item.price }} դ</span>
+          <span v-if="item.discount" class="small">{{ item.price+(item.price*item.discount/100) }} դ</span>
         </div>
         
       </div>
@@ -67,6 +71,11 @@ export default {
             title: 'НОВИНКИ',
             type:false,
         },
+        {
+            id:3,
+            title: 'Скидки',
+            type:false,
+        },
       ],
       form: {
       },
@@ -76,6 +85,7 @@ export default {
     axios.get("/random-categories").then((response) => {
       this.categories = response.data.categories
     });
+    this.changeProducts(1);
   },
   methods: {
     changeProducts(id){
@@ -90,11 +100,16 @@ export default {
       axios.get("/products?is_bestseller=1").then((response) => {
         this.products = response.data.products.data.slice(0, 5);
       });
-    }else{
+    }else if(id == 2){
       axios.get("/products?is_new=1").then((response) => {
         this.products = response.data.products.data.slice(0, 5);
       });
+    }else{
+      axios.get("/products?discount=1").then((response) => {
+        this.products = response.data.products.data.slice(0, 5);
+      });
     }
+    console.log(this.products)
     },
   },
 }
@@ -189,10 +204,22 @@ export default {
           margin-left: 10px;
         }
       }
+      .size{
+        font-size: 12px;
+        color: #767676;
+      }
       .price{
-        color: #ba1051;
-        font-size: 1.3125rem;
-        font-weight: 700;
+        .big{
+          color: #ba1051;
+          font-size: 1.3125rem;
+          font-weight: 700;
+        }
+        .small{
+          font-size: 12px;
+          color: #767676;
+          margin-left: 5px;
+          text-decoration: line-through;
+        }
       }
    
     }
