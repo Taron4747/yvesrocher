@@ -51,15 +51,19 @@
         </div>
         <div class="info_data_item">
           <div class="images">
-            <img src="images/visa.svg"/>
-            <img src="images/mc.svg"/>
-            <img src="images/arca.png"/>
+            <img src="/images/visa.svg"/>
+            <img src="/images/mc.svg"/>
+            <img src="/images/arca.png"/>
           </div>
         </div>
       </div>
     </div>
      <div class="footer_content_data_bottom">
-
+      <div>Встретимся здесь</div>
+      <a target="_blank" href="https://www.instagram.com/yvesrocherarm1/?hl=en"><img src="/images/instagram.svg"/></a>
+      <a target="_blank" href="https://www.facebook.com/p/Yves-Rocher-Armenia-100063517751918/?locale=hy_AM"><img src="/images/facebook.svg"/></a>
+      <a href=""><img src="/images/x.svg"/></a>
+      <a href=""><img src="/images/youtube.svg"/></a>
      </div>
   </div>
 </template>
@@ -162,7 +166,17 @@ export default {
     }
   }
   .footer_content_data_bottom{
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 35px;
+    div{
+      font-weight: 600;
+      margin-right: 8px;
+    }
+    img{
+      margin-left: 16px;
+    }
   }
 }
 </style>
