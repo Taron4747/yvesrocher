@@ -29,7 +29,6 @@ use Illuminate\Support\Facades\Route;
 // Auth
 Route::get('/language/{language}', function ($language) {
     Session()->put('locale', $language);
-
     return redirect()->back();
 })->name('language');
 Route::middleware(['setLocale'])->group(function () {

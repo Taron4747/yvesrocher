@@ -19,7 +19,18 @@
           </div>
         </div>
         <div class="banner_middle_right">
-            <img src="/images/shops.svg">
+                  <Link href="/language/ru">
+                    <span  class="dropdown_items_active"> ru</span>
+                </Link>
+                   <Link href="/language/arm">
+                    <span  class="dropdown_items_active"> arm</span>
+                </Link>
+                   <Link href="/language/en">
+                    <span  class="dropdown_items_active"> en</span>
+                </Link>
+            <div class="lang" @click="changeLang('arm')" :class="{ active: this.$page.props.locale == 'arm' }">ARM</div>
+            <div class="lang" @click="changeLang('ru')" :class="{ active: this.$page.props.locale == 'ru' }">RU</div>
+            <div class="lang" @click="changeLang('en')" :class="{ active: this.$page.props.locale == 'en' }">EN</div>
             <img class="bottom" src="/images/account.svg">
             <img src="/images/cart.svg">
         </div>
@@ -47,7 +58,7 @@
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <span v-if="item.image">{{ item.name_ru }}</span>
+           <span v-if="item.hasImage">{{ item.name_ru }}</span>
           </div>
           <div
               v-if="showDropdown === true"
@@ -80,11 +91,16 @@
 </template>
 
 <script>
+import { Head, Link } from '@inertiajs/vue3'
+
 import PromoBanner from '@/Shared/PromoBanner.vue'
+import axios from "axios";
 
 export default {
   components: {
     PromoBanner,
+    Head,
+    Link,
   },
   props: {
     categories: Object,
@@ -136,7 +152,6 @@ export default {
     };
 
     this.categoriesData.push(newCategory);
-//     console.log(this.categoriesData)
 
   },
   methods: {
@@ -147,11 +162,11 @@ export default {
             if(categories.id == id){
               this.subCategoriesData = categories.children;
               this.image = categories.image;
-              console.log(categories)
             }
           });
         }else{
           this.subCategoriesData = this.aboutImageBanners;
+          this.image = null;
         }
    
         this.choosedCategory = id
@@ -159,6 +174,12 @@ export default {
         this.choosedCategory = 0
       }
       this.showDropdown = type;
+    },
+    changeLang(type){
+       axios.get("/language/" + type).then((response) => {
+        console.log(response)
+      });
+      // console.log(type);
     }
   },
 }
@@ -217,6 +238,19 @@ export default {
     .banner_middle_right{
       align-items: center;
       justify-content: flex-end;
+      .lang{
+        cursor: pointer;
+        font-size: 14px;
+        color: #014E2E;
+        margin-left: 10px;
+      }
+      .lang:last-child{
+        margin-right: 25[x];
+      }
+      .active{
+        text-decoration: underline;
+        font-weight: 600;
+      }
       img{
         cursor: pointer;
         margin-left: 24px;
