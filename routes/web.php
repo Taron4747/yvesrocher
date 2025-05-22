@@ -28,6 +28,12 @@ use Illuminate\Http\Request;
 */
 
 // Auth
+
+Route::get('/language/{language}', function ($language) {
+    Session()->put('locale', $language);
+    return redirect()->back();
+})->name('language');
+
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthenticatedSessionController::class, 'register'])->name('register');
     Route::post('/register', [AuthenticatedSessionController::class, 'postRegister']);
@@ -54,10 +60,7 @@ Route::post('/email/resend', function (Request $request) {
     return response()->json(['message' => 'Verification email resent.']);
 })->middleware(['auth', 'throttle:6,1'])->name('verification.resend');
 
-Route::get('/language/{language}', function ($language) {
-    Session()->put('locale', $language);
-    return redirect()->back();
-})->name('language');
+
 Route::middleware(['setLocale'])->group(function () {
     
     Route::get('test', [CatalogController::class, 'test']);
