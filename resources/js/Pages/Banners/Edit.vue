@@ -66,11 +66,16 @@
             alt="Preview"
             class="max-h-48 object-contain border rounded"
           />
-  <label class="custom_checkbox text_color">Активен
-      <input v-model="form.is_active" type="checkbox" :true-value="1" :false-value="0">
-      <span class="checkmark"></span>
-  </label>
+          <label class="custom_checkbox text_color">
+  Активен
+  <input v-model="form.is_active" type="checkbox" :true-value="1" :false-value="0" />
+  <span class="checkmark"></span>
+</label>
 
+<!-- Показываем ошибку -->
+<span v-if="form.errors.is_active" class="text-red-600 text-sm">
+  {{ form.errors.is_active }}
+</span>
   <text-input v-model="form.position" :error="form.errors.position" class="pb-8 pr-6 w-full " label="Позиция баннера" />
 
 </div>

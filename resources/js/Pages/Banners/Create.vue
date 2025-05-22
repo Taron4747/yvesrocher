@@ -20,17 +20,17 @@
           <TextAreaInput v-model="form.text_ru" :error="form.errors.text_ru" class="pb-8 pr-6 w-full " label="Русский"/>
           <TextAreaInput v-model="form.text_en" :error="form.errors.text_en" class="pb-8 pr-6 w-full " label="English"/>
           <div class="title_big">Значение</div>
-<label class="form-label">Հայերեն</label>
-          <QuillEditor label=""   contentType="html"
- v-model:content="form.proposition_arm" theme="snow" toolbar="full"/>
-<label class="form-label">Русский</label>
+      <label class="form-label">Հայերեն</label>
+                <QuillEditor label=""   contentType="html"
+      v-model:content="form.proposition_arm" theme="snow" toolbar="full"/>
+      <label class="form-label">Русский</label>
 
-          <QuillEditor   contentType="html"
- v-model:content="form.proposition_ru" theme="snow" toolbar="full"/>
-<label class="form-label">English</label>
+                <QuillEditor   contentType="html"
+      v-model:content="form.proposition_ru" theme="snow" toolbar="full"/>
+      <label class="form-label">English</label>
 
-          <QuillEditor   contentType="html"
- v-model:content="form.proposition_en" theme="snow" toolbar="full"/>
+                <QuillEditor   contentType="html"
+      v-model:content="form.proposition_en" theme="snow" toolbar="full"/>
 
           <!-- <text-input v-model="form.proposition_arm" :error="form.errors.proposition_arm" class="pb-8 pr-6 w-full " label="Հայերեն" />
           <text-input v-model="form.proposition_ru" :error="form.errors.proposition_ru" class="pb-8 pr-6 w-full " label="Русский" />
@@ -46,10 +46,16 @@
           <image-input  :max-files="1" v-model="form.image_small" :error="form.errors.image_small" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото Маленькое" />
           <image-input  :max-files="1" v-model="form.bottom_image" :error="form.errors.bottom_image" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото" />
 
-          <label class="custom_checkbox text_color">Активен
-              <input v-model="form.is_active" type="checkbox" checked="checked">
-              <span class="checkmark"></span>
-          </label>
+          <label class="custom_checkbox text_color">
+  Активен
+  <input v-model="form.is_active" type="checkbox" :true-value="1" :false-value="0" />
+  <span class="checkmark"></span>
+</label>
+
+<!-- Показываем ошибку -->
+<span v-if="form.errors.is_active" class="text-red-600 text-sm">
+  {{ form.errors.is_active }}
+</span>
 
           <text-input v-model="form.position" :error="form.errors.position" class="pb-8 pr-6 w-full " label="Позиция баннера" />
 

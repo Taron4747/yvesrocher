@@ -371,7 +371,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::post('product-count-change', [ProductController::class, 'productCountChange'])
         ->name('product.count.change')
         ->middleware('auth');
-
+        Route::post('change-banner', [BannersController::class, 'changeBanner'])
+        ->name('banner.change')
+        ->middleware('auth');
     });
     Route::get('category/{id}', [CatalogController::class, 'getByCategory'])
     ->name('category');

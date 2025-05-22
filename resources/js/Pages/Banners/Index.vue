@@ -24,6 +24,8 @@
           <th class="pb-4 pt-6 px-6">Название</th>    
           <th class="pb-4 pt-6 px-6">Описание</th>
           <th class="pb-4 pt-6 px-6">Позиция</th>
+          <th class="pb-4 pt-6 px-6"></th>
+
         </tr>
         </thead>
         <tbody>
@@ -45,11 +47,14 @@
               </Link>
             </td>
             <td class="border-t">
-              <Link class="flex items-center px-6 py-4" :href="`/admin/banners/${banner.id}/edit`" tabindex="-1">
-                {{ banner.position }}
-              </Link>
+                 <input type="number" class="width_30 number_input" v-model="banner.position"/>
+
             </td>
-         
+            <td class="border-t">
+            <button class="btn-indigo" @click="changePosition(banner)">
+              Изменить
+            </button>
+          </td>
           </tr>
           <tr v-if="banners.data.length === 0">
             <td class="px-6 py-4 border-t" colspan="4">No banners found.</td>
@@ -69,6 +74,7 @@ import Layout from '@/Shared/Layout.vue'
 import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import Pagination from '@/Shared/Pagination.vue'
+import axios from "axios";
 import SearchFilter from '@/Shared/SearchFilter.vue'
 
 export default {
@@ -103,6 +109,15 @@ export default {
   methods: {
     reset() {
       this.form = mapValues(this.form, () => null)
+    },
+    changePosition(banner){
+      let formData = new FormData
+      formData.set('id', banner.id)
+      formData.set('position', banner.position)
+      axios.post('/admin/change-banner', formData,
+            ).then(response => {
+              alert('Изменения сохранены ')
+            })
     },
   },
 }

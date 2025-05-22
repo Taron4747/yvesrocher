@@ -11,6 +11,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use App\Rules\MaxActiveLimit;
 
 class BannersController extends Controller
 {
@@ -42,7 +43,6 @@ class BannersController extends Controller
     {
 
         $data =Request::all();
-// dd($data);
     $validator = Validator::make(Request::all(), [
         'text_arm' => ['required', 'max:500'],
         'text_ru' => ['required', 'max:500'],
@@ -60,6 +60,8 @@ class BannersController extends Controller
         'image_medium' => ['required' ],
         'image_small' => ['required' ],
         'bottom_image' => ['required' ],
+        'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
+
     ]);
     $validator->validate();
 
@@ -89,7 +91,6 @@ class BannersController extends Controller
 
     public function edit(Banner $banner): Response
     {
-        // dd($banner);
         return Inertia::render('Banners/Edit', [
             'banner' => [
                 'id' => $banner->id,
@@ -136,7 +137,8 @@ class BannersController extends Controller
                 // 'proposition_en' => ['required', 'max:500'],
                 'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
 
-                'is_active' => ['required'],
+        'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
+                
             ])
         );
         if (isset(Request::file('image_big')[0])) {
@@ -175,5 +177,11 @@ class BannersController extends Controller
         $banner->restore();
 
         return Redirect::back()->with('success', 'Баннер восстановлен.');
+    }
+    public function changeBanner()
+    {
+        $data =Request::all();
+        Banner::where('id',$data['id'])->update(['position'=>$data['position']]);
+
     }
 }
