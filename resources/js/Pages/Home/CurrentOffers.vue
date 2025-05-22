@@ -3,18 +3,16 @@
     <div class="title">Текущие <b>предложения</b></div>
     <div class="title_small"><span>Войдите в свою учетную запись, чтобы воспользоваться скидкой 35% на 3 продукта + бесплатный подарок!*</span></div>
     <div class="data_content">
-      <div class="data" v-for="item in imageBanners.slice().reverse().slice(0, 3)">
+      <a :href="item.link" class="data" v-for="item in imageBanners.slice().reverse().slice(0, 3)">
         <div class="data_top">
           <img :src="item['image_medium']"/>
         </div>
-        <div class="data_middle">
+        <div class="data_bottom">
           <div class="title">{{ item.title_ru }}</div>
           <div class="text">{{ item.proposition_ru  }}</div>
+          <button>За покупками</button>
         </div>
-        <div class="data_bottom">
-          <button>Воспользуйтесь преимуществом</button>
-        </div>
-      </div>
+      </a>
       <!-- <div class="data">
         <div class="data_top">
           <img :src="images[1]['image_medium']"/>
@@ -79,7 +77,7 @@ export default {
   justify-content: center;
   margin: 50px auto 0 auto;
   width: 1140px;
-  color: #014E2E;
+  // color: #014E2E;
   .title{
     font-size: 28px;
   }
@@ -98,42 +96,52 @@ export default {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      border-radius: 8px;
+      border-radius: 20px;
       background: #6F7E0D1A;
-      height: 426px;
-      width: 369px;
-      margin-right: 9px;
+      height: 554px;
+      width: 364px;
+      margin-right: 24px;
       .data_top{
         img{
           width: 100%;
-          height: 202px;
-          border-radius: 8px 8px 0 0;
-        }
-      }
-      .data_middle{
-        padding: 0 30px;
-        .title{
-          font-size: 18px;
-          text-align: center;
-          margin-bottom: 8px;
-        }
-        .text{
-          font-size: 16px;
-          color: #767676;
-          text-align: center;
+          height: 304px;
+          border-radius: 20px 20px 0 0;
         }
       }
       .data_bottom{
-        display: flex;
-        border-radius: 0 0 8px 8px;
+        display: flex; 
+        flex-direction: column; 
+        justify-content: flex-start; 
+        padding: 22px;
+        height: 250px;
+        background-color: #D3E1D4;
+        border-radius: 0 0 20px 20px;
+        .title{
+            font-size: 20px;
+            margin-bottom: 20px;
+            // color: #000;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .text{
+          text-align: left;
+          // font-size: 16px;
+          // color: #767676;
+        }
         button{
-          margin: 0 auto;
-          padding: 10px 24px;
-          background: #014E2E;
-          color: #FFFFFF;
-          border-radius: 20px;
-          font-weight: 600;
-          margin-bottom: 20px;
+          padding: 10px 15px;
+          border-radius: 5px;
+          float: left;
+          display: block;
+          box-sizing: border-box;
+          min-width: 135px;
+          margin-bottom: 5px;
+          font-weight: 700;
+          width: max-content;
+          margin-top: auto;
+          text-transform: uppercase;
+          background-color: #000;
+          color: #fff;
         }
       }
     }
