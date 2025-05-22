@@ -62,8 +62,8 @@
       <div>Встретимся здесь</div>
       <a target="_blank" href="https://www.instagram.com/yvesrocherarm1/?hl=en"><img src="/images/instagram.svg"/></a>
       <a target="_blank" href="https://www.facebook.com/p/Yves-Rocher-Armenia-100063517751918/?locale=hy_AM"><img src="/images/facebook.svg"/></a>
-      <a href=""><img src="/images/x.svg"/></a>
-      <a href=""><img src="/images/youtube.svg"/></a>
+      <!-- <a href=""><img src="/images/x.svg"/></a>
+      <a href=""><img src="/images/youtube.svg"/></a> -->
      </div>
   </div>
 </template>
