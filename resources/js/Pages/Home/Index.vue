@@ -6,7 +6,7 @@
   />
   <div class="page_content">
     <ImageBanner :imageBanners="imageBanners"/>
-    <Products :categories="categories"/>
+    <Products />
     <CurrentOffers :imageBanners="imageBanners" />
     <WithYou />
     <AboutAs />

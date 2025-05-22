@@ -1,12 +1,12 @@
 <template>
   <div class="categories_content">
-    <div class="category_item" v-for="item in categories
+    <a :href="/category/+item.id" class="category_item" v-for="item in categories
       .filter(item => item.id !== 1000)
       .slice(0, 4)" :key="item.id">
-      <a :href="/category/+item.id">
+      <span :href="/category/+item.id">
         {{ item.name_ru }}
-      </a>
-    </div>
+      </span>
+    </a>
   </div>
   <div class="categories_content categories_content_small">
     <div class="category_item" v-for="item in categoryBanners" :class="{ category_item_active: item.type}" @click="changeProducts(item.id)">
@@ -48,13 +48,13 @@ export default {
 
   },
   props: {
-    categories:Object
   },
   mounted(){
     this.changeProducts(1);
   },
   data() {
     return {
+      categories:[],
       products:[],
       categoryBanners: [
         {
@@ -72,7 +72,11 @@ export default {
       },
     }
   },
-  
+  mounted(){
+    axios.get("/random-categories").then((response) => {
+      this.categories = response.data.categories
+    });
+  },
   methods: {
     changeProducts(id){
       this.categoryBanners

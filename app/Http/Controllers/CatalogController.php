@@ -193,9 +193,9 @@ class CatalogController extends Controller
     public function randomCategories()  {
         $categories =Category::where('parent_id',null)->inRandomOrder()->limit(4)->get();
         
-        return Inertia::render('Home/Index', [
-            'categories' =>$categories,
-        ]);
+        return [
+             'categories' =>$categories,
+        ];
     }
 
 }

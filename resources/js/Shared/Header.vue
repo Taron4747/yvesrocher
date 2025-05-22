@@ -19,7 +19,7 @@
           </div>
         </div>
         <div class="banner_middle_right">
-                  <Link href="/language/ru">
+                  <!-- <Link href="/language/ru">
                     <span  class="dropdown_items_active"> ru</span>
                 </Link>
                    <Link href="/language/arm">
@@ -27,7 +27,7 @@
                 </Link>
                    <Link href="/language/en">
                     <span  class="dropdown_items_active"> en</span>
-                </Link>
+                </Link> -->
             <div class="lang" @click="changeLang('arm')" :class="{ active: this.$page.props.locale == 'arm' }">ARM</div>
             <div class="lang" @click="changeLang('ru')" :class="{ active: this.$page.props.locale == 'ru' }">RU</div>
             <div class="lang" @click="changeLang('en')" :class="{ active: this.$page.props.locale == 'en' }">EN</div>
