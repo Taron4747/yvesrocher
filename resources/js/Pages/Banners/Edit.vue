@@ -22,9 +22,20 @@
   <TextAreaInput v-model="form.text_ru" :error="form.errors.text_ru" class="pb-8 pr-6 w-full " label="Русский"/>
   <TextAreaInput v-model="form.text_en" :error="form.errors.text_en" class="pb-8 pr-6 w-full " label="English"/>
   <div class="title_big">Значение</div>
-  <text-input v-model="form.proposition_arm" :error="form.errors.proposition_arm" class="pb-8 pr-6 w-full " label="Հայերեն" />
+  <!-- <text-input v-model="form.proposition_arm" :error="form.errors.proposition_arm" class="pb-8 pr-6 w-full " label="Հայերեն" />
   <text-input v-model="form.proposition_ru" :error="form.errors.proposition_ru" class="pb-8 pr-6 w-full " label="Русский" />
-  <text-input v-model="form.proposition_en" :error="form.errors.proposition_en" class="pb-8 pr-6 w-full " label="English" />
+  <text-input v-model="form.proposition_en" :error="form.errors.proposition_en" class="pb-8 pr-6 w-full " label="English" /> -->
+  <label class="form-label">Հայերեն</label>
+          <QuillEditor label=""   contentType="html"
+ v-model:content="form.proposition_arm" theme="snow" toolbar="full"/>
+<label class="form-label">Русский</label>
+
+          <QuillEditor   contentType="html"
+ v-model:content="form.proposition_ru" theme="snow" toolbar="full"/>
+<label class="form-label">English</label>
+
+          <QuillEditor   contentType="html"
+ v-model:content="form.proposition_en" theme="snow" toolbar="full"/>
 
   <div class="title_big">Ссылка на баннер </div>
 

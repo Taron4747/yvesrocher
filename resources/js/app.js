@@ -6,6 +6,9 @@ import baseMixin from './base'
 // Импорт компонента vue-multiselect
 import Multiselect from 'vue-multiselect'
 import 'vue-multiselect/dist/vue-multiselect.css'
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
+import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 
 createInertiaApp({
   resolve: name => {
@@ -20,6 +23,7 @@ createInertiaApp({
 
       // Регистрируем vue-multiselect
       .component('Multiselect', Multiselect)
+      .component('QuillEditor', QuillEditor)
 
       .mount(el)
   },

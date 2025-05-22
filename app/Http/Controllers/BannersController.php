@@ -24,9 +24,9 @@ class BannersController extends Controller
                 ->withQueryString()
                 ->through(fn ($banner) => [
                     'id' => $banner->id,
-                    'text_arm' => $banner->text_arm,
+                    'title_ru' => $banner->title_ru,
                     'text_ru' => $banner->text_ru,
-                    'text_en' => $banner->text_en,
+                    'position' => $banner->position,
                     'link' => $banner->link,
                   
                 ]),
@@ -52,10 +52,10 @@ class BannersController extends Controller
         'title_en' => ['required', 'max:500'],
         'position' => ['required', 'integer'],
 
-        'proposition_arm' => ['required', 'max:500'],
-        'proposition_ru' => ['required', 'max:500'],
-        'proposition_en' => ['required', 'max:500'],
-        'link' => ['required', 'max:500'],
+        // 'proposition_arm' => ['required', 'max:500'],
+        // 'proposition_ru' => ['required', 'max:500'],
+        // 'proposition_en' => ['required', 'max:500'],
+        'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
         'image_big' => ['required' ],
         'image_medium' => ['required' ],
         'image_small' => ['required' ],
@@ -131,10 +131,11 @@ class BannersController extends Controller
                 'title_en' => ['required', 'max:500'],
                 'position' => ['required', 'integer'],
         
-                'proposition_arm' => ['required', 'max:500'],
-                'proposition_ru' => ['required', 'max:500'],
-                'proposition_en' => ['required', 'max:500'],
-                'link' => ['required', 'max:500'],
+                // 'proposition_arm' => ['required', 'max:500'],
+                // 'proposition_ru' => ['required', 'max:500'],
+                // 'proposition_en' => ['required', 'max:500'],
+                'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
+
                 'is_active' => ['required'],
             ])
         );

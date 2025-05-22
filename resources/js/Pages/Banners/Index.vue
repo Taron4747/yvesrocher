@@ -21,10 +21,9 @@
         <thead>
           <tr class="text-left font-bold">
           <th class="pb-4 pt-6 px-6">ID</th>
-          <th class="pb-4 pt-6 px-6">Հայերեն</th>
-          <th class="pb-4 pt-6 px-6">Русский</th>
-          <th class="pb-4 pt-6 px-6">English</th>
-          <th class="pb-4 pt-6 px-6">Фото</th>
+          <th class="pb-4 pt-6 px-6">Название</th>    
+          <th class="pb-4 pt-6 px-6">Описание</th>
+          <th class="pb-4 pt-6 px-6">Позиция</th>
         </tr>
         </thead>
         <tbody>
@@ -37,7 +36,7 @@
             </td>
             <td class="border-t">
               <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/banners/${banner.id}/edit`">
-                {{ banner.text_arm }}
+                {{ banner.title_ru }}
               </Link>
             </td>
             <td class="border-t">
@@ -47,14 +46,10 @@
             </td>
             <td class="border-t">
               <Link class="flex items-center px-6 py-4" :href="`/admin/banners/${banner.id}/edit`" tabindex="-1">
-                {{ banner.text_en }}
+                {{ banner.position }}
               </Link>
             </td>
-            <td class="border-t">
-              <Link class="flex items-center px-6 py-4" :href="`/admin/banners/${banner.id}/edit`" tabindex="-1">
-                {{ banner.image_big }}
-              </Link>
-            </td>
+         
           </tr>
           <tr v-if="banners.data.length === 0">
             <td class="px-6 py-4 border-t" colspan="4">No banners found.</td>
