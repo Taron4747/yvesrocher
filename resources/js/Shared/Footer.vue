@@ -28,8 +28,7 @@
         </div>
         <div class="content_data_item">
           <div class="data_item_top" style="    border: 1px solid #939956;
-    display: flex
-;
+    display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 12px;
@@ -43,6 +42,25 @@
         </div>
       </div>
     </div>
+    <div class="footer_content_data_center">
+      <div class="info_data">
+        <div class="info_data_item">
+          <div class="title">Обслуживание клиентов</div>
+          <div class="phone">(010) 534836</div>
+          <div class="address">Free service and calls (Monday to Friday 11 AM to 6 PM and Saturday 11 AM to 5 PM).</div>
+        </div>
+        <div class="info_data_item">
+          <div class="images">
+            <img src="images/visa.svg"/>
+            <img src="images/mc.svg"/>
+            <img src="images/arca.png"/>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="footer_content_data_bottom">
+
+     </div>
   </div>
 </template>
 
@@ -102,6 +120,49 @@ export default {
         }
       }
     }
+  }
+  .footer_content_data_center{
+     .info_data{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 50px 0 30px 0;
+      .info_data_item{
+        background: #F0F0F0;
+        border-radius: 5px;
+        padding: 25px;
+        .title{
+          font-size: 14px;
+          font-weight: 600;
+          margin-bottom: 5px;
+          line-height: 100%;
+        }
+        .phone{
+          font-size: 20px;
+          line-height: 23px;
+          color: #014E2E;
+          margin-bottom: 5px;
+        }
+        .address{
+          font-size: 12px;
+          font-weight: 400;
+        }
+        .images{
+          display: flex;
+          margin-top: 4px;
+          align-items: center;
+          img{
+            margin-left: 18px;
+          }
+          img:last-child{
+            height: 15px;
+          }
+        }
+      }
+    }
+  }
+  .footer_content_data_bottom{
+    
   }
 }
 </style>
