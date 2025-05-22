@@ -6,8 +6,8 @@
 
     <div class="relative flex-1 overflow-hidden mx-4">
       <transition name="slide-out" mode="out-in">
-        <div :key="currentIndex" class="text-center font-medium">
-          <span v-html="currentMessage" />
+        <div :key="currentIndex" class="text-center font-medium hover_text">
+          <a :href="currentLink" v-html="currentMessage" />
         </div>
       </transition>
     </div>
@@ -44,6 +44,16 @@ const currentMessage = computed(() => {
     return banner.text_ru + ' - ' +banner.proposition_ru
   } else {
     return 'No message available'
+  }
+})
+
+const currentLink = computed(() => {
+  const banner = props.banners[currentIndex.value]
+  
+  if (banner && banner.text_ru) {
+    return banner.link
+  } else {
+    return '/'
   }
 })
 
