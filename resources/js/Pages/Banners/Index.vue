@@ -135,6 +135,7 @@ export default {
             ).then(response => {
               if (response.data.status === 'warning') {
                 alert(response.data.message);
+                banner.is_active =0
               } else {
                 alert('Изменения сохранены');
               }
