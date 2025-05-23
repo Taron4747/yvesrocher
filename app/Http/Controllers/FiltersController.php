@@ -103,7 +103,7 @@ class FiltersController extends Controller
         $existingIds = collect($request->customData)->pluck('id')->filter()->toArray();
 
         // Удаляем те значения, которых больше нет
-        // $filter->values()->whereNotIn('id', $existingIds)->delete();
+        $filter->subFilters()->whereNotIn('id', $existingIds)->delete();
         
         // Обновляем и добавляем
         foreach ($request->customData as $item) {
