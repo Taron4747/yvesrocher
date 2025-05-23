@@ -32,15 +32,18 @@
           <div  class="pb-8 pr-6 w-full lg:w-1/3 editor" >
             <label class="form-label">Հայերեն</label>
                 <QuillEditor label=""   contentType="html"
-            v-model:content="form.description_arm" theme="snow" toolbar="full"/>
+            v-model:content="form.description_arm" theme="snow" toolbar="full"   style="height: 300px"
+ />
             <label class="form-label">Русский</label>
 
                       <QuillEditor   contentType="html"
-            v-model:content="form.description_ru" theme="snow" toolbar="full"/>
+            v-model:content="form.description_ru" theme="snow" toolbar="full"   style="height: 300px"
+/>
             <label class="form-label">English</label>
 
                       <QuillEditor   contentType="html"
-            v-model:content="form.description_en" theme="snow" toolbar="full"/>
+            v-model:content="form.description_en" theme="snow" toolbar="full"   style="height: 300px"
+/>
           </div>
           <!-- <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն"/>
           <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский"/>
