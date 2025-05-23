@@ -28,6 +28,7 @@
                    <Link href="/language/en">
                     <span  class="dropdown_items_active"> en</span>
                 </Link> -->
+                
             <div class="lang" @click="changeLang('arm')" :class="{ active: this.$page.props.locale == 'arm' }">ARM</div>
             <div class="lang" @click="changeLang('ru')" :class="{ active: this.$page.props.locale == 'ru' }">RU</div>
             <div class="lang" @click="changeLang('en')" :class="{ active: this.$page.props.locale == 'en' }">EN</div>
