@@ -19,6 +19,10 @@
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Հայերեն" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Русский" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
+          <div class="title_big">Описание</div>
+          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full " label="Հայերեն"/>
+          <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full " label="Русский"/>
+          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full " label="English"/>
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete sub category</button>
@@ -35,6 +39,7 @@ import Layout from '@/Shared/Layout.vue'
 import TextInput from '@/Shared/TextInput.vue'
 import SelectInput from '@/Shared/SelectInput.vue'
 import LoadingButton from '@/Shared/LoadingButton.vue'
+import TextAreaInput from '@/Shared/TextareaInput.vue'
 import TrashedMessage from '@/Shared/TrashedMessage.vue'
 
 export default {
@@ -45,6 +50,7 @@ export default {
     SelectInput,
     TextInput,
     TrashedMessage,
+    TextAreaInput,
   },
   layout: Layout,
   props: {
@@ -60,6 +66,9 @@ export default {
         name_ru: this.category.name_ru,
         name_en: this.category.name_en,
         parent_id: this.category.parent_id,
+        description_en:  this.category.description_en,
+        description_ru:  this.category.description_ru,
+        description_arm:  this.category.description_arm,
       }),
     }
   },

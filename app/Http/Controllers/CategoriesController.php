@@ -53,6 +53,9 @@ class CategoriesController extends Controller
             'name_en' => ['required', 'max:50'],
             'name_arm' => ['required', 'max:50'],
             'name_ru' => ['required', 'max:50'],
+            'description_ru' => ['required'],
+            'description_arm' => ['required'],
+            'description_en' => ['required'],
             'image' => ['required'],
             'second_image' => ['required'],
         
@@ -68,6 +71,9 @@ class CategoriesController extends Controller
             'name_en' => $data['name_en'],
             'name_arm' => $data['name_arm'],
             'name_ru' => $data['name_ru'],
+            'description_ru' => $data['description_ru'],
+            'description_arm' => $data['description_arm'],
+            'description_en' => $data['description_en'],
             'image' => $url,
             'second_image' => $secondurl,
 
@@ -106,6 +112,7 @@ class CategoriesController extends Controller
                 'name_arm' => $filter->name_arm,
                 'name_ru' => $filter->name_ru,
                 'name_en' => $filter->name_en,
+              
                 'filterable' => $filter->filterable,
                 'sub_filters' => $filter->subFilters->whereIn('id', $categorySubFilterIds)->map(function ($subFilter) {
                     return [
@@ -135,6 +142,9 @@ class CategoriesController extends Controller
                 'name_arm' => $category->name_arm,
                 'name_ru' => $category->name_ru,
                 'name_en' => $category->name_en,
+                'description_en' => $category->description_en,
+                'description_ru' => $category->description_ru,
+                'description_arm' => $category->description_arm,
                 'image' => $category->image,
                 'second_image' => $category->second_image,
                 // 'category_filters'=>  $categoryFilters->filters->where('filterable',true)->values()->toArray(),
@@ -159,6 +169,9 @@ class CategoriesController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
+                'description_ru' => ['required'],
+                'description_arm' => ['required'],
+                'description_en' => ['required'],
             ])
         );
         if (isset(Request::file('image')[0])) {
@@ -255,7 +268,9 @@ class CategoriesController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'parent_id' => ['required'],
-               
+                'description_ru' => ['required'],
+                'description_arm' => ['required'],
+                'description_en' => ['required'],
             ])
         );
 
@@ -270,6 +285,9 @@ class CategoriesController extends Controller
                 'name_arm' => $category->name_arm,
                 'name_ru' => $category->name_ru,
                 'name_en' => $category->name_en,
+                'description_en' => $category->description_en,
+                'description_arm' => $category->description_arm,
+                'description_ru' => $category->description_ru,
                 'parent_id' => $category->parent_id,
               
                 'deleted_at' => $category->deleted_at,
@@ -286,6 +304,9 @@ class CategoriesController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
+                'description_ru' => ['required'],
+                'description_arm' => ['required'],
+                'description_en' => ['required'],
             ])
         );
 
@@ -351,6 +372,9 @@ class CategoriesController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'parent_id' => ['required'],
+                'description_ru' => ['required'],
+                'description_arm' => ['required'],
+                'description_en' => ['required'],
                
             ])
         );
@@ -367,6 +391,9 @@ class CategoriesController extends Controller
                 'name_arm' => $category->name_arm,
                 'name_ru' => $category->name_ru,
                 'name_en' => $category->name_en,
+                'description_en' => $category->description_en,
+                'description_arm' => $category->description_arm,
+                'description_ru' => $category->description_ru,
                 'parent_id' => $category->parent_id,
               
                 'deleted_at' => $category->deleted_at,
@@ -384,6 +411,9 @@ class CategoriesController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
+                'description_ru' => ['required'],
+                'description_arm' => ['required'],
+                'description_en' => ['required'],
             ])
         );
 
@@ -419,7 +449,7 @@ class CategoriesController extends Controller
             $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
                 return [
                     'id' => $subFilter->id,
-                    'name' => $subFilter->name,
+                    'description' => $subFilter->name,
                     'product_count' => $subFilter->products()->count(),
                 ];
             });
