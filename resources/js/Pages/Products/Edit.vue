@@ -91,7 +91,10 @@
               <input v-model="form.is_bestseller" type="checkbox" :true-value="1" :false-value="0">
               <span class="checkmark"></span>
           </label>
-        
+          <label class="custom_checkbox text_color">Экоформат
+              <input v-model="form.is_ecco" type="checkbox" :true-value="1" :false-value="0">
+              <span class="checkmark"></span>
+          </label>
         <div class="title_big">Фильтры</div>
       <span v-if="errorMessage" class="form-error">{{ errorMessage }}</span>
         <div class="w-full mt-6">
@@ -197,6 +200,7 @@ export default {
         category_id:this.product.category_id,
         sub_category_id:this.product.sub_category_id,
         sub_sub_category_id:this.product.sub_sub_category_id,
+        is_ecco:this.product.is_ecco,
       }),
       image:this.product.image,
       images:this.product.images,

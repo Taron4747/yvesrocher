@@ -111,6 +111,7 @@ class ProductController extends Controller
         $data['image'] =$image;
         $data['is_new'] =$data['is_new']===null?0:$data['is_new'];
         $data['is_bestseller'] =$data['is_bestseller']===null?0:$data['is_bestseller'];
+        $data['is_ecco'] =$data['is_ecco']===null?0:$data['is_ecco'];
         $product = Product::create($data);
         if (Request::file('images')) {
 
@@ -234,7 +235,8 @@ class ProductController extends Controller
                 Rule::unique('products', 'product_code')->ignore($product->id),
             ],
             'price'           => ['required', 'integer'],
-            'size_type_id'           => ['integer'],
+            'size_type_id'           => ['nullable'],
+            'is_ecci'           => ['nullable'],
         ]);
 
       

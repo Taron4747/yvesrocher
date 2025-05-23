@@ -14,6 +14,10 @@
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Հայերեն" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Русский" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
+          <div class="title_big">Описание</div>
+          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full " label="Հայերեն"/>
+          <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full " label="Русский"/>
+          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full " label="English"/>
           <div class="title_big">Медиа</div>
           <image-input v-model="form.image" :error="form.errors.image" label="Фото в меню (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
           <div class="grid grid-cols-2 gap-2 mt-2">
@@ -80,6 +84,7 @@ import LoadingButton from '@/Shared/LoadingButton.vue'
 import TrashedMessage from '@/Shared/TrashedMessage.vue'
 import Multiselect from 'vue-multiselect'
 import ImageInput from '@/Shared/ImageInput.vue'
+import TextAreaInput from '@/Shared/TextareaInput.vue'
 
 export default {
   components: {
@@ -90,6 +95,7 @@ export default {
     TextInput,
     TrashedMessage,
     Multiselect,
+    TextAreaInput,
     ImageInput,
   },
   layout: Layout,
@@ -107,6 +113,9 @@ export default {
         name_arm: this.category.name_arm,
         name_ru: this.category.name_ru,
         name_en: this.category.name_en,
+        description_en:  this.category.description_en,
+        description_ru:  this.category.description_ru,
+        description_arm:  this.category.description_arm,
         image:  null,
         second_image: null,
         filters: [], 
