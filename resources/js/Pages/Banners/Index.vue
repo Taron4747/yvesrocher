@@ -51,9 +51,9 @@
 
             </td>
             <td class="border-t">
-            <button class="btn-indigo" @click="changePosition(banner)">
+            <div class="btn-indigo" @click="changePosition(banner)" style="cursor: pointer;width: fit-content;">
               Изменить
-            </button>
+            </div>
           </td>
           </tr>
           <tr v-if="banners.data.length === 0">

@@ -29,9 +29,23 @@
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
           <div class="title_big">Описание</div>
-          <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն"/>
+          <div  class="pb-8 pr-6 w-full lg:w-1/3 editor" >
+            <label class="form-label">Հայերեն</label>
+                <QuillEditor label=""   contentType="html"
+            v-model:content="form.description_arm" theme="snow" toolbar="full"/>
+            <label class="form-label">Русский</label>
+
+                      <QuillEditor   contentType="html"
+            v-model:content="form.description_ru" theme="snow" toolbar="full"/>
+            <label class="form-label">English</label>
+
+                      <QuillEditor   contentType="html"
+            v-model:content="form.description_en" theme="snow" toolbar="full"/>
+          </div>
+          <!-- <TextAreaInput v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն"/>
           <TextAreaInput v-model="form.description_ru" :error="form.errors.description_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский"/>
-          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English"/>
+          <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English"/> -->
+          
           <div class="title_big">Состав</div>
           <text-input v-model="form.composition_arm" :error="form.errors.composition_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
           <text-input v-model="form.composition_ru" :error="form.errors.composition_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
@@ -282,6 +296,14 @@ export default {
                   margin-right: 12px;
                 }
               }
+            }
+          }
+          .editor{
+            label{
+              margin-top: 15px;
+            }
+            label:first:child{
+              margin-top: 0;
             }
           }
 </style>
