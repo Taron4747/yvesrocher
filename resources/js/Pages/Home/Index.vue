@@ -43,7 +43,7 @@ export default {
     imageBanners: Object,
   },
   mounted(){
-    // console.log(this.imageBanners)
+    console.log(this.textBanners)
   },
   data() {
     return {

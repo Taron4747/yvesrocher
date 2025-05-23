@@ -98,7 +98,9 @@ const startSlider = () => {
 
 // Переход к слайду по индексу
 const goToSlide = (index) => {
+  if (currentIndex.value === index) return
   currentIndex.value = index
+  startSlider()
 }
 
 // Инициализация слайдов после монтирования компонента

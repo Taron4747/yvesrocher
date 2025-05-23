@@ -109,7 +109,7 @@ export default {
         this.products = response.data.products.data.slice(0, 5);
       });
     }
-    console.log(this.products)
+    // console.log(this.products)
     },
   },
 }
