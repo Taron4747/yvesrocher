@@ -29,6 +29,7 @@ class BannersController extends Controller
                     'text_ru' => $banner->text_ru,
                     'position' => $banner->position,
                     'link' => $banner->link,
+                    'is_active' => $banner->is_active,
                   
                 ]),
         ]);
@@ -201,6 +202,25 @@ class BannersController extends Controller
     {
         $data =Request::all();
         Banner::where('id',$data['id'])->update(['position'=>$data['position']]);
+
+    } 
+
+    public function bannerActivate()
+    {
+        $data =Request::all();
+        // dd($data);
+        if ($data['is_active'] ==0) {
+            $bannersCount = Banner::where('is_active',1)->count();
+            if ($bannersCount ==3) {
+                return response()->json([    'status' => 'warning','message'=>'Невозможно одновременно иметь больше пяти активных баннеров ']);
+                
+            }
+            Banner::where('id',$data['id'])->update(['is_active'=>1]);
+
+        }else{
+        Banner::where('id',$data['id'])->update(['is_active'=>0]);
+
+        }
 
     }
 }

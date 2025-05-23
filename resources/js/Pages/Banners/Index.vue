@@ -24,6 +24,7 @@
           <th class="pb-4 pt-6 px-6">Название</th>    
           <th class="pb-4 pt-6 px-6">Описание</th>
           <th class="pb-4 pt-6 px-6">Позиция</th>
+          <th class="pb-4 pt-6 px-6">Активен</th>
           <th class="pb-4 pt-6 px-6"></th>
 
         </tr>
@@ -48,6 +49,13 @@
             </td>
             <td class="border-t">
                  <input type="number" class="width_30 number_input" v-model="banner.position"/>
+
+            </td>
+            <td class="border-t">
+              <label class="custom_checkbox text_color"style="margin:25px" >
+                <input v-model="banner.is_active" @click="changeActive(banner)" type="checkbox" :true-value="1" :false-value="0" />
+                <span class="checkmark"></span>
+              </label>
 
             </td>
             <td class="border-t">
@@ -117,6 +125,19 @@ export default {
       axios.post('/admin/change-banner', formData,
             ).then(response => {
               alert('Изменения сохранены ')
+            })
+    },
+    changeActive(banner){
+      let formData = new FormData
+      formData.set('id', banner.id)
+      formData.set('is_active', banner.is_active)
+      axios.post('/admin/banner-activate', formData,
+            ).then(response => {
+              if (response.data.status === 'warning') {
+                alert(response.data.message);
+              } else {
+                alert('Изменения сохранены');
+              }
             })
     },
   },

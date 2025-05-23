@@ -361,10 +361,12 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::delete('banners/{banner}', [BannersController::class, 'destroy'])
         ->name('banners.destroy')
         ->middleware('auth');
-
+        Route::post('banner-activate', [BannersController::class, 'bannerActivate'])
+        ->middleware('auth');
         Route::put('banners/{banner}/restore', [BannersController::class, 'restore'])
         ->name('banners.restore')
         ->middleware('auth');
+
         Route::get('category/filters/{id}', [CategoriesController::class, 'categoryFilters'])
         ->name('category.filters')
         ->middleware('auth');
