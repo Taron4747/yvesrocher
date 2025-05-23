@@ -18,14 +18,14 @@
         <Link class="group flex items-center py-3" href="/admin/categories">
         <icon name="office" class="mr-2 w-4 h-4"
           :class="isUrl('admin/categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('admin/categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Категории</div>
+        <div :class="isUrl('admin/categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Семейство продуктов</div>
         </Link>
       </div>
       <div class="margin_1">
         <Link class="group flex items-center py-3" href="/admin/sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
           :class="isUrl('admin/sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('admin/sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Подкатегории
+        <div :class="isUrl('admin/sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Категория
         </div>
         </Link>
       </div>
@@ -33,7 +33,7 @@
         <Link class="group flex items-center py-3" href="/admin/sub-sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
           :class="isUrl('admin/sub-sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('admin/sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Под Подкатегории</div>
+        <div :class="isUrl('admin/sub-sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Подкатегории</div>
         </Link>
       </div>
     </div>

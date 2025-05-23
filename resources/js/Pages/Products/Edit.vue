@@ -12,15 +12,15 @@
           <div class="title_big">Код Продукта</div>
           <text-input v-model="form.product_code" :error="form.errors.product_code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
           <div class="title_big">Категоризация</div>
-          <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
+          <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейство продуктов">
             <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData.filter(cat => !cat.parent_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>    
-          <SelectInput v-model="form.sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория" v-if="form.category_id">
+          <SelectInput v-model="form.sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория" v-if="form.category_id">
             <option disabled value="">Выберите подкатегорию</option>
             <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>  
-          <SelectInput v-model="form.sub_sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подподкатегория" v-if="form.sub_category_id">
+          <SelectInput v-model="form.sub_sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория" v-if="form.sub_category_id">
             <option disabled value="">Выберите подподкатегорию</option>
             <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.sub_category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>  

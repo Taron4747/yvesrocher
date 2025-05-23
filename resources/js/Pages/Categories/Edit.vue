@@ -2,7 +2,7 @@
   <div>
     <Head :title="`${form.name_arm} `" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Категории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Семейство продуктов</Link>
       <span class="text-indigo-400 font-medium">/</span>
       {{ form.name_ru }} 
     </h1>
@@ -63,7 +63,7 @@
        
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить категорию</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить категорию</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить семейство продуктов</loading-button>
         </div>
       </form>
     </div>

@@ -2,7 +2,7 @@
   <div>
     <Head :title="`${form.name_arm} `" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-categories">Подкатегории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-categories">Категории</Link>
       <span class="text-indigo-400 font-medium">/</span>
       {{ form.name_arm }} 
     </h1>
@@ -10,8 +10,8 @@
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="update">
         <div class="-mb-8 -mr-6 p-8">
-          <div class="title_big">Категория</div>
-          <select-input v-model="form.parent_id" :error="form.errors.parent_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Категории">
+          <div class="title_big">Семейство продуктов</div>
+          <select-input v-model="form.parent_id" :error="form.errors.parent_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Семейство продуктов">
             <option :value="null" />
             <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name_arm }}</option>
           </select-input>
@@ -22,7 +22,7 @@
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
           <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить подкатегории</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить подкатегории</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить категорию</loading-button>
         </div>
       </form>
     </div>

@@ -2,14 +2,14 @@
   <div>
     <Head title="Create Sub sub category" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-sub-categories">Под Подкатегории</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/sub-sub-categories">Подкатегория</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div class="-mb-8 -mr-6 p-8">
-          <div class="title_big">Подкатегория</div>
-          <select-input v-model="form.parent_id" :error="form.errors.parent_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Подкатегории">
+          <div class="title_big">Категория</div>
+          <select-input v-model="form.parent_id" :error="form.errors.parent_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Категории">
             <option :value="null" />
             <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name_arm }}</option>
           </select-input>
@@ -19,7 +19,7 @@
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать Под Подкатегорию</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать Подкатегорию</loading-button>
         </div>
       </form>
     </div>
