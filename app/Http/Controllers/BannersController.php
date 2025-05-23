@@ -43,26 +43,26 @@ class BannersController extends Controller
     {
 
         $data =Request::all();
-    $validator = Validator::make(Request::all(), [
-        'text_arm' => ['required', 'max:500'],
-        'text_ru' => ['required', 'max:500'],
-        'text_en' => ['required', 'max:500'],
-        'title_arm' => ['required', 'max:500'],
-        'title_ru' => ['required', 'max:500'],
-        'title_en' => ['required', 'max:500'],
-        'position' => ['required', 'integer'],
-
-        // 'proposition_arm' => ['required', 'max:500'],
-        // 'proposition_ru' => ['required', 'max:500'],
-        // 'proposition_en' => ['required', 'max:500'],
-        'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
-        'image_big' => ['required' ],
-        'image_medium' => ['required' ],
-        'image_small' => ['required' ],
-        'bottom_image' => ['required' ],
-        'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
-
-    ]);
+        $validator = Validator::make(Request::all(), [
+            'text_arm' => ['required', 'max:500'],
+            'text_ru' => ['required', 'max:500'],
+            'text_en' => ['required', 'max:500'],
+            'title_arm' => ['required', 'max:500'],
+            'title_ru' => ['required', 'max:500'],
+            'title_en' => ['required', 'max:500'],
+            'position' => ['required', 'integer'],
+            // 'proposition_arm' => ['required', 'max:500'],
+            // 'proposition_ru' => ['required', 'max:500'],
+            // 'proposition_en' => ['required', 'max:500'],
+            'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
+            'image_big' => ['required' ],
+            'image_medium' => ['required' ],
+            'image_small' => ['required' ],
+            'bottom_image' => ['required' ],
+            'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
+        ], [
+            'link.regex' => 'Неверный формат ссылки. URL должен начинаться с: https://yves-rocher.am/',
+        ]);
     $validator->validate();
 
 
@@ -123,6 +123,23 @@ class BannersController extends Controller
     {
         $data =Request::all();
         $banner->update(
+            // Request::validate([
+            //     'text_arm' => ['required', 'max:500'],
+            //     'text_ru' => ['required', 'max:500'],
+            //     'text_en' => ['required', 'max:500'],
+            //     'title_arm' => ['required', 'max:500'],
+            //     'title_ru' => ['required', 'max:500'],
+            //     'title_en' => ['required', 'max:500'],
+            //     'position' => ['required', 'integer'],
+        
+            //     // 'proposition_arm' => ['required', 'max:500'],
+            //     // 'proposition_ru' => ['required', 'max:500'],
+            //     // 'proposition_en' => ['required', 'max:500'],
+            //     'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
+
+            //     'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
+                
+            // ])
             Request::validate([
                 'text_arm' => ['required', 'max:500'],
                 'text_ru' => ['required', 'max:500'],
@@ -131,16 +148,16 @@ class BannersController extends Controller
                 'title_ru' => ['required', 'max:500'],
                 'title_en' => ['required', 'max:500'],
                 'position' => ['required', 'integer'],
-        
                 // 'proposition_arm' => ['required', 'max:500'],
                 // 'proposition_ru' => ['required', 'max:500'],
                 // 'proposition_en' => ['required', 'max:500'],
                 'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
-
-        'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
-                
+                'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
+            ], [
+                'link.regex' => 'Неверный формат ссылки. URL должен начинаться с: https://yves-rocher.am/',
             ])
         );
+     
         if (isset(Request::file('image_big')[0])) {
             $path = Request::file('image_big')[0]->store('images', 's3', 'public');
             $image_big = Storage::disk('s3')->url($path);
