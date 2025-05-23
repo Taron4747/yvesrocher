@@ -50,9 +50,9 @@
             <input type="number" class="width_30 number_input" v-model="product.count"/>
           </td>
           <td class="border-t">
-            <button class="btn-indigo" @click="changePriceCount(product)">
+            <div class="btn-indigo" @click="changePriceCount(product)" style="cursor: pointer;width: fit-content;">
               Изменить
-            </button>
+            </div>
           </td>
           <td class="w-px border-t">
             <Link class="flex items-center px-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
@@ -96,7 +96,6 @@ export default {
     products: Object,
   },
   mounted(){
-    console.log(this.products.data);
   },
   data() {
     return {
@@ -125,7 +124,7 @@ export default {
       formData.set('price', product.price)
       axios.post('/admin/product-count-change', formData,
             ).then(response => {
-              
+              alert("Изменения сохранены")
             })
     }
   },

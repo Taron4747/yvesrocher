@@ -11,7 +11,7 @@
         <div class="-mb-8 -mr-6 p-8">
           <div class="title_big">Код Продукта</div>
           <text-input v-model="form.product_code" :error="form.errors.product_code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
-          <div class="title_big">Категория</div>
+          <div class="title_big">‘Категоризация</div>
           <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория">
             <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData.filter(cat => !cat.parent_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
@@ -59,7 +59,7 @@
             <text-input v-model="form.size" :error="form.errors.size" placeholder="50" class="pb-8 pr-6  lg:w-2/3" label="Размер" />
             <SelectInput v-model="form.size_type_id" class="pb-8 pr-6  lg:w-1/3" label="Выберите тип">
               <option disabled value="">Выберите тип </option>
-              <option v-for="opt in types" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option> 
+              <option v-for="opt in dataTypes" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option> 
             </SelectInput>   
           </div>
           <!-- <text-input v-model="form.size" :error="form.errors.size" class="pb-8 pr-6 w-full lg:w-1/3" label="Размер" />
@@ -155,7 +155,7 @@ export default {
       categoriesData:this.categories,
       filtersData:this.filters,
       butonFiltersData:this.butonFilters,
-      types:this.types,
+      dataTypes:this.types,
       selected: [],
       form: this.$inertia.form({
         name_arm:  this.product.name_arm,
