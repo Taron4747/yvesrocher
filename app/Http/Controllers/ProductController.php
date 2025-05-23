@@ -85,6 +85,9 @@ class ProductController extends Controller
         unset($data['images']);
         $validator = Validator::make(Request::all(), [
                 'name_arm' => ['required', 'max:50'],
+                'category_id' => ['required'],
+                'sub_category_id' => ['required'],
+                'sub_sub_category_id' => ['required'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
                 // 'size' => ['required', 'numeric'],

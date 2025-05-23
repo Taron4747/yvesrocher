@@ -59,6 +59,21 @@
       <div :class="isUrl('admin/banners') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Баннеры</div>
       </Link>
     </div>
+
+    <div class="margin_1">
+      <Link class="group flex items-center py-3" href="/admin/settings">
+      <icon name="printer" class="mr-2 w-4 h-4"
+        :class="isUrl('admin/settings') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin/settings') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Настройки</div>
+      </Link>
+    </div>
+    <div class="margin_1">
+      <Link class="group flex items-center py-3" href="/admin/shops">
+      <icon name="printer" class="mr-2 w-4 h-4"
+        :class="isUrl('admin/shops') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin/shops') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Магазины</div>
+      </Link>
+    </div>
     <!-- <dropdown class="mt-1" placement="bottom-end">
       <template #default>
         <div class="mb-4">

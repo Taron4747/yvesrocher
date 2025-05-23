@@ -13,6 +13,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BannersController;
 use App\Http\Controllers\CatalogController;
+use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\ShopsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -376,6 +378,42 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::post('change-banner', [BannersController::class, 'changeBanner'])
         ->name('banner.change')
         ->middleware('auth');
+
+        Route::get('settings', [SettingsController::class, 'index'])
+        ->name('banners')
+        ->middleware('auth');
+
+
+
+           // shops
+
+           Route::get('shops', [ShopsController::class, 'index'])
+           ->name('shops')
+           ->middleware('auth');
+
+       Route::get('shops/create', [ShopsController::class, 'create'])
+           ->name('shops.create')
+           ->middleware('auth');
+
+       Route::post('shops', [ShopsController::class, 'store'])
+           ->name('shops.store')
+           ->middleware('auth');
+
+       Route::get('shops/{shop}/edit', [ShopsController::class, 'edit'])
+           ->name('shops.edit')
+           ->middleware('auth');
+
+       Route::put('shops/{shop}', [ShopsController::class, 'update'])
+           ->name('shops.update')
+           ->middleware('auth');
+
+       Route::delete('shops/{shop}', [ShopsController::class, 'destroy'])
+           ->name('shops.destroy')
+           ->middleware('auth');
+
+       Route::put('shops/{shop}/restore', [ShopsController::class, 'restore'])
+           ->name('shops.restore')
+           ->middleware('auth');
     });
     Route::get('category/{id}', [CatalogController::class, 'getByCategory'])
     ->name('category');
