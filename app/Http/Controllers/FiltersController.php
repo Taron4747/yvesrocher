@@ -52,6 +52,7 @@ class FiltersController extends Controller
        
 
         $data =Request::all();
+        // dd($data);
         $insertdata = [
             'name_en' => $data['name_en'],
             'name_arm' => $data['name_arm'],
@@ -60,7 +61,7 @@ class FiltersController extends Controller
 
         ];
         $filter = Filter::create($insertdata) ;
-        if ($data['filterable'] ==true) {
+        // if ($data['filterable'] ==true) {
             foreach ($data['customData'] as $key => $customData) {
                 $filterdata =[
                     'name_en' => $customData['name_en'],
@@ -70,7 +71,7 @@ class FiltersController extends Controller
                 ];
                 SubFilter::create($filterdata);
             }
-        }
+        // }
         return Redirect::route('filter')->with('success', 'Filter created.');
     }
 
