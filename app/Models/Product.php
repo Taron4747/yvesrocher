@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $appends = ['type'];
     public function category()
     {
         return $this->belongsTo(Category::class);
@@ -18,6 +19,10 @@ class Product extends Model
     public function images()
     {
         return $this->hasMany(ProductImage::class);
+    }
+    public function sizeType()
+    {
+        return $this->belongsTo(SizeType::class);
     }
     public function subFilters()
     {
@@ -40,5 +45,23 @@ class Product extends Model
                 $query->onlyTrashed();
             }
         });
+    }
+
+    public function getTypeAttribute()
+    {
+        $locale = app()->getLocale();
+
+        if (!$this->relationLoaded('sizeType')) {
+            $this->load('sizeType');
+        }
+
+        $field = match ($locale) {
+            'ru' => 'name_ru',
+            'en' => 'name_en',
+            'hy', 'arm' => 'name_arm',
+            default => 'name_ru',
+        };
+
+        return $this->sizeType?->{$field};
     }
 }

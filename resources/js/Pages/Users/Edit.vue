@@ -3,7 +3,7 @@
     <Head :title="`${form.first_name} ${form.last_name}`" />
     <div class="flex justify-start mb-8 max-w-3xl">
       <h1 class="text-3xl font-bold">
-        <Link class="text-indigo-400 hover:text-indigo-600" href="/users">Users</Link>
+        <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/users">Users</Link>
         <span class="text-indigo-400 font-medium">/</span>
         {{ form.first_name }} {{ form.last_name }}
       </h1>
@@ -71,18 +71,18 @@ export default {
   },
   methods: {
     update() {
-      this.form.post(`/users/${this.user.id}`, {
+      this.form.post(`/admin/users/${this.user.id}`, {
         onSuccess: () => this.form.reset('password', 'photo'),
       })
     },
     destroy() {
       if (confirm('Are you sure you want to delete this user?')) {
-        this.$inertia.delete(`/users/${this.user.id}`)
+        this.$inertia.delete(`/admin/users/${this.user.id}`)
       }
     },
     restore() {
       if (confirm('Are you sure you want to restore this user?')) {
-        this.$inertia.put(`/users/${this.user.id}/restore`)
+        this.$inertia.put(`/admin/users/${this.user.id}/restore`)
       }
     },
   },
