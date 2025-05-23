@@ -24,15 +24,18 @@
           {{ form.errors.proposition_arm }}
       <label class="form-label">Հայերեն</label>
                 <QuillEditor label=""   contentType="html"
-      v-model:content="form.proposition_arm" theme="snow" toolbar="full"/>
+      v-model:content="form.proposition_arm" theme="snow" toolbar="full"   style="height: 300px"
+/>
       <label class="form-label">Русский</label>
 
                 <QuillEditor   contentType="html"
-      v-model:content="form.proposition_ru" theme="snow" toolbar="full"/>
+      v-model:content="form.proposition_ru" theme="snow" toolbar="full"   style="height: 300px"
+/>
       <label class="form-label">English</label>
 
                 <QuillEditor   contentType="html"
-      v-model:content="form.proposition_en" theme="snow" toolbar="full"/>
+      v-model:content="form.proposition_en" theme="snow" toolbar="full"   style="height: 300px"
+/>
 
           <!-- <text-input v-model="form.proposition_arm" :error="form.errors.proposition_arm" class="pb-8 pr-6 w-full " label="Հայերեն" />
           <text-input v-model="form.proposition_ru" :error="form.errors.proposition_ru" class="pb-8 pr-6 w-full " label="Русский" />
