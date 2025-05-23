@@ -14,8 +14,8 @@
         </div>
         <div class="banner_middle_center">
           <div class="search_content">
-            <img src="/images/search_green.svg">
-            <span>ПОИСК</span>
+            <input @keyup.enter="handleEnter" v-model="searchValue" placeholder="ПОИСК" type="text" />
+            <img @click="handleEnter" src="/images/search_green.svg">
           </div>
         </div>
         <div class="banner_middle_right">
@@ -109,6 +109,7 @@ export default {
   },
   data() {
     return {
+      searchValue:'',
       image:null,
       showDropdown:false,
       choosedCategory:0,
@@ -156,6 +157,12 @@ export default {
 
   },
   methods: {
+    handleEnter(){
+      const length = this.searchValue.length;
+      if(length > 2){
+        alert("Идет поиск,пока нету отобройения результат,по сколку страница поиска еще не готова")
+      }
+    },
     showHide(type,id){
       if(type){
         if(id != 1000){
@@ -219,20 +226,35 @@ export default {
         .search_content{
           display: flex;
           align-items: center;
+          position: relative;
           cursor: pointer;
           width: 302px;
           height: 35px;
           border-bottom: 1px solid #014E2E;
           padding-left: 11px;
+          input{
+            padding-left: 45px;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin-left: -11px;
+            border: none;
+            border: none !important;
+            outline: none; /* Убирает рамку при фокусе */
+            box-shadow: none; /* Если библиотека добавляет тень вместо рамки */
+          }
+          input::placeholder {
+            font-size: 14px!important;
+            color: #014E2E!important;
+          }
           img{
+            position: absolute;
+            z-index: 5;
+            left: 11px;
+            top: 5px;
             width: 23px;
             height: 20px;
             margin-right: 20px;
-          }
-          span{
-            font-size: 14px;
-            color: #014E2E;
-            line-height: 100%;
           }
         }
     }
