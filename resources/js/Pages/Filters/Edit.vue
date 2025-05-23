@@ -16,10 +16,10 @@
           <div class="-mb-8 -mr-6 p-8">
             <div class="title_big">Значение</div>
             <div v-for="key in countOfCustom" class="-mb-8 -mr-6 p-8 relative">
-              <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
-              <text-input v-model="customData[key-1].name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
-              <text-input v-model="customData[key-1].name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
-              <div v-if="countOfCustom != key" class="add_custom" @click="removeCustom(key)">
+              <text-input @keyup="validation(2,key-1)" v-model="customData[key-1].name_arm" :error="customData[key-1].error_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+              <text-input @keyup="validation(2,key-1)" v-model="customData[key-1].name_ru" :error="customData[key-1].error_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+              <text-input @keyup="validation(2,key-1)" v-model="customData[key-1].name_en" :error="customData[key-1].error_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
+              <div v-if="countOfCustom != 1" class="add_custom" @click="removeCustom(key)">
                 <img src="/images/trash.svg">
               </div>   
             </div>
@@ -77,38 +77,76 @@ export default {
       name_arm: value.name_arm,
       name_ru: value.name_ru,
       name_en: value.name_en,
+      error_arm: '',
+      error_ru: '',
+      error_en: '',
     })) || [],
     countOfCustom: (this.filter?.sub_filters?.length || 1),
   }
 },
   methods: {
     update() {
-      this.form.customData = this.customData
+      this.form.customData = JSON.parse(JSON.stringify(this.customData));
+      const nameArm = this.form.customData[this.form.customData.length - 1]?.name_arm;
+      const nameRu = this.form.customData[this.form.customData.length - 1]?.name_ru;
+      const nameEn = this.form.customData[this.form.customData.length - 1]?.name_en;
+    
+      if(nameArm == '' || 
+        nameRu == '' || 
+        nameEn == '' && this.form.customData.length == 1){
+        this.addValue();
+        return false;
+      }
       this.form.put(`/admin/filter/${this.form.id}`) // метод PUT для обновления
     },
     addValue(){
+      var key = this.customData.length-1;
+      
       if(!this.form.name_arm){
         this.form.errors.name_arm = "The name arm field is required."
-      }else if(!this.form.name_ru){
+      }
+      if(!this.form.name_ru){
         this.form.errors.name_ru = "The name ru field is required."
-      }else if(!this.form.name_en){
+      }
+      if(!this.form.name_en){
         this.form.errors.name_en = "The name en field is required."
       }
-      var key = this.customData.length-1;
-        if(this.customData[key].name_arm && this.customData[key].name_ru && this.customData[key].name_en
-        && this.form.name_arm && this.form.name_ru && this.form.name_en){
-          this.pushData(key)
-          this.countOfCustom ++
-        }     
+       if(!this.customData[key].name_arm){
+        this.customData[key].error_arm = "The value arm field is required."
+      }
+      if(!this.customData[key].name_ru){
+        this.customData[key].error_ru = "The value ru field is required."
+      }
+      if(!this.customData[key].name_en){
+        this.customData[key].error_en = "The value en field is required."
+      }
+      
+      if(this.customData[key].name_arm && this.customData[key].name_ru && this.customData[key].name_en
+      && this.form.name_arm && this.form.name_ru && this.form.name_en){
+        this.pushData(key)
+        this.countOfCustom ++
+      }     
     },
-    validation(type){
+     validation(type,key = null){
       if(type == 1){
         if(this.form.name_arm){
           this.form.errors.name_arm = ""
-        }else if(this.form.name_ru){
+        }
+        if(this.form.name_ru){
           this.form.errors.name_ru = ""
-        }else if(this.form.name_en){
+        }
+        if(this.form.name_en){
           this.form.errors.name_en = ""
+        }
+      }else{
+        if(this.customData[key].name_arm){
+          this.customData[key].error_arm = ""
+        }
+        if(this.customData[key].name_ru){
+          this.customData[key].error_ru = ""
+        }
+        if(this.customData[key].name_en){
+          this.customData[key].error_en = ""
         }
       }
     },
@@ -117,6 +155,9 @@ export default {
         name_arm: '',
         name_ru:'',
         name_en: '',
+        error_arm: '',
+        error_ru: '',
+        error_en: '',
       }
       this.customData.push(newObject); 
     },
