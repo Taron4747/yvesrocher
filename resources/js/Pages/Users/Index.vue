@@ -30,7 +30,7 @@
           <th class="pb-4 pt-6 px-6">Телефон</th>
           <th class="pb-4 pt-6 px-6" colspan="2">Роль</th>
         </tr>
-        <tr v-for="user in users" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
+        <tr v-for="user in users.data" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t">
             <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/users/${user.id}/edit`">
               <img v-if="user.photo" class="block -my-2 mr-2 w-5 h-5 rounded-full" :src="user.photo" />
@@ -64,6 +64,8 @@
         </tr>
       </table>
     </div>
+    <pagination class="mt-6" :links="users.links" />
+
   </div>
 </template>
 
@@ -75,6 +77,7 @@ import Layout from '@/Shared/Layout.vue'
 import throttle from 'lodash/throttle'
 import mapValues from 'lodash/mapValues'
 import SearchFilter from '@/Shared/SearchFilter.vue'
+import Pagination from '@/Shared/Pagination.vue'
 
 export default {
   components: {
@@ -82,11 +85,12 @@ export default {
     Icon,
     Link,
     SearchFilter,
+    Pagination,
   },
   layout: Layout,
   props: {
     filters: Object,
-    users: Array,
+    users: Object,
   },
   data() {
     return {
