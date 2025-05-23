@@ -12,15 +12,15 @@
           <div class="title_big">Код Продукта</div>
           <text-input v-model="form.product_code" :error="form.errors.product_code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
           <div class="title_big">Категоризация</div>
-          <SelectInput v-model="form.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейство продуктов">
+          <SelectInput v-model="form.category_id" :error="form.errors.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейство продуктов">
             <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData.filter(cat => !cat.parent_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>    
-          <SelectInput v-model="form.sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория" v-if="form.category_id">
+          <SelectInput v-model="form.sub_category_id" :error="form.errors.sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Категория" v-if="form.category_id">
             <option disabled value="">Выберите подкатегорию</option>
             <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>  
-          <SelectInput v-model="form.sub_sub_category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория" v-if="form.sub_category_id">
+          <SelectInput v-model="form.sub_sub_category_id" :error="form.errors.sub_sub_category_id"  class="pb-8 pr-6 w-full lg:w-1/3" label="Подкатегория" v-if="form.sub_category_id">
             <option disabled value="">Выберите подподкатегорию</option>
             <option v-for="opt in categoriesData.filter(cat => cat.parent_id === form.sub_category_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>  
@@ -76,7 +76,7 @@
           </label>
         
         <div class="title_big">Фильтры</div>
-      
+       <span v-if="errorMessage" class="form-error">{{ errorMessage }}</span>
         <div class="w-full mt-6">
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
@@ -147,6 +147,7 @@ export default {
   },
   data() {
     return {
+      errorMessage:'',
       categoriesData:this.categories,
       dataTypes:this.types,
       filtersData:this.filters,
@@ -193,6 +194,23 @@ export default {
     });
     },
     store() {
+      this.errorMessage = "";
+      const selectedFilters = this.filtersData.filter(filter => filter.type === true);
+
+      if (selectedFilters.length === 0) {
+        this.errorMessage = 'Выберите хотя бы один фильтр';
+        return false;
+      } else {
+          // Проверка 2: у каждого выбранного фильтра должен быть хотя бы один активный подфильтр
+          const hasInvalidSubFilters = selectedFilters.some(filter => {
+              return !filter.sub_filters.some(sub => sub.type === true);
+          });
+
+          if (hasInvalidSubFilters) {
+              this.errorMessage = 'Значение фильтра обязательно';
+              return false;
+          } 
+      }
       this.form.button_filters = this.selected;
       this.form.filters = this.filtersData;
       this.form.post('/admin/product')

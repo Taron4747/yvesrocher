@@ -117,6 +117,7 @@ export default {
     }
   },
   mounted(){
+    // console.log(this.category)
   const categoryFiltersArray = Object.values(this.category.category_filters);
   this.filtersData.forEach((filter) => {
     filter.type = false;
@@ -127,7 +128,7 @@ export default {
       if(catFilter.id === filter.id){
         filter.type = true;
         Object.values(catFilter.sub_filters).forEach((catSubFilter) => {
-          console.log(catSubFilter)
+          // console.log(catSubFilter)
           filter.sub_filters.forEach((subFilter) => {
             if(subFilter.id === catSubFilter.id){
               subFilter.type = true;
