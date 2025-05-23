@@ -40,3 +40,8 @@ export default {
   },
 }
 </script>
+<style>
+input::placeholder {
+  color: #a8a8a8!important;
+}
+</style>
