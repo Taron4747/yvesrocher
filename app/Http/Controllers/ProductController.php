@@ -194,7 +194,7 @@ class ProductController extends Controller
                 'filters' => $product->subFilters->values()->toArray(),
                 'butonFilters' => $product->filters->where('filterefilterable',0)->values()->toArray(),
                 'sub_sub_category_id' => $product->sub_sub_category_id,
-                'sub_sub_category_id' => $product->sub_sub_category_id,
+                'size_type_id' => $product->size_type_id,
             ],
             'categoryfilters'=>$categoryfilters->values()->toArray(),
             'categories' =>Category::with('children.children')->get()->toArray(),
