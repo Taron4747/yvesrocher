@@ -9,14 +9,11 @@
       <form @submit.prevent="update">
         <div class="-mb-8 -mr-6 p-8">
           <div class="title_big">Название</div>
-          <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
-          <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
-          <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
-          <label class="custom_checkbox text_color">Добавить значение в фильтр
-              <input v-model="form.filterable" type="checkbox" checked="checked">
-              <span class="checkmark"></span>
-          </label>
-          <div class="-mb-8 -mr-6 p-8" v-if="form.filterable">
+          <text-input @keyup="validation(1)" v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
+          <text-input @keyup="validation(1)" v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
+          <text-input @keyup="validation(1)" v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
+          
+          <div class="-mb-8 -mr-6 p-8">
             <div class="title_big">Значение</div>
             <div v-for="key in countOfCustom" class="-mb-8 -mr-6 p-8 relative">
               <text-input v-model="customData[key-1].name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
@@ -90,13 +87,30 @@ export default {
       this.form.put(`/admin/filter/${this.form.id}`) // метод PUT для обновления
     },
     addValue(){
+      if(!this.form.name_arm){
+        this.form.errors.name_arm = "The name arm field is required."
+      }else if(!this.form.name_ru){
+        this.form.errors.name_ru = "The name ru field is required."
+      }else if(!this.form.name_en){
+        this.form.errors.name_en = "The name en field is required."
+      }
       var key = this.customData.length-1;
         if(this.customData[key].name_arm && this.customData[key].name_ru && this.customData[key].name_en
         && this.form.name_arm && this.form.name_ru && this.form.name_en){
           this.pushData(key)
           this.countOfCustom ++
         }     
-        console.log(this.customData)
+    },
+    validation(type){
+      if(type == 1){
+        if(this.form.name_arm){
+          this.form.errors.name_arm = ""
+        }else if(this.form.name_ru){
+          this.form.errors.name_ru = ""
+        }else if(this.form.name_en){
+          this.form.errors.name_en = ""
+        }
+      }
     },
     pushData(){
       let newObject = {
