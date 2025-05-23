@@ -186,6 +186,8 @@ class BannersController extends Controller
     {
         $banner->delete();
 
+        return redirect()->route('banners')->with('success', 'Баннер удален.');
+
         return Redirect::back()->with('success', 'Баннер удален.');
     }
 
