@@ -9,15 +9,17 @@
       <form @submit.prevent="store">
         <div class="-mb-8 -mr-6 p-8">
           <div class="title_big">Название</div>
+          <!-- {{ form.errors }} -->
           <text-input v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/2" label="Հայերեն" />
           <text-input v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/2" label="Русский" />
           <text-input v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/2" label="English" />
           <div class="title_big">Медиа</div>  
           <image-input v-model="form.image" :error="form.errors.image" label="Фото в меню (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
-          <image-input v-model="form.second_image" :error="form.errors.second_image" label="Фото в каталоге(только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
+          <image-input v-model="form.second_image" :error="form.errors.second_image" label="Фото в каталоге (только 1 фото)" class="pb-8 pr-6 w-full lg:w-1/2" accept="image/*" :max-files="1"/>
           <!-- <file-input v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full lg:w-1/2" type="file" accept="image/*" label="Фото" /> -->
           <div class="w-full mt-6">
             <div class="title_big">Фильтры</div>
+              <span v-if="errorMessage" class="form-error">{{ errorMessage }}</span>
               <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
                 <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                     <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
@@ -84,6 +86,7 @@ export default {
   data() {
     return {
       filtersData:this.filters,
+      errorMessage:"",
       // butonFiltersData:this.butonFilters,
       // selected: [],
       form: this.$inertia.form({
@@ -107,6 +110,26 @@ export default {
   },
   methods: {
     store() {
+       this.errorMessage = "";
+      const selectedFilters = this.filtersData.filter(filter => filter.type === true);
+
+      if (selectedFilters.length === 0) {
+        this.errorMessage = 'Выберите хотя бы один фильтр';
+        return false;
+      } else {
+          // Проверка 2: у каждого выбранного фильтра должен быть хотя бы один активный подфильтр
+          const hasInvalidSubFilters = selectedFilters.some(filter => {
+              return !filter.sub_filters.some(sub => sub.type === true);
+          });
+
+          if (hasInvalidSubFilters) {
+              this.errorMessage = 'Значение фильтра обязательно';
+              return false;
+          } 
+      }
+      
+      
+      
       this.form.filters = this.filtersData
       // this.form.button_filters = this.selected      
       this.form.post('/admin/categories')

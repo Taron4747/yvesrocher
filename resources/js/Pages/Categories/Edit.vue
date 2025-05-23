@@ -33,6 +33,7 @@
         </div>
           <div class="w-full mt-6">
           <div class="title_big">Фильтры</div>
+           <span v-if="errorMessage" class="form-error">{{ errorMessage }}</span>
           <div v-for="filter in filtersData" :key="filter.id" class="mb-4">
             <label class="custom_checkbox custom_checkbox_bold">{{filter.name_ru}}
                 <input v-model="filter.type" type="checkbox" checked="checked" @change="onFilterChange(filter)">
@@ -50,7 +51,7 @@
             </div>
           </div>
         </div>
-        <multiselect 
+        <!-- <multiselect 
           v-model="selected" 
           :options="butonFiltersData" 
           :multiple="true" 
@@ -58,7 +59,7 @@
           label="name_arm"  
           track-by="id"  
            class="width_30"
-        />
+        /> -->
         </div>
        
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
@@ -99,8 +100,9 @@ export default {
   data() {
     return {
       filtersData:this.category.filters,
-      butonFiltersData:this.category.buton_filters,
-      selected: [],
+      // butonFiltersData:this.category.buton_filters,
+      // selected: [],
+      errorMessage:"",
       form: this.$inertia.form({
         name_arm: this.category.name_arm,
         name_ru: this.category.name_ru,
@@ -139,8 +141,27 @@ export default {
   },
   methods: {
     update() {
+       this.errorMessage = "";
+      const selectedFilters = this.filtersData.filter(filter => filter.type === true);
+
+      if (selectedFilters.length === 0) {
+        this.errorMessage = 'Выберите хотя бы один фильтр';
+        return false;
+      } else {
+          // Проверка 2: у каждого выбранного фильтра должен быть хотя бы один активный подфильтр
+          const hasInvalidSubFilters = selectedFilters.some(filter => {
+              return !filter.sub_filters.some(sub => sub.type === true);
+          });
+
+          if (hasInvalidSubFilters) {
+              this.errorMessage = 'Значение фильтра обязательно';
+              return false;
+          } 
+      }
+      
+      
+      
       this.form.filters = this.filtersData
-      this.form.button_filters = this.selected   
       this.form.post(`/admin/categories/${this.category.id}`)
     },
     destroy() {
