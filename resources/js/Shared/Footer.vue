@@ -59,7 +59,7 @@
       </div>
     </div>
      <div class="footer_content_data_bottom">
-      <div>Встретимся здесь</div>
+      <div>мы в социальных сетях</div>
       <a target="_blank" href="https://www.instagram.com/yvesrocherarm1/?hl=en"><img src="/images/instagram.svg"/></a>
       <a target="_blank" href="https://www.facebook.com/p/Yves-Rocher-Armenia-100063517751918/?locale=hy_AM"><img src="/images/facebook.svg"/></a>
       <!-- <a href=""><img src="/images/x.svg"/></a>
@@ -131,6 +131,7 @@ export default {
       align-items: center;
       justify-content: space-around;
       padding: 50px 0 30px 0;
+      background: #F0F0F0;
       .info_data_item{
         background: #F0F0F0;
         border-radius: 5px;
