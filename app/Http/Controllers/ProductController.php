@@ -87,7 +87,8 @@ class ProductController extends Controller
                 'name_arm' => ['required', 'max:50'],
                 'name_ru' => ['required', 'max:50'],
                 'name_en' => ['required', 'max:50'],
-                'size' => ['required', 'numeric'],
+                // 'size' => ['required', 'numeric'],
+                'count' => ['required'],
                 'description_arm' => ['required'],
                 'description_ru' => ['required'],
                 'description_en' => ['required'],
@@ -98,6 +99,7 @@ class ProductController extends Controller
                 'product_code' => ['required', 'unique:products'], 
 
                 'image' => ['required'],
+                'images'=> ['required'],
                 'price' => ['required','integer'],
         ]);
         $validator->validate();

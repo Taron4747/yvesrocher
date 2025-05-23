@@ -84,6 +84,9 @@ export default {
     countOfCustom: (this.filter?.sub_filters?.length || 1),
   }
 },
+created(){
+  console.log(this.customData);
+},
   methods: {
     update() {
       this.form.customData = JSON.parse(JSON.stringify(this.customData));

@@ -20,7 +20,8 @@
           <TextAreaInput v-model="form.text_ru" :error="form.errors.text_ru" class="pb-8 pr-6 w-full " label="Русский"/>
           <TextAreaInput v-model="form.text_en" :error="form.errors.text_en" class="pb-8 pr-6 w-full " label="English"/>
           <div class="title_big">Значение</div>
-          <!-- {{ form.errors.text_arm }} -->
+          {{ form.errors.text_arm }}
+          {{ form.errors.proposition_arm }}
       <label class="form-label">Հայերեն</label>
                 <QuillEditor label=""   contentType="html"
       v-model:content="form.proposition_arm" theme="snow" toolbar="full"/>
