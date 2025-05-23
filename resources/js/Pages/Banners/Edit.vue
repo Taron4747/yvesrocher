@@ -27,15 +27,18 @@
   <text-input v-model="form.proposition_en" :error="form.errors.proposition_en" class="pb-8 pr-6 w-full " label="English" /> -->
   <label class="form-label">Հայերեն</label>
           <QuillEditor label=""   contentType="html"
- v-model:content="form.proposition_arm" theme="snow" toolbar="full"/>
+ v-model:content="form.proposition_arm" theme="snow" toolbar="full"   style="height: 300px"
+/>
 <label class="form-label">Русский</label>
 
           <QuillEditor   contentType="html"
- v-model:content="form.proposition_ru" theme="snow" toolbar="full"/>
+ v-model:content="form.proposition_ru" theme="snow" toolbar="full"   style="height: 300px"
+/>
 <label class="form-label">English</label>
 
           <QuillEditor   contentType="html"
- v-model:content="form.proposition_en" theme="snow" toolbar="full"/>
+ v-model:content="form.proposition_en" theme="snow" toolbar="full"   style="height: 300px"
+/>
 
   <div class="title_big">Ссылка на баннер </div>
 
