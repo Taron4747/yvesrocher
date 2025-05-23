@@ -41,16 +41,17 @@
         <div class="categores_data relative">
           <div
             class="categores_data_item"
+            v-show="!item.hasImage"
             v-for="item in categoriesData"
             :key="item.id"
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <a :href="'/category/'+item.id" v-if="!item.hasImage">{{ item.name_ru }}</a>
+           <a :href="'/category/'+item.id" >{{ item.name_ru }}</a>
           </div>
           <div class="categores_data_item old_green">НОВИНКИ</div>
           <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
-          <div class="categores_data_item old_green">АКЦИИ</div>
+          <div class="categores_data_item old_green">Скидки</div>
           <div
             class="categores_data_item old_green"
             v-for="item in categoriesData.filter(item => item.hasImage)"
@@ -354,6 +355,7 @@ export default {
 .old_green{
   color: #939956;
   font-weight: 600;
+  text-transform: uppercase;
 }
 .border_underline{
   border-bottom: 2px solid #000000;
