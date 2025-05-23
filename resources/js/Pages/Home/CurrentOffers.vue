@@ -9,7 +9,7 @@
         </div>
         <div class="data_bottom">
           <div class="title">{{ item.title_ru }}</div>
-          <div class="text">{{ item.proposition_ru  }}</div>
+          <div class="text"  v-html="item.proposition_ru" />
           <button>За покупками</button>
         </div>
       </a>
