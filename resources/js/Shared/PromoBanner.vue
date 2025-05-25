@@ -24,6 +24,8 @@
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import Cookies from 'js-cookie'
 
+const emit = defineEmits(['hide'])
+
 const props = defineProps({
   banners: {
     type: Array,
@@ -37,6 +39,7 @@ const props = defineProps({
 
 const hideBanner = () => {
   Cookies.set('hide_promo_banner', true, { expires: 7 })
+    emit('hide')
 }
 
 const currentIndex = ref(0)

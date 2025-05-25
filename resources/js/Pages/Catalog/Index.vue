@@ -1,6 +1,6 @@
 <template>
   <Head title="Интернет-магазин растительной косметики и парфюмерии из Франции с доставкой — Yves Rocher" />
-  <Header :categories="categories" :banners="textBanners" />
+  <Header :categories="categories" :banners="textBanners" @hidePromo="hidePromo"/>
   <div class="page_content" :class="{ 'page_content_small': !showPromo }">
     <CategoryInfo :category="category" />
     <div class="subacategory_content" v-if="category.children"> 
@@ -170,6 +170,9 @@ export default {
 
   },
   methods: {
+     hidePromo(){
+      this.showPromo = false;
+    },
     onPriceChange(newValue) {
       this.price = newValue // явно присваиваем обновлённое значение
       this.updateUrl()

@@ -3,6 +3,7 @@
   <Header
     :categories="categories"
     :banners="textBanners"
+    @hidePromo="hidePromo"
   />
   <div class="page_content" :class="{ 'page_content_small': !showPromo }">
     <ImageBanner :imageBanners="imageBanners"/>
@@ -53,7 +54,9 @@ export default {
   },
   
   methods: {
-    
+    hidePromo(){
+      this.showPromo = false;
+    }
   },
 }
 </script>

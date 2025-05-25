@@ -2,6 +2,7 @@
   <div class="header">
     <div class="banner_top" v-if="showPromo">
       <PromoBanner 
+      @hide="hidePromo"
       :banners="banners"
        />
     </div>
@@ -104,6 +105,7 @@ export default {
     Head,
     Link,
   },
+  emits: ["hidePromo"],
   props: {
     categories: Object,
     banners: Object,
@@ -160,6 +162,10 @@ export default {
 
   },
   methods: {
+    hidePromo(){
+      this.showPromo = false;
+      this.$emit("hidePromo");
+    },
     handleEnter(){
       const length = this.searchValue.length;
       if(length > 2){
