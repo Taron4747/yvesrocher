@@ -13,6 +13,7 @@ use Inertia\Response;
 use App\Models\Category;
 use App\Models\Banner;
 use App\Models\Filter;
+use Illuminate\Support\Arr;
 
 class HomeController extends Controller
 {
@@ -50,8 +51,29 @@ class HomeController extends Controller
                   ->orWhere('description_ru', 'LIKE', "%{$search}%");
             });
         })
-        ->with(['filters', 'subFilters'])
-        ->get();
+        ->with(['filters', 'subFilters']);
+        if (isset($data['new'])) {
+            $products =$products->where('is_new',1);
+        }
+        if (isset($data['bestseller'])) {
+            $products =$products->where('is_bestseller',1);
+        }
+        if (isset($data['discount'])) {
+            $products =$products->where('discount','>',0);
+            
+        }
+        if (isset($data['price'])) {
+            // $products =$products->where('price','>=',$data['price']['min'])->where('price','=<',$data['price']['max']);
+            $products =$products->whereBetween('price',[$data['price']['min'],$data['price']['max']]);
+            
+        }
+        if (isset($data['filters'])) {
+            $subFilterIds = Arr::flatten($data['filters']);
+            $products =$products->whereHas('subFilters', function ($query) use ($subFilterIds) {
+                $query->whereIn('sub_filter_id', $subFilterIds);
+            });
+        }
+        $products =$products->paginate(20);
     
     $productIds = $products->pluck('id');
     
@@ -62,7 +84,7 @@ class HomeController extends Controller
         $query->whereHas('products', function ($q) use ($productIds) {
             $q->whereIn('products.id', $productIds);
         });
-    }])->paginate(20);
+    }])->get();
     
     // Сборка структуры с product_count
     $filtersWithCounts = $filters->map(function ($filter) use ($productIds) {
