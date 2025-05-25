@@ -27,10 +27,12 @@
 
     <!-- карусель товаров -->
     <div class="carousel_wrapper">
-      <h2 class="carousel_title">Популярные товары</h2>
+      <!-- <h2 class="carousel_title">Популярные товары</h2> -->
 
       <div class="arrow left">
-        <button @click="prevSlide">&lt;</button>
+        <button @click="prevSlide">
+          <img src="images/arrow_carusel.svg"/>
+        </button>
       </div>
 
       <div class="products_content_wrapper" ref="carouselWrapper">
@@ -71,7 +73,9 @@
       </div>
 
       <div class="arrow right">
-        <button @click="nextSlide">&gt;</button>
+        <button @click="nextSlide">
+          <img src="images/arrow_carusel.svg"/>
+        </button>
       </div>
     </div>
   </div>
@@ -269,7 +273,7 @@ export default {
   }
 
   .arrow {
-    background: #ffffff;
+    // background: #ffffff;
     color: #014e2e;
     font-size: 24px;
     width: 50px;
@@ -278,29 +282,38 @@ export default {
     z-index: 1;
 
     button {
-      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #F4F3F7;
       cursor: pointer;
       position: absolute;
       width: 40px;
       height: 40px;
-      border-radius: 50%;
+      border-radius: 8px;
       top: calc(50% - 20px);
-      box-shadow: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
       border: none;
+      img{
+        width: 24px;
+        height: 24px;
+      }
     }
     &.left {
       left: 0;
-      background: linear-gradient(to right, white 80%, transparent 100%);
+      // background: linear-gradient(to right, white 80%, transparent 100%);
       button{
-        right: 0;
+        right: 68px;
       }
     }
 
     &.right {
       right: 0;
-      background: linear-gradient(to left, white 80%, transparent 100%);
+      // background: linear-gradient(to left, white 80%, transparent 100%);
        button{
-        left: 0;
+        img{
+          transform: rotate(180deg);
+        }
+        left: 68px;
       }
     }
   }

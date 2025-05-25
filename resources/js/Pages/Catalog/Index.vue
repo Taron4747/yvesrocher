@@ -1,7 +1,7 @@
 <template>
   <Head title="Интернет-магазин растительной косметики и парфюмерии из Франции с доставкой — Yves Rocher" />
   <Header :categories="categories" :banners="textBanners" />
-  <div class="page_content">
+  <div class="page_content" :class="{ 'page_content_small': !showPromo }">
     <CategoryInfo :category="category" />
     <div class="subacategory_content" v-if="category.children"> 
       <div class="subacategory_content_item" v-for="item in category.children" :key="item.id">
@@ -93,6 +93,7 @@ import CategoryInfo from '../Catalog/CategoryInfo.vue'
 import Footer from '@/Shared/Footer.vue'
 import Slider from '@vueform/slider'
 import '@vueform/slider/themes/default.css'
+import Cookies from 'js-cookie'
 
 export default {
   components: {
@@ -112,6 +113,7 @@ export default {
   },
   data() {
     return {
+      showPromo: true,
       priceFilter: false,
       price: [this.prices.min_price, this.prices.max_price],
       isNew: false,
@@ -138,6 +140,7 @@ export default {
     }
   },
   mounted(){
+    this.showPromo = Cookies.get('hide_promo_banner') ? false : true;
     const urlParams = new URLSearchParams(window.location.search)
 
     // Новинки, скидки, бестселлеры

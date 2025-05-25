@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div class="banner_top">
+    <div class="banner_top" v-if="showPromo">
       <PromoBanner 
       :banners="banners"
        />
@@ -94,7 +94,7 @@
 
 <script>
 import { Head, Link } from '@inertiajs/vue3'
-
+import Cookies from 'js-cookie'
 import PromoBanner from '@/Shared/PromoBanner.vue'
 import axios from "axios";
 
@@ -110,6 +110,7 @@ export default {
   },
   data() {
     return {
+      showPromo:true,
       searchValue:'',
       image:null,
       showDropdown:false,
@@ -141,6 +142,7 @@ export default {
     }
   },
   mounted() {
+    this.showPromo = Cookies.get('hide_promo_banner') ? false : true;
     this.categoriesData.forEach((categories) => {
       categories.hasImage = false;
     });

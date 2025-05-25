@@ -4,7 +4,7 @@
     :categories="categories"
     :banners="textBanners"
   />
-  <div class="page_content">
+  <div class="page_content" :class="{ 'page_content_small': !showPromo }">
     <ImageBanner :imageBanners="imageBanners"/>
     <Products />
     <CurrentOffers :imageBanners="imageBanners" />
@@ -24,6 +24,7 @@ import WithYou from '../Home/WithYou.vue'
 import Products from '../Home/Products.vue'
 import AboutAs from '../Home/AboutAs.vue'
 import Footer from '@/Shared/Footer.vue'
+import Cookies from 'js-cookie'
 
 export default {
   components: {
@@ -43,11 +44,11 @@ export default {
     imageBanners: Object,
   },
   mounted(){
-    // console.log(this.textBanners)
+    this.showPromo = Cookies.get('hide_promo_banner') ? false : true;
   },
   data() {
     return {
-      
+      showPromo:true,
     }
   },
   

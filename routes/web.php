@@ -381,7 +381,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         ->middleware('auth');
 
         Route::get('settings', [SettingsController::class, 'index'])
-        ->name('banners')
+        ->name('settings')
         ->middleware('auth');
 
 

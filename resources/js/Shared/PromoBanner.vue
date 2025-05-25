@@ -16,12 +16,13 @@
       <img src="/images/vector_banner.svg">
     </button>
 
-    <img class="cross" src="/images/cross.svg">
+    <img class="cross" src="/images/cross.svg" @click="hideBanner">
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
+import Cookies from 'js-cookie'
 
 const props = defineProps({
   banners: {
@@ -33,6 +34,10 @@ const props = defineProps({
     default: 3000, // 3 секунды покоя
   }
 })
+
+const hideBanner = () => {
+  Cookies.set('hide_promo_banner', true, { expires: 7 })
+}
 
 const currentIndex = ref(0)
 
