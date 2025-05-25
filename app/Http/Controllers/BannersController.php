@@ -211,7 +211,7 @@ class BannersController extends Controller
         // dd($data);
         if ($data['is_active'] ==0) {
             $bannersCount = Banner::where('is_active',1)->count();
-            if ($bannersCount ==3) {
+            if ($bannersCount ==5) {
                 return response()->json([    'status' => 'warning','message'=>'Невозможно одновременно иметь больше пяти активных баннеров ']);
                 
             }
