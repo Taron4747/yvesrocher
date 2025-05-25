@@ -207,8 +207,28 @@ export default {
     }
   },
   mounted(){
-    console.log(this.product)
     this.setFilters()
+    const productFiltersArray = Object.values(this.product.filters);
+    this.filtersData.forEach((filter) => {
+      filter.type = false;
+      filter.sub_filters.forEach((sub) => sub.type = false);
+    });
+    productFiltersArray.forEach((catFilter) => {
+      this.filtersData.forEach((filter) => {
+        if(catFilter.id === filter.id){
+          filter.type = true;
+          Object.values(catFilter.sub_filters).forEach((catSubFilter) => {
+            // console.log(catSubFilter)
+            filter.sub_filters.forEach((subFilter) => {
+              if(subFilter.id === catSubFilter.id){
+                subFilter.type = true;
+                
+              }
+            });
+          });
+        }
+      });
+    });
   },
   methods: {
     setFilters(){
