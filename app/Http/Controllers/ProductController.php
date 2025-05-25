@@ -170,9 +170,30 @@ class ProductController extends Controller
         });
 
       
-        $filters = Filter::with('subFilters')->get();
+        $productFilters =  $product->load('filters','subFilters');
+        $productSubFilterIds = $product->subFilters()->pluck('sub_filters.id');
+
+        // Формируем данные для ответа
+        $productFilters = $product->filters->map(function ($filter) use ($productSubFilterIds) {
+            return [
+                'id' => $filter->id,
+                'name_arm' => $filter->name_arm,
+                'name_ru' => $filter->name_ru,
+                'name_en' => $filter->name_en,
+              
+                'filterable' => $filter->filterable,
+                'sub_filters' => $filter->subFilters->whereIn('id', $productSubFilterIds)->map(function ($subFilter) {
+                    return [
+                        'id' => $subFilter->id,
+                        'name_arm' => $subFilter->name_arm,
+                        'name_ru' => $subFilter->name_ru,
+                        'name_en' => $subFilter->name_en,
+                    ];
+                }),
+            ];
+        });
+
       
-            
         return Inertia::render('Products/Edit', [
             'product' => [
                 'id' => $product->id,
@@ -196,8 +217,7 @@ class ProductController extends Controller
                 'price' => $product->price,
                 'category_id' => $product->category_id,
                 'sub_category_id' => $product->sub_category_id,
-                'filters' => $product->filters->values()->toArray(),
-                'sub_filters' => $product->subFilters->values()->toArray(),
+                'filters' => $productFilters,
                 'butonFilters' => $product->filters->where('filterefilterable',0)->values()->toArray(),
                 'sub_sub_category_id' => $product->sub_sub_category_id,
                 'size_type_id' => $product->size_type_id,
