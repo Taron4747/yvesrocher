@@ -207,6 +207,7 @@ export default {
     }
   },
   mounted(){
+    console.log(this.product)
     this.setFilters()
   },
   methods: {
