@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\URL;
 use Inertia\Response;
 use App\Models\Category;
 use App\Models\Banner;
+use Illuminate\Support\Arr;
 
 class CatalogController extends Controller
 {
@@ -24,6 +25,8 @@ class CatalogController extends Controller
     }
     public function getByCategory($id)
     {
+        // dd(Request::all());
+        $data =Request::all();
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
         $filtersWithCounts = $category->filters->map(function ($filter) {
@@ -49,9 +52,10 @@ class CatalogController extends Controller
             ];
         });
     
-        $products = Product::where('category_id',$id)->where('count','!=',0)
-            ->paginate(20);
-                $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
+        $products = Product::where('category_id',$id)->where('count','!=',0);
+        $products = $this->filterData($products,$data);
+        $products= $products->paginate(20);
+        $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
 
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
@@ -62,8 +66,39 @@ class CatalogController extends Controller
                 'prices'=>$prices,
             ]);
     }
+    public function filterData($products,$data){
+        if (count($data)==0) {
+           return $products;
+        }else{
+            if (isset($data['new'])) {
+                $products =$products->where('is_new',1);
+            }
+            if (isset($data['bestseller'])) {
+                $products =$products->where('is_bestseller',1);
+            }
+            if (isset($data['discount'])) {
+                $products =$products->where('discount','>',0);
+                
+            }
+            if (isset($data['price'])) {
+                // $products =$products->where('price','>=',$data['price']['min'])->where('price','=<',$data['price']['max']);
+                $products =$products->whereBetween('price',[$data['price']['min'],$data['price']['max']]);
+                
+            }
+            if (isset($data['filters'])) {
+                $subFilterIds = Arr::flatten($data['filters']);
+                $products =$products->whereHas('subFilters', function ($query) use ($subFilterIds) {
+                    $query->whereIn('sub_filter_id', $subFilterIds);
+                });
+            }
+            return  $products;
+        }
+     
+    }
     public function getBySubCategory($id)
     {
+        $data =Request::all();
+
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
@@ -91,8 +126,9 @@ class CatalogController extends Controller
             ];
         });
     
-        $products = Product::where('sub_category_id',$id)->where('count','!=',0)
-            ->paginate(20);
+        $products = Product::where('sub_category_id',$id)->where('count','!=',0);
+        $products = $this->filterData($products,$data);
+        $products= $products->paginate(20);
                 $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
 
             return Inertia::render('Catalog/Index', [
@@ -109,6 +145,8 @@ class CatalogController extends Controller
 
     public function getBySubSubCategory($id)
     {
+        $data =Request::all();
+
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subSubCategory =Category::where('id',$id)->first();
         $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
@@ -137,9 +175,10 @@ class CatalogController extends Controller
             ];
         });
     
-        $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0)
-            ->paginate(20);
-                $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
+        $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0);
+        $products = $this->filterData($products,$data);
+        $products= $products->paginate(20);
+        $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
 
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
