@@ -234,6 +234,7 @@ export default {
 }
 .categories_content_small{
   justify-content: center!important;
+  margin-bottom: 25px;
   .category_item{
     margin: 0 10px;
     width: 150px;
