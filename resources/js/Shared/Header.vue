@@ -167,8 +167,12 @@ export default {
       this.$emit("hidePromo");
     },
     handleEnter(){
-      const length = this.searchValue.length;
-      if(length > 2){
+      // const length = this.searchValue.length;
+      // if(length > 2){
+      //   window.location.href = `${window.location.origin}/search?search=${this.searchValue}`
+      // }
+      const cleanedValue = this.searchValue.replace(/\s+/g, '');
+      if (cleanedValue.length > 2) {
         window.location.href = `${window.location.origin}/search?search=${this.searchValue}`
       }
     },
