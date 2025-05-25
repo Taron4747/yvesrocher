@@ -29,7 +29,7 @@
             <img :class="{ transform: priceFilter }" src="/images/vector.svg"/>
           </div>
           <div class="price_slider" v-if="priceFilter">
-            <Slider v-model="price" :min="0" :max="10000" :step="100" @change="updateUrl" />
+            <Slider v-model="price" :min="0" :max="10000" :step="100" @change="onPriceChange" />
           </div>
         </div>
         <div class="product_filter" v-for="item in filtersWithCountsData" :key="item.id">
@@ -136,7 +136,39 @@ export default {
         .filter(Boolean)
     }
   },
+  mounted(){
+    const urlParams = new URLSearchParams(window.location.search)
+
+    // Новинки, скидки, бестселлеры
+    this.isNew = urlParams.get('new') === '1'
+    this.bestseller = urlParams.get('bestseller') === '1'
+    this.discount = urlParams.get('discount') === '1'
+
+    // Цена
+    const minPrice = urlParams.get('price[min]')
+    const maxPrice = urlParams.get('price[max]')
+    if (minPrice && maxPrice) {
+      this.price = [Number(minPrice), Number(maxPrice)]
+    }
+
+    // filtersSelected: filters[2][]=1&filters[2][]=2&filters[3][]=5
+    const filters = {}
+    for (const [key, value] of urlParams.entries()) {
+      const match = key.match(/^filters\[(\d+)]\[]$/)
+      if (match) {
+        const sectionId = match[1]
+        if (!filters[sectionId]) filters[sectionId] = []
+        filters[sectionId].push(Number(value))
+      }
+    }
+    this.filtersSelected = filters
+
+  },
   methods: {
+    onPriceChange(newValue) {
+      this.price = newValue // явно присваиваем обновлённое значение
+      this.updateUrl()
+    },
     showHideFilter(id) {
       if (this.openFilters.includes(id)) {
         this.openFilters = this.openFilters.filter(openId => openId !== id)
