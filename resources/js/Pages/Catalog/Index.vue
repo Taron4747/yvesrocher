@@ -29,7 +29,7 @@
             <img :class="{ transform: priceFilter }" src="/images/vector.svg"/>
           </div>
           <div class="price_slider" v-if="priceFilter">
-            <Slider v-model="price" :min="0" :max="10000" :step="100" @change="onPriceChange" />
+            <Slider v-model="price" :min="this.prices.min_price" :max="this.prices.max_price" @change="onPriceChange" />
           </div>
         </div>
         <div class="product_filter" v-for="item in filtersWithCountsData" :key="item.id">
@@ -103,6 +103,7 @@ export default {
     Slider,
   },
   props: {
+    prices: Object,
     products: Object,
     categories: Object,
     category: Object,
@@ -112,7 +113,7 @@ export default {
   data() {
     return {
       priceFilter: false,
-      price: [1000, 5000],
+      price: [this.prices.min_price, this.prices.max_price],
       isNew: false,
       bestseller: false,
       discount: false,
@@ -162,6 +163,7 @@ export default {
       }
     }
     this.filtersSelected = filters
+    this.openFilters = Object.keys(this.filtersSelected).map(id => Number(id))
 
   },
   methods: {
@@ -191,10 +193,21 @@ export default {
         }
       }
 
-      // Получаем текущий путь (например, /subcategory/6)
-      const currentPath = window.location.pathname
+      // Получаем текущий путь (например, /subcategory/6)  
+      if(window.location.pathname == "/search"){
+         const url = new URL(window.location.href)
+        let base = `${url.origin}${url.pathname}`
+        let search = url.searchParams.get('search')
+
+        if (search !== null) {
+          base += `?search=${encodeURIComponent(search)}`
+        }
+        window.location.href = `${base}&${params.toString()}`
+      }else{
+        window.location.href = `${window.location.pathname}?${params.toString()}`
+      }
       // Обновляем только query-параметры
-      window.location.href = `${currentPath}?${params.toString()}`
+     
     },
     toggleFilter(sectionId, subFilterId) {
       const current = this.filtersSelected[sectionId] || []
