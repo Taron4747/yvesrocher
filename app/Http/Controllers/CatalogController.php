@@ -29,16 +29,16 @@ class CatalogController extends Controller
         $data =Request::all();
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
-        $filtersWithCounts = $category->filters->map(function ($filter) {
-            $filterProductCount = $filter->products()->count();
+        $filtersWithCounts = $category->filters->map(function ($filter) use($id){
+            $filterProductCount = $filter->products()->where('category_id',$id)->count();
 
-            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id) {
                 return [
                     'id' => $subFilter->id,
                     'name_ru' => $subFilter->name_ru,
                     'name_arm' => $subFilter->name_arm,
                     'name_en' => $subFilter->name_en,
-                    'product_count' => $subFilter->products()->count(),
+                    'product_count' => $subFilter->products()->where('category_id',$id)->count(),
                 ];
             });
             return [
@@ -102,16 +102,16 @@ class CatalogController extends Controller
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
-        $filtersWithCounts = $category->filters->map(function ($filter) {
-            $filterProductCount = $filter->products()->count();
+        $filtersWithCounts = $category->filters->map(function ($filter) use($id) {
+            $filterProductCount = $filter->products()->where('sub_category_id',$id)->count();
 
-            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) use($id)  {
                 return [
                     'id' => $subFilter->id,
                    'name_ru' => $subFilter->name_ru,
                     'name_arm' => $subFilter->name_arm,
                     'name_en' => $subFilter->name_en,
-                    'product_count' => $subFilter->products()->count(),
+                    'product_count' => $subFilter->products()->where('sub_category_id',$id)->count(),
                 ];
             });
 
@@ -151,16 +151,16 @@ class CatalogController extends Controller
         $subSubCategory =Category::where('id',$id)->first();
         $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
-        $filtersWithCounts = $category->filters->map(function ($filter) {
-            $filterProductCount = $filter->products()->count();
+        $filtersWithCounts = $category->filters->map(function ($filter) use($id){
+            $filterProductCount = $filter->products()->where('sub_sub_category_id',$id)->count();
 
-            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) {
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id) {
                 return [
                     'id' => $subFilter->id,
                    'name_ru' => $subFilter->name_ru,
                     'name_arm' => $subFilter->name_arm,
                     'name_en' => $subFilter->name_en,
-                    'product_count' => $subFilter->products()->count(),
+                    'product_count' => $subFilter->products()->where('sub_sub_category_id',$id)->count(),
                 ];
             });
 
