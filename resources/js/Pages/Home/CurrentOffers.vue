@@ -3,7 +3,7 @@
     <div class="title">Текущие <b>предложения</b></div>
     <div class="title_small"><span>Войдите в свою учетную запись, чтобы воспользоваться скидкой 35% на 3 продукта + бесплатный подарок!*</span></div>
     <div class="data_content">
-      <a :href="item.link" class="data" v-for="item in imageBanners.slice().reverse().slice(0, 3)">
+      <a :href="item.link" class="data" v-for="item in imageBanners.slice(0, 3)">
         <div class="data_top">
           <img :src="item['image_medium']"/>
         </div>
