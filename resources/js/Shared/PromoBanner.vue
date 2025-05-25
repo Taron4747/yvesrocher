@@ -33,7 +33,7 @@ const props = defineProps({
   },
   interval: {
     type: Number,
-    default: 3000, // 3 секунды покоя
+    default: 5000, // 3 секунды покоя
   }
 })
 
@@ -67,25 +67,33 @@ const currentLink = computed(() => {
 
 let timer = null
 
-// Функция для перехода к следующему баннеру
+const resetTimer = () => {
+  if (timer) clearInterval(timer)
+  timer = setInterval(() => {
+    next()
+  }, props.interval)
+}
+
 const next = () => {
   currentIndex.value = (currentIndex.value + 1) % props.banners.length
+  resetTimer()
 }
 
-// Функция для перехода к предыдущему баннеру
 const prev = () => {
   currentIndex.value = (currentIndex.value - 1 + props.banners.length) % props.banners.length
+  resetTimer()
 }
 
-// Запуск интервала на автоматическое переключение баннеров
 onMounted(() => {
   if (props.banners.length > 0) {
-    timer = setInterval(() => {
-      next()
-    }, props.interval) // Интервал теперь 3 секунды (3000 ms)
+    resetTimer()
   } else {
     console.error('Banners are empty!')
   }
+})
+
+onBeforeUnmount(() => {
+  clearInterval(timer)
 })
 
 onBeforeUnmount(() => {
