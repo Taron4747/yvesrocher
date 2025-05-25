@@ -22,12 +22,26 @@
             <input type="checkbox">
             <span class="checkmark"></span>
         </label>
-        <div class="product_filter" v-for="item in filtersWithCounts">
-          <div class="filter_title">{{ item.name_ru }}</div>
-          <label class="custom_checkbox custom_checkbox_small" v-for="item1 in item.sub_filters">{{ item1.name_ru }} <span class="small_size">({{ item1.product_count }})</span>
-            <input type="checkbox">
-            <span class="checkmark"></span>
-          </label>
+        <div class="product_filter">
+          <div class="filter_title" @click="priceFilter = !priceFilter">
+            <span>Цена</span>
+            <img :class="{transform : priceFilter}" src="/images/vector.svg"/>
+          </div>
+          <div class="price_slider" v-if="priceFilter">
+            <Slider v-model="price" :min="0" :max="10000" :step="100" />
+          </div>
+        </div>
+        <div class="product_filter" v-for="item in filtersWithCountsData">
+          <div class="filter_title" @click="showHideFilter(item.id)">
+            <span>{{ item.name_ru }}</span>
+            <img :class="{transform : item.isOpen}" src="/images/vector.svg"/>
+          </div>
+          <div v-if="item.isOpen">
+            <label class="custom_checkbox custom_checkbox_small" v-for="item1 in item.sub_filters">{{ item1.name_ru }} <span class="small_size">({{ item1.product_count }})</span>
+              <input type="checkbox">
+              <span class="checkmark"></span>
+            </label>
+          </div>
         </div>
       </div>
       <div class="product_data_content">
@@ -61,7 +75,6 @@
     <Footer />
   </div>
 </template>
-
 <script>
 import { Head } from '@inertiajs/vue3'
 import Icon from '@/Shared/Icon.vue'
@@ -69,14 +82,17 @@ import Header from '@/Shared/Header.vue'
 import CategoryInfo from '../Catalog/CategoryInfo.vue'
 import Footer from '@/Shared/Footer.vue'
 
+import Slider from '@vueform/slider'
+import '@vueform/slider/themes/default.css'
+
 export default {
   components: {
     Head,
     Icon,
     Header,
     CategoryInfo,
-   
     Footer,
+    Slider, // обязательно зарегистрируй
   },
   props: {
     products: Object,
@@ -85,19 +101,48 @@ export default {
     filtersWithCounts: Object,
     textBanners: Object,
   },
-  mounted(){
-    // console.log(this.textBanners)
-    // console.log(this.categories)
-    // console.log(this.filtersWithCounts)
-  },
   data() {
     return {
-      
+      filtersWithCountsData:this.filtersWithCounts,
+      priceFilter: false,
+      price: [1000, 5000], // добавь переменную, которую использует v-model
     }
   },
-  
-  methods: {
+  watch: {
+    price(price) {
+      console.log(this.price);
+    },
+  },
+  computed: {
+    filtersWithCountsData() {
+        return this.filtersWithCountsData
+          .map(filter => {
+            const visibleSubFilters = filter.sub_filters.filter(sub => sub.product_count > 0);
+            if (visibleSubFilters.length === 0) return null;
+
+            return {
+              ...filter,
+              sub_filters: visibleSubFilters
+            };
+          })
+          .filter(Boolean);
+    }
+  },
+  mounted(){
+      this.filtersWithCountsData.forEach((filters) => {
+      filters.isOpen = false;
+    });
     
+  },
+  methods: {
+    showHideFilter(id){
+      this.filtersWithCountsData.forEach((filters) => {
+        if(filters.id == id){
+          filters.isOpen = !filters.isOpen;
+        }
+      });
+      console.log(id)
+    }
   },
 }
 </script>
@@ -132,11 +177,18 @@ export default {
     }
     .product_filter{
       .filter_title{
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         margin-top: 25px;
         font-weight: 600;
       }
       .small_size{
         font-size: 12px;
+      }
+      .price_slider{
+        margin: 25px 10px 50px 10px;
       }
     }
   }
@@ -218,5 +270,8 @@ export default {
       }
     }
   }
+}
+.transform{
+  transform: rotate(180deg);
 }
 </style>

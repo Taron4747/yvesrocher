@@ -133,3 +133,34 @@
   .hover_text:hover{
     text-decoration: underline;
   }
+  .slider-target{
+    height: 2px!important;
+  .slider-base{
+    .slider-connect{
+      background: #014E2E;
+      height: 2px;
+    }
+    .slider-origin{
+      .slider-handle{
+        height: 15px;
+        width: 15px;
+        .slider-touch-area{
+          background: #014E2E;
+          border-radius: 50%;
+        }
+        .slider-tooltip{
+          background: none;
+          border: none;
+          color: #000;
+          bottom: -26px;
+          font-size: 14px;
+          font-weight: 400;
+        }
+        .slider-tooltip::before{
+          border: unset!important;
+        }
+      }
+    }
+  }
+  }
+  
