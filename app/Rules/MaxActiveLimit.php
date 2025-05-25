@@ -29,7 +29,7 @@ class MaxActiveLimit implements Rule
             $query->where('id', '!=', $this->id);
         }
 
-        return $query->count() < 5;
+        return $query->count() < 6;
     }
 
     public function message()
