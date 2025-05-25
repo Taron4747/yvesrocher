@@ -1,44 +1,54 @@
 <template>
   <Head title="Интернет-магазин растительной косметики и парфюмерии из Франции с доставкой — Yves Rocher" />
-  <Header
-    :categories="categories"
-    :banners="textBanners"
-  />
+  <Header :categories="categories" :banners="textBanners" />
   <div class="page_content">
-    <CategoryInfo :category="category"/>
+    <CategoryInfo :category="category" />
     <div class="subacategory_content" v-if="category.children"> 
-      <div class="subacategory_content_item" v-for="item in category.children">
-        <a :href="'/subcategory/'+item.id">{{ item.name_ru }}</a>
+      <div class="subacategory_content_item" v-for="item in category.children" :key="item.id">
+        <a :href="'/subcategory/' + item.id">{{ item.name_ru }}</a>
       </div>
     </div>
     <div class="product_page">
       <div class="product_filters">
         <div class="title">Результаты фильтров</div>
         <label class="custom_checkbox custom_checkbox_small">Бестселлеры
-            <input type="checkbox">
-            <span class="checkmark"></span>
+          <input type="checkbox" v-model="bestseller" @change="updateUrl">
+          <span class="checkmark"></span>
         </label>
         <label class="custom_checkbox custom_checkbox_small">Новинки
-            <input type="checkbox">
-            <span class="checkmark"></span>
+          <input type="checkbox" v-model="isNew" @change="updateUrl">
+          <span class="checkmark"></span>
+        </label>
+        <label class="custom_checkbox custom_checkbox_small">Скидки
+          <input type="checkbox" v-model="discount" @change="updateUrl">
+          <span class="checkmark"></span>
         </label>
         <div class="product_filter">
           <div class="filter_title" @click="priceFilter = !priceFilter">
             <span>Цена</span>
-            <img :class="{transform : priceFilter}" src="/images/vector.svg"/>
+            <img :class="{ transform: priceFilter }" src="/images/vector.svg"/>
           </div>
           <div class="price_slider" v-if="priceFilter">
-            <Slider v-model="price" :min="0" :max="10000" :step="100" />
+            <Slider v-model="price" :min="0" :max="10000" :step="100" @change="updateUrl" />
           </div>
         </div>
-        <div class="product_filter" v-for="item in filtersWithCountsData">
+        <div class="product_filter" v-for="item in filtersWithCountsData" :key="item.id">
           <div class="filter_title" @click="showHideFilter(item.id)">
             <span>{{ item.name_ru }}</span>
-            <img :class="{transform : item.isOpen}" src="/images/vector.svg"/>
+            <img :class="{ transform: item.isOpen }" src="/images/vector.svg"/>
           </div>
           <div v-if="item.isOpen">
-            <label class="custom_checkbox custom_checkbox_small" v-for="item1 in item.sub_filters">{{ item1.name_ru }} <span class="small_size">({{ item1.product_count }})</span>
-              <input type="checkbox">
+            <label
+              class="custom_checkbox custom_checkbox_small"
+              v-for="item1 in item.sub_filters"
+              :key="item1.id"
+            >
+              {{ item1.name_ru }} <span class="small_size">({{ item1.product_count }})</span>
+              <input
+                type="checkbox"
+                :checked="(filtersSelected[item.id] || []).includes(item1.id)"
+                @change="toggleFilter(item.id, item1.id)"
+              >
               <span class="checkmark"></span>
             </label>
           </div>
@@ -50,7 +60,7 @@
           <img src="/images/Vector.svg">  
         </div>
         <div class="product_data">
-          <div class="product_data_item" v-for="item in products.data">
+          <div class="product_data_item" v-for="item in products.data" :key="item.id">
             <div class="product_image">
               <img :src="item.image">
             </div>
@@ -75,24 +85,22 @@
     <Footer />
   </div>
 </template>
+
 <script>
 import { Head } from '@inertiajs/vue3'
-import Icon from '@/Shared/Icon.vue'
 import Header from '@/Shared/Header.vue'
 import CategoryInfo from '../Catalog/CategoryInfo.vue'
 import Footer from '@/Shared/Footer.vue'
-
 import Slider from '@vueform/slider'
 import '@vueform/slider/themes/default.css'
 
 export default {
   components: {
     Head,
-    Icon,
     Header,
     CategoryInfo,
     Footer,
-    Slider, // обязательно зарегистрируй
+    Slider,
   },
   props: {
     products: Object,
@@ -103,55 +111,86 @@ export default {
   },
   data() {
     return {
-      filtersWithCountsData:this.filtersWithCounts,
       priceFilter: false,
-      price: [1000, 5000], // добавь переменную, которую использует v-model
+      price: [1000, 5000],
+      isNew: false,
+      bestseller: false,
+      discount: false,
+      filtersSelected: {}, // { 1: [2,3], 3: [8] }
+      openFilters: [], // сюда будем сохранять id открытых фильтров
     }
-  },
-  watch: {
-    price(price) {
-      console.log(this.price);
-    },
   },
   computed: {
     filtersWithCountsData() {
-        return this.filtersWithCountsData
-          .map(filter => {
-            const visibleSubFilters = filter.sub_filters.filter(sub => sub.product_count > 0);
-            if (visibleSubFilters.length === 0) return null;
+      return this.filtersWithCounts
+        .map(filter => {
+          const visibleSubFilters = filter.sub_filters.filter(sub => sub.product_count > 0)
+          if (visibleSubFilters.length === 0) return null
 
-            return {
-              ...filter,
-              sub_filters: visibleSubFilters
-            };
-          })
-          .filter(Boolean);
+          return {
+            ...filter,
+            sub_filters: visibleSubFilters,
+            isOpen: this.openFilters.includes(filter.id)
+          }
+        })
+        .filter(Boolean)
     }
-  },
-  mounted(){
-      this.filtersWithCountsData.forEach((filters) => {
-      filters.isOpen = false;
-    });
-    
   },
   methods: {
-    showHideFilter(id){
-      this.filtersWithCountsData.forEach((filters) => {
-        if(filters.id == id){
-          filters.isOpen = !filters.isOpen;
+    showHideFilter(id) {
+      if (this.openFilters.includes(id)) {
+        this.openFilters = this.openFilters.filter(openId => openId !== id)
+      } else {
+        this.openFilters.push(id)
+      }
+    },
+    updateUrl() {
+      const params = new URLSearchParams()
+      if (this.isNew) params.append('new', 1)
+      if (this.bestseller) params.append('bestseller', 1)
+      if (this.discount) params.append('discount', 1)
+      params.append('price[min]', this.price[0])
+      params.append('price[max]', this.price[1])
+      for (const [sectionId, subIds] of Object.entries(this.filtersSelected)) {
+        if (Array.isArray(subIds)) {
+          subIds.forEach(subId => {
+            params.append(`filters[${sectionId}][]`, subId)
+          })
         }
-      });
-      console.log(id)
+      }
+
+      // Получаем текущий путь (например, /subcategory/6)
+      const currentPath = window.location.pathname
+      // Обновляем только query-параметры
+      window.location.href = `${currentPath}?${params.toString()}`
+    },
+    toggleFilter(sectionId, subFilterId) {
+      const current = this.filtersSelected[sectionId] || []
+
+      let updated
+      if (current.includes(subFilterId)) {
+        updated = current.filter(id => id !== subFilterId)
+      } else {
+        updated = [...current, subFilterId]
+      }
+
+      this.filtersSelected = {
+        ...this.filtersSelected,
+        [sectionId]: updated
+      }
+
+      this.updateUrl()
     }
-  },
+  }
 }
 </script>
+
 <style scoped lang="scss">
-.subacategory_content{
+.subacategory_content {
   width: 1140px;
   margin: 25px auto 0 auto;
   display: flex;
-  .subacategory_content_item{
+  .subacategory_content_item {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -163,20 +202,20 @@ export default {
     height: 40px;
   }
 }
-.product_page{
+.product_page {
   display: flex;
   justify-content: space-between;
   width: 1140px;
   margin: 0 auto;
   margin-top: 32px;
-  .product_filters{
+  .product_filters {
     width: 270px;
-    .title{
+    .title {
       font-size: 20px;
       color: #014E2E;
     }
-    .product_filter{
-      .filter_title{
+    .product_filter {
+      .filter_title {
         cursor: pointer;
         display: flex;
         align-items: center;
@@ -184,30 +223,30 @@ export default {
         margin-top: 25px;
         font-weight: 600;
       }
-      .small_size{
+      .small_size {
         font-size: 12px;
       }
-      .price_slider{
+      .price_slider {
         margin: 25px 10px 50px 10px;
       }
     }
   }
-  .product_data_content{
-    .sorting{
+  .product_data_content {
+    .sorting {
       display: flex;
       justify-content: flex-end;
       color: #014E2E;
       font-weight: 600;
-      img{
+      img {
         margin-left: 12px;
       }
     }
-    .product_data{
+    .product_data {
       display: flex;
       flex-wrap: wrap;
       width: 845px;
       margin-top: 16px;
-      .product_data_item{
+      .product_data_item {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -216,43 +255,43 @@ export default {
         height: 440px;
         margin-bottom: 24px;
         box-shadow: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
-        .product_image{
+        .product_image {
           width: 100%;
           height: 230px;
-          img{
+          img {
             width: 100%;
             height: 100%;
             border-radius: 5px 5px 0 0;
             object-fit: cover;
           }
         }
-        .product_text{
+        .product_text {
           padding: 0 11px;
-          .title{
+          .title {
             font-weight: 400;
             margin-bottom: 5px;
             line-height: 100%;
           }
-          .size{
+          .size {
             font-size: 12px;
             color: #767676;
             margin-bottom: 5px;
           }
-          .rating{
+          .rating {
             display: flex;
             align-items: center;
             margin-bottom: 16px;
-            div{
+            div {
               margin-left: 10px;
             }
           }
-          .price{
+          .price {
             line-height: 100%;
             color: #014E2E;
             font-weight: 600;
           }
         }
-        button{
+        button {
           display: flex;
           align-items: center;
           justify-content: center;
@@ -265,13 +304,13 @@ export default {
           margin: 0 auto;
         }
       }
-      .product_data_item:nth-child(4n){
+      .product_data_item:nth-child(4n) {
         margin-right: 0;
       }
     }
   }
 }
-.transform{
+.transform {
   transform: rotate(180deg);
 }
 </style>
