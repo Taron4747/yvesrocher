@@ -19,15 +19,12 @@ class CatalogController extends Controller
     {
         return Inertia::render('Home/Index', [
             'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
-            'banners' =>Banner::all()
+            'banners' =>Banner::where('is_active',1)->orderBy('position','asc')->get()
         ]);
     }
     public function getByCategory($id)
     {
-        $banners = Banner::all()   ;         
-            $textBanners = $banners->filter(function ($banner) {
-                return $banner->type == 1; // type == 1 для текстовых баннеров
-            });
+        $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
         $filtersWithCounts = $category->filters->map(function ($filter) {
             $filterProductCount = $filter->products()->count();
@@ -54,20 +51,20 @@ class CatalogController extends Controller
     
         $products = Product::where('category_id',$id)->where('count','!=',0)
             ->paginate(20);
+                $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
+
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
-                'textBanners' =>$textBanners,
+                'textBanners' =>$banners,
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
+                'prices'=>$prices,
             ]);
     }
     public function getBySubCategory($id)
     {
-        $banners = Banner::all()   ;         
-            $textBanners = $banners->filter(function ($banner) {
-                return $banner->type == 1; // type == 1 для текстовых баннеров
-            });
+        $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
         $filtersWithCounts = $category->filters->map(function ($filter) {
@@ -96,12 +93,15 @@ class CatalogController extends Controller
     
         $products = Product::where('sub_category_id',$id)->where('count','!=',0)
             ->paginate(20);
+                $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
+
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
-                'textBanners' =>$textBanners,
+                'textBanners' =>$banners,
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
+                'prices'=>$prices,
             ]);
     }
 
@@ -109,10 +109,7 @@ class CatalogController extends Controller
 
     public function getBySubSubCategory($id)
     {
-        $banners = Banner::all()   ;         
-            $textBanners = $banners->filter(function ($banner) {
-                return $banner->type == 1; // type == 1 для текстовых баннеров
-            });
+        $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subSubCategory =Category::where('id',$id)->first();
         $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
@@ -142,12 +139,15 @@ class CatalogController extends Controller
     
         $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0)
             ->paginate(20);
+                $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
+
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
-                'textBanners' =>$textBanners,
+                'textBanners' =>$banners,
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
+                'prices'=>$prices,
             ]);
    
 
