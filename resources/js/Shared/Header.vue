@@ -161,7 +161,7 @@ export default {
     handleEnter(){
       const length = this.searchValue.length;
       if(length > 2){
-        alert("Идет поиск,пока нету отобройения результат,по сколку страница поиска еще не готова")
+        window.location.href = `${window.location.origin}/search?search=${this.searchValue}`
       }
     },
     showHide(type,id){
