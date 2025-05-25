@@ -35,19 +35,30 @@ class HomeController extends Controller
     }
     public function search(Request $request)
     {
-        $search = $request->input('search'); // или 'search'
-    
+        $data =Request::all();
+        $search =  $data['search']; // или 'search'
+        $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;   
         $products = Product::query()
             ->when($search, function ($query, $search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name_en', 'LIKE', "%{$search}%")
                       ->orWhere('name_ru', 'LIKE', "%{$search}%")
-                      ->orWhere('name_arm', 'LIKE', "%{$search}%");
+                      ->orWhere('name_arm', 'LIKE', "%{$search}%")
+                      ->orWhere('description_arm', 'LIKE', "%{$search}%")
+                      ->orWhere('description_en', 'LIKE', "%{$search}%")
+                      ->orWhere('description_ru', 'LIKE', "%{$search}%");
                 });
             })
             ->paginate(20);
     
-        return response()->json($products);
+            return Inertia::render('Catalog/Index', [
+                'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+                'textBanners' =>$banners,
+                'category' =>[],
+                'products' =>$products,
+                // 'filtersWithCounts' =>$filtersWithCounts,
+                'prices'=>['max_price'=>1111,'min_price'=>11],
+            ]);
     }
    
 

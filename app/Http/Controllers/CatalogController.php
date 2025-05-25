@@ -51,6 +51,7 @@ class CatalogController extends Controller
                 'sub_filters' => $subFiltersWithCounts,
             ];
         });
+
     
         $products = Product::where('category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
@@ -130,7 +131,6 @@ class CatalogController extends Controller
         $products = $this->filterData($products,$data);
         $products= $products->paginate(20);
                 $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
-
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
                 'textBanners' =>$banners,

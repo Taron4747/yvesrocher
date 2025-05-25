@@ -196,8 +196,8 @@ class ProductController extends Controller
                 'price' => $product->price,
                 'category_id' => $product->category_id,
                 'sub_category_id' => $product->sub_category_id,
-                'filters' => $product->filters->where('filterefilterable',1)->values()->toArray(),
-                'filters' => $product->subFilters->values()->toArray(),
+                'filters' => $product->filters->values()->toArray(),
+                'sub_filters' => $product->subFilters->values()->toArray(),
                 'butonFilters' => $product->filters->where('filterefilterable',0)->values()->toArray(),
                 'sub_sub_category_id' => $product->sub_sub_category_id,
                 'size_type_id' => $product->size_type_id,
@@ -215,7 +215,7 @@ class ProductController extends Controller
     {
         $request = Request::instance();
         // dd($product->id, $request->all());
-
+        $data =$request->all();
         $validated = $request->validate([
             'name_arm'        => ['required', 'max:50'],
             'name_ru'         => ['required', 'max:50'],
@@ -254,7 +254,29 @@ class ProductController extends Controller
                 ProductImage::create(['product_id'=>$product->id,'path'=> $image]);
             }
         }
+        $filterIds = [];
+        $subFilterIds = [];
+        // dd($data['filters']);
+        if (isset($data['filters'])) {
+            foreach ($data['filters'] as $filters) {
+        // dd($filters);
 
+                if ($filters['type'] == 1 || $filters['type'] == true) {
+                    $filterIds[] = $filters['id'];
+        // dd(77);
+                    foreach ($filters['sub_filters'] as $filter) {
+                        if ($filter['type'] == 1 ||  $filter['type'] == true) {
+                            $subFilterIds[] = $filter['id'];
+                        }
+                    }
+                }
+            }
+        }
+        // dd($filterIds,$subFilterIds);
+        
+        // Обновим связи: удалим старые, добавим новые
+        $product->filters()->sync($filterIds);
+        $product->subFilters()->sync($subFilterIds);
         return Redirect::back()->with('success', 'Продукт обновлен.');
     }
 

@@ -81,10 +81,11 @@ Route::delete('logout', [AuthenticatedSessionController::class, 'destroy'])
 Route::get('/admin', [DashboardController::class, 'index'])
 ->name('dashboard')
 ->middleware('auth');
+Route::get('/search', [HomeController::class, 'search'])->name('search');
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::prefix('admin')->group(function () {
 
-        Route::post('/search', [HomeController::class, 'search'])->name('search');
         
         // Users
 
