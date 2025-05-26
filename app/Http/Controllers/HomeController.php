@@ -50,8 +50,13 @@ class HomeController extends Controller
                   ->orWhere('description_en', 'LIKE', "%{$search}%")
                   ->orWhere('description_ru', 'LIKE', "%{$search}%");
             });
-        })
-        ->with(['filters', 'subFilters']);
+        });
+        $minPrice = (clone $products)->min('price');
+        $maxPrice = (clone $products)->max('price');
+        $new = (clone $products)->where('is_new',1)->count();
+        $bestseller = (clone $products)->where('is_bestseller',1)->count();
+        $discount = (clone $products)->where('discount','>',0)->count();
+        $products =   $products->with(['filters', 'subFilters']);
         if (isset($data['new'])) {
             $products =$products->where('is_new',1);
         }
@@ -114,6 +119,11 @@ class HomeController extends Controller
                 'textBanners' =>$banners,
                 'category' =>[],
                 'products' =>$products,
+                'maxPrice' =>$maxPrice,
+                'minPrice' =>$minPrice,
+                'discount' =>$discount,
+                'new' =>$new,
+                'bestseller' =>$bestseller,
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>['max_price'=>1111,'min_price'=>11],
             ]);

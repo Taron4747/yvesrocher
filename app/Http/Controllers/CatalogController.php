@@ -55,6 +55,11 @@ class CatalogController extends Controller
     
         $products = Product::where('category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
+        $minPrice = (clone $products)->min('price');
+        $maxPrice = (clone $products)->max('price');
+        $new = (clone $products)->where('is_new',1)->count();
+        $bestseller = (clone $products)->where('is_bestseller',1)->count();
+        $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
         $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
 
@@ -63,6 +68,11 @@ class CatalogController extends Controller
                 'textBanners' =>$banners,
                 'category' =>$category,
                 'products' =>$products,
+                'maxPrice' =>$maxPrice,
+                'minPrice' =>$minPrice,
+                'discount' =>$discount,
+                'new' =>$new,
+                'bestseller' =>$bestseller,
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>$prices,
             ]);
@@ -129,6 +139,11 @@ class CatalogController extends Controller
     
         $products = Product::where('sub_category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
+        $minPrice = (clone $products)->min('price');
+        $maxPrice = (clone $products)->max('price');
+        $new = (clone $products)->where('is_new',1)->count();
+        $bestseller = (clone $products)->where('is_bestseller',1)->count();
+        $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
                 $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
             return Inertia::render('Catalog/Index', [
@@ -136,6 +151,11 @@ class CatalogController extends Controller
                 'textBanners' =>$banners,
                 'category' =>$category,
                 'products' =>$products,
+                'maxPrice' =>$maxPrice,
+                'minPrice' =>$minPrice,
+                'discount' =>$discount,
+                'new' =>$new,
+                'bestseller' =>$bestseller,
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>$prices,
             ]);
@@ -177,6 +197,11 @@ class CatalogController extends Controller
     
         $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
+        $minPrice = (clone $products)->min('price');
+        $maxPrice = (clone $products)->max('price');
+        $new = (clone $products)->where('is_new',1)->count();
+        $bestseller = (clone $products)->where('is_bestseller',1)->count();
+        $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
         $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
 
@@ -186,6 +211,11 @@ class CatalogController extends Controller
                 'category' =>$category,
                 'products' =>$products,
                 'filtersWithCounts' =>$filtersWithCounts,
+                'maxPrice' =>$maxPrice,
+                'minPrice' =>$minPrice,
+                'discount' =>$discount,
+                'new' =>$new,
+                'bestseller' =>$bestseller,
                 'prices'=>$prices,
             ]);
    
