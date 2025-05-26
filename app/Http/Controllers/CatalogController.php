@@ -29,30 +29,7 @@ class CatalogController extends Controller
         $data =Request::all();
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
-        $filtersWithCounts = $category->filters->map(function ($filter) use($id){
-            $filterProductCount = $filter->products()->where('category_id',$id)->count();
-
-            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id) {
-                return [
-                    'id' => $subFilter->id,
-                    'name_ru' => $subFilter->name_ru,
-                    'name_arm' => $subFilter->name_arm,
-                    'name_en' => $subFilter->name_en,
-                    'product_count' => $subFilter->products()->where('category_id',$id)->count(),
-                ];
-            });
-            return [
-                'id' => $filter->id,
-                'name_ru' => $filter->name_ru,
-                'name_arm' => $filter->name_arm,
-                'name_en' => $filter->name_en,
-                'type' => $filter->type,
-                'product_count' => $filterProductCount,
-                'sub_filters' => $subFiltersWithCounts,
-            ];
-        });
-
-    
+        $filtersWithCounts =$this->filtersWithCounts($id,$data,'category_id',$category);
         $products = Product::where('category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
         $minPrice = (clone $products)->min('price');
@@ -76,6 +53,61 @@ class CatalogController extends Controller
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>$prices,
             ]);
+    }
+    public function filtersWithCounts($id,$data,$key,$category){
+        // $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
+
+        $filtersWithCounts = $category->filters->map(function ($filter) use($id,$data,$key){
+            $query = $filter->products()->where($key, $id);
+
+            if (isset($data['new'])) {
+                $query->where('is_new', 1);
+            }
+
+            if (isset($data['bestseller'])) {
+                $query->where('is_bestseller', 1);
+            }
+
+            if (isset($data['discount'])) {
+                $query->where('discount', '>', 0);
+            }
+            $filterProductCount = $query->count();
+            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id,$data,$key) {
+
+                $query =$subFilter->products()->where($key,$id);
+
+                if (isset($data['new'])) {
+                    $query->where('is_new', 1);
+                }
+    
+                if (isset($data['bestseller'])) {
+                    $query->where('is_bestseller', 1);
+                }
+    
+                if (isset($data['discount'])) {
+                    $query->where('discount', '>', 0);
+                }
+                $product_count = $query->count();
+
+                return [
+                    'id' => $subFilter->id,
+                    'name_ru' => $subFilter->name_ru,
+                    'name_arm' => $subFilter->name_arm,
+                    'name_en' => $subFilter->name_en,
+                    'product_count' => $product_count,
+                ];
+            });
+            return [
+                'id' => $filter->id,
+                'name_ru' => $filter->name_ru,
+                'name_arm' => $filter->name_arm,
+                'name_en' => $filter->name_en,
+                'type' => $filter->type,
+                'product_count' => $filterProductCount,
+                'sub_filters' => $subFiltersWithCounts,
+            ];
+        });
+        return $filtersWithCounts;
     }
     public function filterData($products,$data){
         if (count($data)==0) {
@@ -113,29 +145,31 @@ class CatalogController extends Controller
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
-        $filtersWithCounts = $category->filters->map(function ($filter) use($id) {
-            $filterProductCount = $filter->products()->where('sub_category_id',$id)->count();
+        $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_category_id',$category);
 
-            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) use($id)  {
-                return [
-                    'id' => $subFilter->id,
-                   'name_ru' => $subFilter->name_ru,
-                    'name_arm' => $subFilter->name_arm,
-                    'name_en' => $subFilter->name_en,
-                    'product_count' => $subFilter->products()->where('sub_category_id',$id)->count(),
-                ];
-            });
+        // $filtersWithCounts = $category->filters->map(function ($filter) use($id) {
+        //     $filterProductCount = $filter->products()->where('sub_category_id',$id)->count();
 
-            return [
-                'id' => $filter->id,
-                'name_ru' => $filter->name_ru,
-                'name_arm' => $filter->name_arm,
-                'name_en' => $filter->name_en,
-                'type' => $filter->type,
-                'product_count' => $filterProductCount,
-                'sub_filters' => $subFiltersWithCounts,
-            ];
-        });
+        //     $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) use($id)  {
+        //         return [
+        //             'id' => $subFilter->id,
+        //            'name_ru' => $subFilter->name_ru,
+        //             'name_arm' => $subFilter->name_arm,
+        //             'name_en' => $subFilter->name_en,
+        //             'product_count' => $subFilter->products()->where('sub_category_id',$id)->count(),
+        //         ];
+        //     });
+
+        //     return [
+        //         'id' => $filter->id,
+        //         'name_ru' => $filter->name_ru,
+        //         'name_arm' => $filter->name_arm,
+        //         'name_en' => $filter->name_en,
+        //         'type' => $filter->type,
+        //         'product_count' => $filterProductCount,
+        //         'sub_filters' => $subFiltersWithCounts,
+        //     ];
+        // });
     
         $products = Product::where('sub_category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
@@ -171,29 +205,31 @@ class CatalogController extends Controller
         $subSubCategory =Category::where('id',$id)->first();
         $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
-        $filtersWithCounts = $category->filters->map(function ($filter) use($id){
-            $filterProductCount = $filter->products()->where('sub_sub_category_id',$id)->count();
+        $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_sub_category_id',$category);
 
-            $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id) {
-                return [
-                    'id' => $subFilter->id,
-                   'name_ru' => $subFilter->name_ru,
-                    'name_arm' => $subFilter->name_arm,
-                    'name_en' => $subFilter->name_en,
-                    'product_count' => $subFilter->products()->where('sub_sub_category_id',$id)->count(),
-                ];
-            });
+        // $filtersWithCounts = $category->filters->map(function ($filter) use($id){
+        //     $filterProductCount = $filter->products()->where('sub_sub_category_id',$id)->count();
 
-            return [
-                'id' => $filter->id,
-                'name_ru' => $filter->name_ru,
-                'name_arm' => $filter->name_arm,
-                'name_en' => $filter->name_en,
-                'type' => $filter->type,
-                'product_count' => $filterProductCount,
-                'sub_filters' => $subFiltersWithCounts,
-            ];
-        });
+        //     $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id) {
+        //         return [
+        //             'id' => $subFilter->id,
+        //            'name_ru' => $subFilter->name_ru,
+        //             'name_arm' => $subFilter->name_arm,
+        //             'name_en' => $subFilter->name_en,
+        //             'product_count' => $subFilter->products()->where('sub_sub_category_id',$id)->count(),
+        //         ];
+        //     });
+
+        //     return [
+        //         'id' => $filter->id,
+        //         'name_ru' => $filter->name_ru,
+        //         'name_arm' => $filter->name_arm,
+        //         'name_en' => $filter->name_en,
+        //         'type' => $filter->type,
+        //         'product_count' => $filterProductCount,
+        //         'sub_filters' => $subFiltersWithCounts,
+        //     ];
+        // });
     
         $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
