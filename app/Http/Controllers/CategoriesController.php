@@ -216,7 +216,7 @@ class CategoriesController extends Controller
     {
         $category->delete();
 
-        return Redirect::back()->with('success', 'Категория  удалена .');
+        return redirect()->route('categories')->with('success', 'Категория  удалена .');
     }
 
     public function restore(Category $category): RedirectResponse
@@ -316,6 +316,8 @@ class CategoriesController extends Controller
     public function destroySub(Category $category): RedirectResponse
     {
         $category->delete();
+
+        return redirect()->route('subcategories')->with('success', 'Категория  удалена .');
 
         return Redirect::back()->with('success', 'Sub Category deleted.');
     }
@@ -423,6 +425,7 @@ class CategoriesController extends Controller
     public function destroySubSub(Category $category): RedirectResponse
     {
         $category->delete();
+        return redirect()->route('subsubcategories')->with('success', 'Саб Категория  удалена .');
 
         return Redirect::back()->with('success', 'Sub Category deleted.');
     }

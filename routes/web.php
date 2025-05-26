@@ -222,7 +222,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
         // Sub Categories
         Route::get('sub-categories', [CategoriesController::class, 'indexSub'])
-        ->name('sub-categories')
+        ->name('subcategories')
         ->middleware('auth');
 
         Route::get('sub-categories/create', [CategoriesController::class, 'createSub'])
@@ -251,7 +251,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
         // Sub Categories
         Route::get('sub-sub-categories', [CategoriesController::class, 'indexSubSub'])
-        ->name('sub-sub-categories')
+        ->name('subsubcategories')
         ->middleware('auth');
         
         Route::get('sub-sub-categories/create', [CategoriesController::class, 'createSubSub'])
