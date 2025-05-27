@@ -111,6 +111,7 @@ class ProposalsController extends Controller
     public function destroy(Proposal $proposal): RedirectResponse
     {
         $proposal->delete();
+        return redirect()->route('proposals')->with('success', 'Предложение бизнеса удалено.');
 
         return Redirect::back()->with('success', 'Contact deleted.');
     }
