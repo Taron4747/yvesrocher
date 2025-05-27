@@ -1,7 +1,7 @@
 <template>
   <div class="current_content">
-    <div class="title">Текущие <b>предложения</b></div>
-    <div class="title_small"><span>Войдите в свою учетную запись, чтобы воспользоваться скидкой 35% на 3 продукта + бесплатный подарок!*</span></div>
+    <div class="title" v-html="this.$page.props.language.current_offers"></div>
+    <!-- <div class="title_small"><span>Войдите в свою учетную запись, чтобы воспользоваться скидкой 35% на 3 продукта + бесплатный подарок!*</span></div> -->
     <div class="data_content">
       <a :href="item.link" class="data" v-for="item in imageBanners.slice(0, 3)">
         <div class="data_top">
@@ -80,6 +80,7 @@ export default {
   // color: #014E2E;
   .title{
     font-size: 28px;
+    margin-bottom: 16px;
   }
   .title_small{
     display: flex;
