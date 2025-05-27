@@ -10,16 +10,16 @@
     </div>
     <div class="product_page">
       <div class="product_filters">
-        <div class="title">Результаты фильтров</div>
-        <label class="custom_checkbox custom_checkbox_small">Бестселлеры
+        <div class="title">{{ this.$page.props.language.filter_results }}</div>
+        <label class="custom_checkbox custom_checkbox_small">{{ this.$page.props.language.bestsellers }}
           <input type="checkbox" v-model="bestseller" @change="updateUrl">
           <span class="checkmark"></span>
         </label>
-        <label class="custom_checkbox custom_checkbox_small">Новинки
+        <label class="custom_checkbox custom_checkbox_small">{{ this.$page.props.language.new }}
           <input type="checkbox" v-model="isNew" @change="updateUrl">
           <span class="checkmark"></span>
         </label>
-        <label class="custom_checkbox custom_checkbox_small">Скидки
+        <label class="custom_checkbox custom_checkbox_small">{{ this.$page.props.language.discounts }}
           <input type="checkbox" v-model="discount" @change="updateUrl">
           <span class="checkmark"></span>
         </label>
@@ -76,7 +76,7 @@
               </div>
             </div>
             <button>
-              В Кoрзину
+              {{ this.$page.props.language.add_to_cart }}
             </button>
           </div>  
         </div>

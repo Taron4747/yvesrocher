@@ -10,7 +10,7 @@
         <div class="data_bottom">
           <div class="title">{{ item[`title_${$page.props.locale}`]}}</div>
           <div class="text"  v-html="item[`proposition_${$page.props.locale}`]" />
-          <button>За покупками</button>
+          <button>{{ this.$page.props.language.shop_now }}</button>
         </div>
       </a>
       <!-- <div class="data">

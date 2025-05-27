@@ -3,14 +3,14 @@
     "add_to_cart": "Ավելացնել զամբյուղ",
     "current_offers": "ՄԵՐ ԱՌԱՋԱՐԿՆԵՐԸ",
     "shop_now": "Անցնել գնումների",
-    "yves_with_you": "Yves Rocher-ն Ձեր կողքին է",
-    "about_us": "Մեր մասին",
+    "yves_with_you": "Yves Rocher-ն <b>Ձեր կողքին է</b>",
+    "about_us": "<b>Մեր</b> մասին",
     "discover": "Բացահայտել",
     "learn_more": "Իմանալ ավելին",
-    "shipping_yerevan": "Առաքում Երևանում",
-    "secured_payment": "Անվտանգ վճարում",
-    "return_policy": "Վերադարձի պայմանները",
-    "contact_us": "Կապ մեզ հետ",
+    "shipping_yerevan": "Առաքում <b>Երևանում</b>",
+    "secured_payment": "<b>Անվտանգ</b> վճարում",
+    "return_policy": "Վերադարձի <b>պայմանները</b>",
+    "contact_us": "<b>Կապ</b> մեզ հետ",
     "customer_service": "Հաճախորդների սպասարկում",
     "work_time": "Yves Rocher-ի կոնտակտային կենտրոն կարող եք զանգահարել  յուրաքանչյուր օր՝ ժամը 10:00-ից 20:00:",
     "follow_us": "Հետևեք մեզ՝",
@@ -25,5 +25,6 @@
     "price_asc": "Գինը՝ ցածրից բարձր",
     "price_desc": "Գինը՝ բարձրից ցածր",
     "discount_asc": "Զեղչ՝ փոքրից մեծ",
-    "discount_desc": "Զեղչ՝ մեծից փոքր"
+    "discount_desc": "Զեղչ՝ մեծից փոքր",
+    "about_mark":"Ապրանքանիշի մասին"
 }

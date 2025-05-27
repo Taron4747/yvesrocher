@@ -1,6 +1,6 @@
 <template>
   <div class="about_content">
-    <div class="title"><b>O</b> нас</div>
+    <div class="title" v-html="this.$page.props.language.about_us"></div>
     <div class="content">
       <div class="content_item content_item_1">
         <div class="title">Our product, our expertise</div>

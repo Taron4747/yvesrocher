@@ -18,7 +18,7 @@
         @click="changeProducts(item.id)"
         :key="item.id"
       >
-        <div>{{ item[`title_${$page.props.locale}`] }} </div>
+        <div>{{ item.title }} </div>
       </div>
     </div>
   <div class="carousel_full_wrapper">
@@ -67,7 +67,7 @@
                 >{{ item.price + (item.price * item.discount / 100) }} դ</span>
               </div>
             </div>
-            <button>В корзину</button>
+            <button>{{ this.$page.props.language.add_to_cart }}</button>
           </div>
         </div>
       </div>
@@ -96,23 +96,17 @@ export default {
       categoryBanners: [
         {
             id:1,
-            title_arm: 'Бестселлеры',
-            title_ru: 'Бестселлеры',
-            title_en: 'Бестселлеры',
+            title: this.$page.props.language.bestsellers,
             type:true,
         },
         {
             id:2,
-            title_arm: 'НОВИНКИ',
-            title_ru: 'НОВИНКИ',
-            title_en: 'НОВИНКИ',
+            title: this.$page.props.language.new,
             type:false,
         },
         {
             id:3,
-            title_arm: 'Скидки',
-            title_ru: 'Скидки',
-            title_en: 'Скидки',
+            title: this.$page.props.language.discounts,
             type:false,
         },
       ],

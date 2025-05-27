@@ -51,9 +51,9 @@
           >
            <a :href="'/category/'+item.id" >{{ item[`name_${$page.props.locale}`] }}</a>
           </div>
-          <div class="categores_data_item old_green">НОВИНКИ</div>
-          <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
-          <div class="categores_data_item old_green">Скидки</div>
+          <div class="categores_data_item old_green">{{ this.$page.props.language.new }}</div>
+          <div class="categores_data_item old_green">{{ this.$page.props.language.bestsellers }}</div>
+          <div class="categores_data_item old_green">{{ this.$page.props.language.discounts }}</div>
           <div
             class="categores_data_item old_green"
             v-for="item in categoriesData.filter(item => item.hasImage)"
@@ -153,9 +153,9 @@ export default {
 // console.log(cleanImageBanners)
     const newCategory = {
       id:1000,
-      name_arm: "О МАРКЕ",  
+      name_arm: "Ապրանքանիշի մասին",  
       name_ru: "О МАРКЕ",  
-      name_en: "О МАРКЕ",  
+      name_en: "The brand",  
       children: this.aboutImageBanners,
       hasImage: true, 
     };

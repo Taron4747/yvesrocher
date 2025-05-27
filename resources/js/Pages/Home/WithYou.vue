@@ -1,6 +1,6 @@
 <template>
   <div class="with_you_content">
-    <div class="title">Yves Rocher <b>с вами</b></div>
+    <div class="title" v-html="this.$page.props.language.yves_with_you"></div>
     <div class="content">
       <div class="content_left">
         <img src="/images/push-1.svg"/>

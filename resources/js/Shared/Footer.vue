@@ -6,25 +6,21 @@
           <div class="data_item_top">
             <img src="/images/footer_car.svg"/>
           </div>
-          <div class="data_item_bottom">
-            Shipping in <b>Yerevan </b>
+          <div class="data_item_bottom" v-html="this.$page.props.language.shipping_yerevan">
+            
           </div>
         </div>
         <div class="content_data_item">
           <div class="data_item_top">
             <img src="/images/footer_lock.svg"/>
           </div>
-          <div class="data_item_bottom">
-            <b>Secured</b> payment
-          </div>
+          <div class="data_item_bottom" v-html="this.$page.props.language.secured_payment"></div>
         </div>
         <div class="content_data_item">
           <div class="data_item_top">
             <img src="/images/footer_circle.svg"/>
           </div>
-          <div class="data_item_bottom">
-            Return  <b>Policy</b>
-          </div>
+          <div class="data_item_bottom" v-html="this.$page.props.language.return_policy"></div>
         </div>
         <div class="content_data_item">
           <div class="data_item_top" style="    border: 1px solid #939956;
@@ -35,19 +31,16 @@
     border-radius: 50%;">
             <img src="/images/phone.svg" style="margin-bottom: 0;"/>
           </div>
-          <div class="data_item_bottom">
-            <b>Contact 
-            </b>US
-          </div>
+          <div class="data_item_bottom" v-html="this.$page.props.language.contact_us"></div>
         </div>
       </div>
     </div>
     <div class="footer_content_data_center">
       <div class="info_data">
         <div class="info_data_item">
-          <div class="title">Обслуживание клиентов</div>
+          <div class="title"  v-html="this.$page.props.language.contact_us"></div>
           <div class="phone">(010) 534836</div>
-          <div class="address">Free service and calls (Monday to Friday 11 AM to 6 PM and Saturday 11 AM to 5 PM).</div>
+          <div class="address" v-html="this.$page.props.language.work_time"></div>
         </div>
         <div class="info_data_item">
           <div class="images">
@@ -59,7 +52,7 @@
       </div>
     </div>
      <div class="footer_content_data_bottom">
-      <div>мы в социальных сетях</div>
+      <div>{{ this.$page.props.language.follow_us }}</div>
       <a target="_blank" href="https://www.instagram.com/yvesrocherarm1/?hl=en"><img src="/images/instagram.svg"/></a>
       <a target="_blank" href="https://www.facebook.com/p/Yves-Rocher-Armenia-100063517751918/?locale=hy_AM"><img src="/images/facebook.svg"/></a>
       <!-- <a href=""><img src="/images/x.svg"/></a>
