@@ -49,7 +49,7 @@
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <a :href="'/category/'+item.id" >{{ item.name_ru }}</a>
+           <a :href="'/category/'+item.id" >{{ item[`name_${$page.props.locale}`] }}</a>
           </div>
           <div class="categores_data_item old_green">НОВИНКИ</div>
           <div class="categores_data_item old_green">БЕСТСЕЛЛЕРЫ</div>
@@ -61,7 +61,7 @@
             :class="{ border_underline: choosedCategory == item.id}"
             @mouseenter="showHide(true,item.id)"
           >
-           <span v-if="item.hasImage">{{ item.name_ru }}</span>
+           <span v-if="item.hasImage">{{ item[`name_${$page.props.locale}`] }}</span>
           </div>
           <div
               v-if="showDropdown === true"
@@ -70,9 +70,9 @@
             >
           <div class="dropdown_content_left">
             <div class="subcategories_content" :key="item1.id" v-for="item1 in subCategoriesData">
-                <a :href="'/subcategory/'+item1.id"  class="title" v-if="!item1.image_medium">{{ item1.name_ru }}</a>
+                <a :href="'/subcategory/'+item1.id"  class="title" v-if="!item1.image_medium">{{ item1[`name_${$page.props.locale}`] }}</a>
                 <a :href="'/subsubcategory/'+item2.id" class="text" v-if="!item1.image_medium" v-for="item2 in item1.children">
-                  {{ item2.name_ru }}
+                  {{ item2[`name_${$page.props.locale}`] }}
                 </a>
                 <div class="" v-if="item1.image_medium">
                   <div class="image_banner" >
@@ -153,7 +153,9 @@ export default {
 // console.log(cleanImageBanners)
     const newCategory = {
       id:1000,
+      name_arm: "О МАРКЕ",  
       name_ru: "О МАРКЕ",  
+      name_en: "О МАРКЕ",  
       children: this.aboutImageBanners,
       hasImage: true, 
     };

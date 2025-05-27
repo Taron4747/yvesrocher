@@ -5,7 +5,7 @@
     </button>
 
     <div class="relative flex-1 overflow-hidden mx-4">
-      <transition name="slide-out" mode="out-in">
+      <transition :name="transitionName" mode="out-in">
         <div :key="currentIndex" class="text-center font-medium hover_text">
           <a :href="currentLink" v-html="currentMessage" />
         </div>
@@ -23,6 +23,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import Cookies from 'js-cookie'
+import { usePage } from '@inertiajs/vue3'
 
 const emit = defineEmits(['hide'])
 
@@ -34,7 +35,14 @@ const props = defineProps({
   interval: {
     type: Number,
     default: 5000, // 3 секунды покоя
-  }
+  },
+})
+
+const page = usePage()
+const locale = computed(() => page.props.locale)
+
+const transitionName = computed(() => {
+  return direction.value === 'left' ? 'slide-from-left' : 'slide-from-right'
 })
 
 const hideBanner = () => {
@@ -48,8 +56,8 @@ const currentIndex = ref(0)
 const currentMessage = computed(() => {
   const banner = props.banners[currentIndex.value]
   
-  if (banner && banner.text_ru) {
-    return banner.text_ru + ' - ' +banner.proposition_ru
+  if (banner && banner[`text_${locale.value}`]) {
+    return banner[`text_${locale.value}`]+ ' - ' +banner[`proposition_${locale.value}`] 
   } else {
     return 'No message available'
   }
@@ -58,7 +66,7 @@ const currentMessage = computed(() => {
 const currentLink = computed(() => {
   const banner = props.banners[currentIndex.value]
   
-  if (banner && banner.text_ru) {
+  if (banner && banner[`text_${locale.value}`]) {
     return banner.link
   } else {
     return '/'
@@ -74,12 +82,16 @@ const resetTimer = () => {
   }, props.interval)
 }
 
+const direction = ref('right')
+
 const next = () => {
+  direction.value = 'right'
   currentIndex.value = (currentIndex.value + 1) % props.banners.length
   resetTimer()
 }
 
 const prev = () => {
+  direction.value = 'left'
   currentIndex.value = (currentIndex.value - 1 + props.banners.length) % props.banners.length
   resetTimer()
 }
@@ -102,6 +114,41 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped>
+.slide-from-right-enter-active,
+.slide-from-right-leave-active,
+.slide-from-left-enter-active,
+.slide-from-left-leave-active {
+  transition: all 0.5s ease;
+}
+
+.slide-from-right-enter-from {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-from-right-leave-to {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.slide-from-left-enter-from {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.slide-from-left-leave-to {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.slide-from-right-enter-to,
+.slide-from-right-leave-from,
+.slide-from-left-enter-to,
+.slide-from-left-leave-from {
+  transform: translateX(0);
+  opacity: 1;
+}
+
 .slide-out-enter-active,
 .slide-out-leave-active {
   transition: all 0.5s ease;

@@ -6,7 +6,7 @@
         v-for="item in categories.filter(c => c.id !== 1000).slice(0, 4)"
         :key="item.id"
       >
-        {{ item.name_ru }}
+        {{ item[`name_${$page.props.locale}`] }} 
       </a>
     </div>
 
@@ -18,7 +18,7 @@
         @click="changeProducts(item.id)"
         :key="item.id"
       >
-        <div>{{ item.title }}</div>
+        <div>{{ item[`title_${$page.props.locale}`] }} </div>
       </div>
     </div>
   <div class="carousel_full_wrapper">
@@ -51,7 +51,7 @@
               <img :src="item.image" />
             </div>
             <div class="text_cotent">
-              <div class="title">{{ item.name_ru }}</div>
+              <div class="title">{{ item[`name_${$page.props.locale}`] }}</div>
               <div class="rating">
                 <img src="/images/stars.png" />
                 <div>(100)</div>
@@ -96,17 +96,23 @@ export default {
       categoryBanners: [
         {
             id:1,
-            title: 'Бестселлеры',
+            title_arm: 'Бестселлеры',
+            title_ru: 'Бестселлеры',
+            title_en: 'Бестселлеры',
             type:true,
         },
         {
             id:2,
-            title: 'НОВИНКИ',
+            title_arm: 'НОВИНКИ',
+            title_ru: 'НОВИНКИ',
+            title_en: 'НОВИНКИ',
             type:false,
         },
         {
             id:3,
-            title: 'Скидки',
+            title_arm: 'Скидки',
+            title_ru: 'Скидки',
+            title_en: 'Скидки',
             type:false,
         },
       ],

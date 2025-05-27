@@ -8,8 +8,8 @@
           <img :src="item['image_medium']"/>
         </div>
         <div class="data_bottom">
-          <div class="title">{{ item.title_ru }}</div>
-          <div class="text"  v-html="item.proposition_ru" />
+          <div class="title">{{ item[`title_${$page.props.locale}`]}}</div>
+          <div class="text"  v-html="item[`proposition_${$page.props.locale}`]" />
           <button>За покупками</button>
         </div>
       </a>

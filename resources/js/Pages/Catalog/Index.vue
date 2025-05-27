@@ -5,7 +5,7 @@
     <CategoryInfo :category="category" />
     <div class="subacategory_content" v-if="category.children"> 
       <div class="subacategory_content_item" v-for="item in category.children" :key="item.id">
-        <a :href="'/subcategory/' + item.id">{{ item.name_ru }}</a>
+        <a :href="'/subcategory/' + item.id">{{ item[`name_${$page.props.locale}`] }}</a>
       </div>
     </div>
     <div class="product_page">
@@ -34,7 +34,7 @@
         </div>
         <div class="product_filter" v-for="item in filtersWithCountsData" :key="item.id">
           <div class="filter_title" @click="showHideFilter(item.id)">
-            <span>{{ item.name_ru }}</span>
+            <span>{{ item[`name_${$page.props.locale}`] }}</span>
             <img :class="{ transform: item.isOpen }" src="/images/vector.svg"/>
           </div>
           <div v-if="item.isOpen">
@@ -43,7 +43,7 @@
               v-for="item1 in item.sub_filters"
               :key="item1.id"
             >
-              {{ item1.name_ru }} <span class="small_size">({{ item1.product_count }})</span>
+              {{ item1[`name_${$page.props.locale}`] }} <span class="small_size">({{ item1.product_count }})</span>
               <input
                 type="checkbox"
                 :checked="(filtersSelected[item.id] || []).includes(item1.id)"
@@ -65,7 +65,7 @@
               <img :src="item.image">
             </div>
             <div class="product_text">
-              <div class="title">{{ item.name_ru }}</div>
+              <div class="title">{{ item[`name_${$page.props.locale}`] }}</div>
               <div class="size">Размер {{ item.size }}</div>
               <div class="rating">
                 <img src="/images/stars.png">

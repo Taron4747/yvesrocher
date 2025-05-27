@@ -1,11 +1,11 @@
 <template>
   <div class="category_info_content">
     <div class="category_info_content_top">
-      <span>Главная</span><span>></span><span>{{ category.name_ru }}</span>
+      <span>Главная</span><span>></span><span>{{category[`name_${$page.props.locale}`]}}</span>
     </div>
     <div class="category_info_content_middle">
       <div class="content_middle_left">
-        <div class="title">{{ category.name_ru }}</div>
+        <div class="title">{{category[`name_${$page.props.locale}`]}}</div>
         <div class="text">Buy 1, get 1 at 50% off on all face care products*</div>
         <div class="text">96 item(s) found</div>
       </div>
