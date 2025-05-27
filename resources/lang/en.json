@@ -1,5 +1,29 @@
 {
-    "Status": "Statut en"
-   
-    
+    "search": "Search",
+    "add_to_cart": "Add to Cart",
+    "current_offers": "CURRENT OFFERS",
+    "shop_now": "Shop Now",
+    "yves_with_you": "Yves Rocher with you",
+    "about_us": "About Us",
+    "discover": "Discover",
+    "learn_more": "Learn more",
+    "shipping_yerevan": "Shipping in Yerevan",
+    "secured_payment": "Secured payment",
+    "return_policy": "Return Policy",
+    "contact_us": "Contact Us",
+    "customer_service": "Customer Service",
+    "work_time": "You can call the Yves Rocher contact center daily from 10:00 to 20:00.",
+    "follow_us": "Follow us on:",
+    "home": "Home",
+    "filter_results": "Filter results",
+    "bestsellers": "Bestsellers",
+    "new": "New",
+    "discounts": "Discounts",
+    "sort_by": "Sort by",
+    "alphabetically_asc": "Alphabetically (A–Z)",
+    "alphabetically_desc": "Alphabetically (Z–A)",
+    "price_asc": "Price: Low to High",
+    "price_desc": "Price: High to Low",
+    "discount_asc": "Discount: Low to High",
+    "discount_desc": "Discount: High to Low"
 }

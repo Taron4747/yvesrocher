@@ -1,5 +1,29 @@
 {
-    "Status": "Statut ru"
-   
-    
+    "search": "Поиск",
+    "add_to_cart": "В корзину",
+    "current_offers": "АКТУАЛЬНЫЕ ПРЕДЛОЖЕНИЯ",
+    "shop_now": "За покупками",
+    "yves_with_you": "Yves Rocher с вами",
+    "about_us": "О нас",
+    "discover": "Discover",
+    "learn_more": "Узнать больше",
+    "shipping_yerevan": "Доставка в Ереване",
+    "secured_payment": "Безопасный платеж",
+    "return_policy": "Гарантия возврата",
+    "contact_us": "Свяжитесь с нами",
+    "customer_service": "Обслуживание клиентов",
+    "work_time": "Позвонить в контактный центр Ив Роше можно ежедневно с 10:00 до 20:00.",
+    "follow_us": "Мы в социальных сетях",
+    "home": "Главная",
+    "filter_results": "Результаты фильтров",
+    "bestsellers": "Бестселлеры",
+    "new": "Новинки",
+    "discounts": "Скидки",
+    "sort_by": "Сортировать По",
+    "alphabetically_asc": "По алфавиту (А–Я)",
+    "alphabetically_desc": "По алфавиту (Я–А)",
+    "price_asc": "По цене (-/+)",
+    "price_desc": "По цене (+/-)",
+    "discount_asc": "По размеру скидки -/+",
+    "discount_desc": "По размеру скидки +/-"
 }
