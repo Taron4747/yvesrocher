@@ -124,23 +124,7 @@ class BannersController extends Controller
     {
         $data =Request::all();
         $banner->update(
-            // Request::validate([
-            //     'text_arm' => ['required', 'max:500'],
-            //     'text_ru' => ['required', 'max:500'],
-            //     'text_en' => ['required', 'max:500'],
-            //     'title_arm' => ['required', 'max:500'],
-            //     'title_ru' => ['required', 'max:500'],
-            //     'title_en' => ['required', 'max:500'],
-            //     'position' => ['required', 'integer'],
-        
-            //     // 'proposition_arm' => ['required', 'max:500'],
-            //     // 'proposition_ru' => ['required', 'max:500'],
-            //     // 'proposition_en' => ['required', 'max:500'],
-            //     'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
-
-            //     'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
-                
-            // ])
+           
             Request::validate([
                 'text_arm' => ['required', 'max:500'],
                 'text_ru' => ['required', 'max:500'],
@@ -208,7 +192,6 @@ class BannersController extends Controller
     public function bannerActivate()
     {
         $data =Request::all();
-        // dd($data);
         if ($data['is_active'] ==0) {
             $bannersCount = Banner::where('is_active',1)->count();
             if ($bannersCount ==5) {

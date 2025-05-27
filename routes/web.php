@@ -15,6 +15,7 @@ use App\Http\Controllers\BannersController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShopsController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -430,7 +431,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('products', [CatalogController::class, 'products'])
     ->name('products');
     Route::get('random-categories', [CatalogController::class, 'randomCategories']);
-
+    Route::post('rate', [HomeController::class, 'rate'])->middleware('auth');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
+    Route::get('/favorites', [FavoriteController::class, 'list']);
 });
    
    

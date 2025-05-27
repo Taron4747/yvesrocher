@@ -13,6 +13,7 @@ use Inertia\Response;
 use App\Models\Category;
 use App\Models\Banner;
 use App\Models\Filter;
+use App\Models\ProductRating;
 use Illuminate\Support\Arr;
 
 class HomeController extends Controller
@@ -129,7 +130,34 @@ class HomeController extends Controller
             ]);
     }
    
+    public function rateProduct(Request $request)
+    {
+        $request = Request::instance();
 
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+        $data=$request->all();
+        $product = Product::findOrFail( $data['product_id']);
+    
+        ProductRating::updateOrCreate(
+            [
+                'product_id' => $data['product_id'],
+                'user_id' =>Auth::id(),
+            ],
+            [
+                'rating' => $request->rating,
+            ]
+        );
+        $average = $product->averageRating();
+        $product->rating =$average;
+        $product->save();
+        return response()->json([
+            'message' => 'Спасибо за ваш рейтинг!',
+            // 'average' => $product->averageRating(),
+            // 'count' => $product->ratingCount(),
+        ]);
+    }
    
 
    
