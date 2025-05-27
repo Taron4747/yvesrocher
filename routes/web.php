@@ -437,7 +437,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         ->name('proposals.edit')
         ->middleware('auth');
 
-    Route::put('proposals/{proposal}', [ProposalsController::class, 'update'])
+    Route::post('proposals/{proposal}', [ProposalsController::class, 'update'])
         ->name('proposals.update')
         ->middleware('auth');
 

@@ -12,10 +12,7 @@
           <select-input v-model="form.type" :error="form.errors.type" class="pb-8 pr-6 w-full " label="Тип">
             <option :value="null" />
             <option v-for="opt in dataTypes" :key="opt.name" :value="opt.name">{{ opt.name }}</option> 
-            <!-- <option :value="Новинки" :key="Новинки">Новинки </option>
-            <option :value="Бестселлеры" :key="Бестселлеры"> Бестселлеры </option>
-            <option :value="Скидки" :key="Скидки">    Скидки</option>
-            <option :value="Экоформаты" :key="Экоформаты">    Экоформаты </option> -->
+        
           </select-input>
           <div class="title_big">Описание</div>
           <text-input v-model="form.description_arm" :error="form.errors.description_arm" class="pb-8 pr-6 w-full " label="Հայերեն"/>
@@ -41,7 +38,7 @@
 <image-input  :max-files="1" v-model="form.image" :error="form.errors.image" class="pb-8 pr-6 w-full" type="file" accept="image/*" label="Фото" />
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Create Contact</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Добавить предложение</loading-button>
         </div>
       </form>
     </div>

@@ -58,6 +58,7 @@ class ProposalsController extends Controller
             'proposition_ru' => ['required'],
             'proposition_en' => ['required'],
             'proposition_arm' => ['required'],
+            'image' => ['required'],
         ]);
         $validator->validate();
         $path = Request::file('image')[0]->store('images', 's3', 'public');
@@ -86,39 +87,37 @@ class ProposalsController extends Controller
         ]);
     }
 
-    public function update(Contact $contact): RedirectResponse
+    public function update(Proposal $proposal): RedirectResponse
     {
-        $contact->update(
+        $proposal->update(
             Request::validate([
-                'first_name' => ['required', 'max:50'],
-                'last_name' => ['required', 'max:50'],
-                'organization_id' => [
-                    'nullable',
-                    Rule::exists('organizations', 'id')->where(fn ($query) => $query->where('account_id', Auth::user()->account_id)),
-                ],
-                'email' => ['nullable', 'max:50', 'email'],
-                'phone' => ['nullable', 'max:50'],
-                'address' => ['nullable', 'max:150'],
-                'city' => ['nullable', 'max:50'],
-                'region' => ['nullable', 'max:50'],
-                'country' => ['nullable', 'max:2'],
-                'postal_code' => ['nullable', 'max:25'],
+                'type' => ['required'],
+                'description_arm' => ['required'],
+                'description_ru' => ['required'],
+                'description_en' => ['required'],
+                'proposition_ru' => ['required'],
+                'proposition_en' => ['required'],
+                'proposition_arm' => ['required'],
             ])
         );
-
+        if (isset(Request::file('image_big')[0])) {
+            $path = Request::file('image_big')[0]->store('images', 's3', 'public');
+            $image_big = Storage::disk('s3')->url($path);
+            $proposal->update(['image_big'=>$image_big]);
+        }
         return Redirect::back()->with('success', 'Предложение бизнеса редактирована.');
     }
 
-    public function destroy(Contact $contact): RedirectResponse
+    public function destroy(Proposal $proposal): RedirectResponse
     {
-        $contact->delete();
+        $proposal->delete();
 
         return Redirect::back()->with('success', 'Contact deleted.');
     }
 
-    public function restore(Contact $contact): RedirectResponse
+    public function restore(Proposal $proposal): RedirectResponse
     {
-        $contact->restore();
+        $proposal->restore();
 
         return Redirect::back()->with('success', 'Contact restored.');
     }
