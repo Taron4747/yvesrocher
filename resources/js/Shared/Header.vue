@@ -30,8 +30,8 @@
                     <span  class="dropdown_items_active"> en</span>
                 </Link> -->
                 
-            <div class="lang" @click="changeLang('arm')" :class="{ active: this.$page.props.locale == 'arm' }">ARM</div>
-            <div class="lang" @click="changeLang('ru')" :class="{ active: this.$page.props.locale == 'ru' }">RU</div>
+            <div class="lang" @click="changeLang('arm')" :class="{ active: this.$page.props.locale == 'arm' }">ՀԱՅ</div>
+            <div class="lang" @click="changeLang('ru')" :class="{ active: this.$page.props.locale == 'ru' }">РУ</div>
             <div class="lang" @click="changeLang('en')" :class="{ active: this.$page.props.locale == 'en' }">EN</div>
             <img class="bottom" src="/images/account.svg">
             <img src="/images/cart.svg">
@@ -199,10 +199,11 @@ export default {
       this.showDropdown = type;
     },
     changeLang(type){
-       axios.get("/language/" + type).then((response) => {
-        console.log(response)
+      if(this.$page.props.locale != type){
+      axios.get("/language/" + type).then((response) => {
+        window.location.reload();
       });
-      // console.log(type);
+      }
     }
   },
 }
