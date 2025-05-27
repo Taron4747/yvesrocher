@@ -26,5 +26,6 @@
     "price_desc": "По цене (+/-)",
     "discount_asc": "По размеру скидки -/+",
     "discount_desc": "По размеру скидки +/-",
-    "about_mark":"О марке"
+    "about_mark":"О марке",
+    "price":"Цена"
 }

@@ -26,5 +26,6 @@
     "price_desc": "Price: High to Low",
     "discount_asc": "Discount: Low to High",
     "discount_desc": "Discount: High to Low",
-    "about_mark":"The brand"
+    "about_mark":"The brand",
+    "price":"Price"
 }

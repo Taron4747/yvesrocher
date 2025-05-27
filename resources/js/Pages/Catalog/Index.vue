@@ -25,7 +25,7 @@
         </label>
         <div class="product_filter">
           <div class="filter_title" @click="priceFilter = !priceFilter">
-            <span>Цена</span>
+            <span>{{ this.$page.props.language.price }}</span>
             <img :class="{ transform: priceFilter }" src="/images/vector.svg"/>
           </div>
           <div class="price_slider" v-if="priceFilter">
