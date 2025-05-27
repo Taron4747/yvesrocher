@@ -79,6 +79,8 @@ class HomeController extends Controller
                 $query->whereIn('sub_filter_id', $subFilterIds);
             });
         }
+        $products = $this->sortData($products,$data);
+
         $products =$products->paginate(20);
     
     $productIds = $products->pluck('id');
@@ -129,7 +131,31 @@ class HomeController extends Controller
                 'prices'=>['max_price'=>1111,'min_price'=>11],
             ]);
     }
-   
+    private function sortData($query, $data)
+    {
+        if (!isset($data['sorting'])) {
+            return $query;
+        }
+    
+        switch ($data['sorting']) {
+            case 'name_asc':
+                return $query->orderBy('name_' . app()->getLocale(), 'asc');
+    
+            case 'name_desc':
+                return $query->orderBy('name_' . app()->getLocale(), 'desc');
+    
+            case 'price_asc':
+                return $query->orderBy('price', 'asc');
+            case 'price_desc':
+                return $query->orderBy('price', 'desc');
+            case 'discount_asc':
+                return $query->orderBy('discount', 'asc');
+            case 'discount_desc':
+                return $query->orderBy('discount', 'desc');
+            default:
+                return $query;
+        }
+    }
     public function rateProduct(Request $request)
     {
         $request = Request::instance();
