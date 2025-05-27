@@ -15,7 +15,7 @@
         </div>
         <div class="banner_middle_center">
           <div class="search_content">
-            <input @keyup.enter="handleEnter" v-model="searchValue" placeholder="ПОИСК" type="text" />
+            <input @keyup.enter="handleEnter" v-model="searchValue" :placeholder="this.$page.props.language.search" type="text" />
             <img @click="handleEnter" src="/images/search_green.svg">
           </div>
         </div>

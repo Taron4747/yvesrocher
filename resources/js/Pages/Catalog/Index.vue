@@ -55,9 +55,14 @@
         </div>
       </div>
       <div class="product_data_content">
-        <div class="sorting">
-          <span>Сортитовать ПО</span>
+        <div class="sorting" @click="toggle()">
+          <span>{{ this.$page.props.language.sort_by }}</span>
           <img src="/images/Vector.svg">  
+          <div class="sort_data" v-if="showSorting">
+            <div class="sort_data_item" v-for="item in sort_data">
+                {{ item.title }}
+            </div>
+          </div>
         </div>
         <div class="product_data">
           <div class="product_data_item" v-for="item in products.data" :key="item.id">
@@ -121,6 +126,33 @@ export default {
       discount: false,
       filtersSelected: {}, // { 1: [2,3], 3: [8] }
       openFilters: [], // сюда будем сохранять id открытых фильтров
+      showSorting:false,
+      sort_data: [
+        {
+            id:1,
+            title: this.$page.props.language.alphabetically_asc,
+        },
+        {
+            id:2,
+            title: this.$page.props.language.alphabetically_desc,
+        },
+        {
+            id:3,
+            title: this.$page.props.language.price_asc,
+        },
+        {
+            id:4,
+            title: this.$page.props.language.price_desc,
+        },
+        {
+            id:5,
+            title: this.$page.props.language.discount_asc,
+        },
+        {
+            id:6,
+            title: this.$page.props.language.discount_desc,
+        },
+      ],
     }
   },
   computed: {
@@ -170,7 +202,10 @@ export default {
 
   },
   methods: {
-     hidePromo(){
+    toggle(){
+      this.showSorting = !this.showSorting
+    },
+    hidePromo(){
       this.showPromo = false;
     },
     onPriceChange(newValue) {
@@ -286,10 +321,28 @@ export default {
     .sorting {
       display: flex;
       justify-content: flex-end;
+      position: relative;
       color: #014E2E;
       font-weight: 600;
+      cursor: pointer;
       img {
         margin-left: 12px;
+      }
+      .sort_data{
+        position: absolute;
+        background: #FFFFFF;
+        border-radius: 10px;
+        border: 1px solid #014E2E;
+        padding: 15px;
+        right: 0;
+        top: 20px;
+        .sort_data_item{
+          padding: 10px;
+          border-bottom: 1px solid #014E2E;
+        }
+        .sort_data_item:last-child{
+          border: none;
+        }
       }
     }
     .product_data {
