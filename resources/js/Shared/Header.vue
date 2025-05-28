@@ -224,12 +224,16 @@ export default {
       display: flex;
       align-items: center;
       max-width: 1140px;
+      justify-content: space-between;
       margin: 0 auto;
       height: 65px;
-      .banner_middle_left,.banner_middle_center,.banner_middle_right{
+      .banner_middle_left,.banner_middle_right{
         display: flex;
-        width: calc(100% / 3);
+        // width: calc(100% / 3);
         height: 100%;
+      }
+      .banner_middle_center{
+        width: 682px;
       }
       .banner_middle_left{
         align-items: center;
@@ -243,16 +247,18 @@ export default {
           align-items: center;
           position: relative;
           cursor: pointer;
-          width: 302px;
-          height: 35px;
-          border-bottom: 1px solid #014E2E;
-          padding-left: 11px;
+          width: 100%;
+          height: 42px;
+          // border-bottom: 1px solid #014E2E;
+          // padding-left: 11px;
           input{
-            padding-left: 45px;
+            background: #F7F7F5;
+            border-radius: 21px;
+            padding-left: 60px;
             position: absolute;
             width: 100%;
             height: 100%;
-            margin-left: -11px;
+            // margin-left: -11px;
             border: none;
             border: none !important;
             outline: none; /* Убирает рамку при фокусе */
@@ -261,12 +267,13 @@ export default {
           input::placeholder {
             font-size: 14px!important;
             color: #014E2E!important;
+            text-transform: uppercase;
           }
           img{
             position: absolute;
             z-index: 5;
-            left: 11px;
-            top: 5px;
+            left: 26px;
+            top: 9px;
             width: 23px;
             height: 20px;
             margin-right: 20px;
