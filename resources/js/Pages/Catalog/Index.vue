@@ -185,6 +185,7 @@ export default {
     }
   },
   mounted(){
+    console.log(this.categories)
     console.log(this.category)
     // console.log(this.products)
     this.showPromo = Cookies.get('hide_promo_banner') ? false : true;
