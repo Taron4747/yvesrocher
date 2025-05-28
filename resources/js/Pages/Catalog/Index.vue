@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="product_page">
-      <div class="product_filters">
+      <div class="product_filters" v-if="products.data.length > 0">
         <div class="title">{{ this.$page.props.language.filter_results }}</div>
         <label class="custom_checkbox custom_checkbox_small">{{ this.$page.props.language.bestsellers }}
           <input type="checkbox" v-model="bestseller" @change="updateUrl">
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="product_data_content">
+      <div class="product_data_content" v-if="products.data.length > 0">
         <div class="sorting" @click="toggle()">
           <span>{{ this.$page.props.language.sort_by }}</span>
           <img src="/images/Vector.svg">  
@@ -85,6 +85,9 @@
             </button>
           </div>  
         </div>
+      </div>
+      <div class="no_data"v-if="products.data.length == 0">
+        {{ this.$page.props.language.no_result }}
       </div>
     </div>
     <Footer />
@@ -240,11 +243,13 @@ export default {
         this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
         this.categoryInfoData['description'] = this.subSubCategory[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['subCategoryLink'] = '/subcategory/'+this.subCategory.id;
+        this.categoryInfoData['categoryLink'] = '/category/'+this.category.id;
       }else if(hasSubCategory){
         this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
         this.categoryInfoData['description'] = this.subCategory[`description_${this.$page.props.locale}`];
-
+        this.categoryInfoData['categoryLink'] = '/category/'+this.category.id;
       }else{
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
         this.categoryInfoData['description'] = this.category[`description_${this.$page.props.locale}`];
@@ -252,9 +257,7 @@ export default {
       }    
       this.categoryInfoData['second_image'] = this.category.second_image;
 
-      console.log(this.category)
-      console.log(this.subCategory)
-      console.log(this.subSubCategory)
+      
       console.log(this.categoryInfoData)
     },
     setSortingActive(key){
@@ -492,6 +495,12 @@ export default {
         margin-right: 0;
       }
     }
+  }
+  .no_data{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
   }
 }
 .transform {

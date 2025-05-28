@@ -1,7 +1,16 @@
 <template>
   <div class="category_info_content">
     <div class="category_info_content_top">
-      <span>{{ this.$page.props.language.home }}</span><span>></span><span>{{categoryInfoData.category}}</span><span v-if="categoryInfoData.subCategory">></span><span v-if="categoryInfoData.subCategory">{{categoryInfoData.subCategory}}</span><span v-if="categoryInfoData.subsubcategory">></span><span v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subsubcategory}}</span>
+      <a href="/">{{ this.$page.props.language.home }}</a><span v-if="categoryInfoData.category">></span>
+      <a :href="categoryInfoData.categoryLink" v-if="categoryInfoData.subCategory || categoryInfoData.subsubcategory">{{categoryInfoData.category}}</a>
+      <span v-else>{{categoryInfoData.category}}</span>
+      <span v-if="categoryInfoData.subCategory">></span>
+      <span v-if="categoryInfoData.subCategory">
+        <a :href="categoryInfoData.subCategoryLink" v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subCategory}}</a>
+        <span v-else>{{categoryInfoData.subCategory}}</span>
+      </span>
+      <span v-if="categoryInfoData.subsubcategory">></span>
+      <span v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subsubcategory}}</span>
     </div>
     <div class="category_info_content_middle">
       <div class="content_middle_left">
@@ -12,7 +21,7 @@
         <div class="text" v-else-if="categoryInfoData.subCategoryDesc" v-html="categoryInfoData.subCategoryDesc"></div>
         <div class="text" v-else v-html="categoryInfoData.categoryDesc"></div>
       </div>
-      <div class="content_middle_right">
+      <div class="content_middle_right" v-if="categoryInfoData.category">
         <img :src="categoryInfoData.second_image">
       </div>
     </div>
@@ -51,7 +60,7 @@ export default {
   padding-top: 12px;
   .category_info_content_top{
     margin-bottom: 16px;
-    span{
+    span,a{
       margin-right: 5px;
       color: #767676;
     }
