@@ -243,17 +243,17 @@ export default {
         this.categoryInfoData['subsubcategory'] = this.subSubCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
-        this.categoryInfoData['description'] = this.subSubCategory[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['subsubcategoryDesc'] = this.subSubCategory[`description_${this.$page.props.locale}`];
         this.categoryInfoData['subCategoryLink'] = '/subcategory/'+this.subCategory.id;
         this.categoryInfoData['categoryLink'] = '/category/'+this.category.id;
       }else if(hasSubCategory){
         this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
-        this.categoryInfoData['description'] = this.subCategory[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['subCategoryDesc'] = this.subCategory[`description_${this.$page.props.locale}`];
         this.categoryInfoData['categoryLink'] = '/category/'+this.category.id;
       }else{
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
-        this.categoryInfoData['description'] = this.category[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['categoryDesc'] = this.category[`description_${this.$page.props.locale}`];
         this.categoryInfoData['second_image'] = this.category.second_image;
       }    
       this.categoryInfoData['second_image'] = this.category.second_image;
