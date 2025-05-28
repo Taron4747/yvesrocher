@@ -252,6 +252,10 @@ export default {
         this.categoryInfoData['description'] = this.category[`description_${this.$page.props.locale}`];
         this.categoryInfoData['image'] = this.category.second_image;
       }    
+      console.log(this.category)
+      console.log(this.subCategory)
+      console.log(this.subSubCategory)
+      console.log(this.categoryInfoData)
     },
     setSortingActive(key){
       this.sortKey = key;
