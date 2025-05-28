@@ -1,195 +1,65 @@
 <template>
-    <div>
-      <Head title="Create Contact" />
-      <h1 class="mb-8 text-3xl font-bold">
-        <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/filter">Фильтр</Link>
-        <span class="text-indigo-400 font-medium">/</span> Создать
-      </h1>
-      <div class="mb-8 bg-white rounded-md shadow overflow-hidden">
-        <form @submit.prevent="update">
-          <div class="-mb-8 -mr-6 p-8">
-            <div class="title_big">Название</div>
-            <text-input @keyup="validation(1)" v-model="form.name_arm" :error="form.errors.name_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
-            <text-input @keyup="validation(1)" v-model="form.name_ru" :error="form.errors.name_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
-            <text-input @keyup="validation(1)" v-model="form.name_en" :error="form.errors.name_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
-            
-            <div class="-mb-8 -mr-6 p-8">
-              <div class="title_big">Значение</div>
-              <div v-for="key in countOfCustom" class="-mb-8 -mr-6 p-8 relative">
-                <text-input @keyup="validation(2,key-1)" v-model="customData[key-1].name_arm" :error="customData[key-1].error_arm" class="pb-8 pr-6 w-full lg:w-1/3" label="Հայերեն" />
-                <text-input @keyup="validation(2,key-1)" v-model="customData[key-1].name_ru" :error="customData[key-1].error_ru" class="pb-8 pr-6 w-full lg:w-1/3" label="Русский" />
-                <text-input @keyup="validation(2,key-1)" v-model="customData[key-1].name_en" :error="customData[key-1].error_en" class="pb-8 pr-6 w-full lg:w-1/3" label="English" />
-                <div v-if="countOfCustom != 1" class="add_custom" @click="removeCustom(key)">
-                  <img src="/images/trash.svg">
-                </div>   
-              </div>
-              <div class="add_button" @click="addValue()">
-                <img src="/images/add_photo_blue.svg">
-                <span>Добавить значение</span>
-              </div>
-            </div>
-          </div>
-          <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-            <loading-button :loading="form.processing" class="btn-indigo" type="submit">
-    Сохранить фильтр
-  </loading-button>
-          </div>
-        </form>
-      </div>
+  <div>
+    <Head :title="`${form.name_arm} `" />
+    <h1 class="mb-8 text-3xl font-bold">
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/settings">Настройки </Link>
+      
+    </h1>
+    <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
+      <form @submit.prevent="update">
+        <div class="-mb-8 -mr-6 p-8">
+     
+                <div class="title_big">Настройки</div>
+                <text-input v-model="form.delivery_price" :error="form.errors.delivery_price" class="pb-8 pr-6 w-full " label="Стоимость доставки (в драмах)" />
+                <text-input v-model="form.delivery_discount" :error="form.errors.delivery_discount" class="pb-8 pr-6 w-full " label="Порог для бесплатной доставки (в драмах)" />
+             
+             
+        </div>
+        <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
+          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Сохранить </loading-button>
+        </div>
+      </form>
     </div>
-  </template>
-  
-  <script>
-  import { Head, Link } from '@inertiajs/vue3'
-  import Layout from '@/Shared/Layout.vue'
-  import TextInput from '@/Shared/TextInput.vue'
-  import SelectInput from '@/Shared/SelectInput.vue'
-  import LoadingButton from '@/Shared/LoadingButton.vue'
-  import FileInput from '@/Shared/FileInput.vue'
-  
-  export default {
-    components: {
-      Head,
-      Link,
-      FileInput,
-      LoadingButton,
-      SelectInput,
-      TextInput,
-    },
-    layout: Layout,
-    props: {
-      filter: Object,
-  
-    },
-    remember: 'form',
-    data() {
+  </div>
+</template>
+
+<script>
+import { Head, Link } from '@inertiajs/vue3'
+import Layout from '@/Shared/Layout.vue'
+import TextInput from '@/Shared/TextInput.vue'
+import SelectInput from '@/Shared/SelectInput.vue'
+import LoadingButton from '@/Shared/LoadingButton.vue'
+import TrashedMessage from '@/Shared/TrashedMessage.vue'
+
+export default {
+  components: {
+    Head,
+    Link,
+    LoadingButton,
+    SelectInput,
+    TextInput,
+    TrashedMessage,
+  },
+  layout: Layout,
+  props: {
+    settings: Object,
+  },
+  remember: 'form',
+  data() {
     return {
       form: this.$inertia.form({
-        id: this.filter?.id || null,
-        name_arm: this.filter?.name_arm || '',
-        name_ru: this.filter?.name_ru || '',
-        name_en: this.filter?.name_en || '',
-        filterable: this.filter?.filterable || false,
-        customData: [],
+      
+        delivery_price: this.settings.delivery_price,
+        delivery_discount: this.settings.delivery_discount,
+
       }),
-      customData: this.filter?.sub_filters?.map(value => ({
-        id: value.id,
-        name_arm: value.name_arm,
-        name_ru: value.name_ru,
-        name_en: value.name_en,
-        error_arm: '',
-        error_ru: '',
-        error_en: '',
-      })) || [],
-      countOfCustom: (this.filter?.sub_filters?.length || 1),
     }
   },
-    methods: {
-      update() {
-        this.form.customData = JSON.parse(JSON.stringify(this.customData));
-        const nameArm = this.form.customData[this.form.customData.length - 1]?.name_arm;
-        const nameRu = this.form.customData[this.form.customData.length - 1]?.name_ru;
-        const nameEn = this.form.customData[this.form.customData.length - 1]?.name_en;
-      
-        if(nameArm == '' || 
-          nameRu == '' || 
-          nameEn == '' && this.form.customData.length == 1){
-          this.addValue();
-          return false;
-        }
-        this.form.put(`/admin/filter/${this.form.id}`) // метод PUT для обновления
-      },
-      addValue(){
-        var key = this.customData.length-1;
-        
-        if(!this.form.name_arm){
-          this.form.errors.name_arm = "The name arm field is required."
-        }
-        if(!this.form.name_ru){
-          this.form.errors.name_ru = "The name ru field is required."
-        }
-        if(!this.form.name_en){
-          this.form.errors.name_en = "The name en field is required."
-        }
-         if(!this.customData[key].name_arm){
-          this.customData[key].error_arm = "The value arm field is required."
-        }
-        if(!this.customData[key].name_ru){
-          this.customData[key].error_ru = "The value ru field is required."
-        }
-        if(!this.customData[key].name_en){
-          this.customData[key].error_en = "The value en field is required."
-        }
-        
-        if(this.customData[key].name_arm && this.customData[key].name_ru && this.customData[key].name_en
-        && this.form.name_arm && this.form.name_ru && this.form.name_en){
-          this.pushData(key)
-          this.countOfCustom ++
-        }     
-      },
-       validation(type,key = null){
-        if(type == 1){
-          if(this.form.name_arm){
-            this.form.errors.name_arm = ""
-          }
-          if(this.form.name_ru){
-            this.form.errors.name_ru = ""
-          }
-          if(this.form.name_en){
-            this.form.errors.name_en = ""
-          }
-        }else{
-          if(this.customData[key].name_arm){
-            this.customData[key].error_arm = ""
-          }
-          if(this.customData[key].name_ru){
-            this.customData[key].error_ru = ""
-          }
-          if(this.customData[key].name_en){
-            this.customData[key].error_en = ""
-          }
-        }
-      },
-      pushData(){
-        let newObject = {
-          name_arm: '',
-          name_ru:'',
-          name_en: '',
-          error_arm: '',
-          error_ru: '',
-          error_en: '',
-        }
-        this.customData.push(newObject); 
-      },
-      removeCustom(key){
-          this.customData.splice(key-1, 1);
-          this.countOfCustom --;
-          console.log(this.customData)
-      },
+  methods: {
+    update() {
+      this.form.put(`/admin/settings/`)
     },
-  }
-  </script>
-  <style  lang="scss">
-  .add_button{
-    display: flex;
-    align-items: center;
-    margin: 20px auto 0 auto;
-    width: fit-content;
-    color: #3F4EBD;
-    font-size: 14px;
-    line-height: 130%;
-    padding: 14px 73px;
-    cursor: pointer;
-    img{
-      height: 20px;
-      margin-right: 6px;
-    }
-  }
-  .add_custom{
-    cursor: pointer;
-    position: absolute;
-    right: 20px;
-    bottom: 73px;
-  }
-  </style>
-  
+    
+  },
+}
+</script>

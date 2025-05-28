@@ -385,7 +385,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
         Route::get('settings', [SettingsController::class, 'index'])
         ->name('settings')
         ->middleware('auth');
-
+        Route::put('settings', [SettingsController::class, 'update'])
+        ->middleware('auth');
 
 
            // shops
