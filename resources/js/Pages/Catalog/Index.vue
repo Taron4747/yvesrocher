@@ -59,8 +59,8 @@
           <span>{{ this.$page.props.language.sort_by }}</span>
           <img src="/images/Vector.svg">  
           <div class="sort_data" v-if="showSorting">
-            <div class="sort_data_item" v-for="item in sort_data">
-                {{ item.title }}
+            <div class="sort_data_item" v-for="item in sort_data" @click="changeSorting(item)">
+                <span :class="{'bold':item.type}">{{ item.title }}</span>
             </div>
           </div>
         </div>
@@ -131,28 +131,41 @@ export default {
         {
             id:1,
             title: this.$page.props.language.alphabetically_asc,
+            key:'name_asc',
+            type:false
         },
         {
             id:2,
             title: this.$page.props.language.alphabetically_desc,
+            key:'name_desc',
+            type:false
         },
         {
             id:3,
             title: this.$page.props.language.price_asc,
+            key:'price_asc',
+            type:false
         },
         {
             id:4,
             title: this.$page.props.language.price_desc,
+            key:'price_desc',
+            type:false
         },
         {
             id:5,
             title: this.$page.props.language.discount_asc,
+            key:'discount_asc',
+            type:false
         },
         {
             id:6,
             title: this.$page.props.language.discount_desc,
+            key:'discount_desc',
+            type:false
         },
       ],
+      sortKey:'',
     }
   },
   computed: {
@@ -200,8 +213,22 @@ export default {
     this.filtersSelected = filters
     this.openFilters = Object.keys(this.filtersSelected).map(id => Number(id))
 
+    const url = new URL(window.location.href);
+    const sorting = url.searchParams.get("sorting");
+    if(sorting){
+      this.setSortingActive(sorting)
+    }
   },
   methods: {
+    setSortingActive(key){
+      this.sortKey = key;
+      this.sort_data.forEach((sort) => {
+        sort.type = false;
+        if(sort.key == key){
+          sort.type = true;
+        }
+      });
+    },
     toggle(){
       this.showSorting = !this.showSorting
     },
@@ -219,6 +246,16 @@ export default {
         this.openFilters.push(id)
       }
     },
+    changeSorting(item){
+      this.sortKey = item.key;
+      this.sort_data.forEach((sort) => {
+        sort.type = false;
+        if(sort.id == item.id){
+          sort.type = true;
+        }
+      });
+      this.updateUrl()
+    },
     updateUrl() {
       const params = new URLSearchParams()
       if (this.isNew) params.append('new', 1)
@@ -226,6 +263,7 @@ export default {
       if (this.discount) params.append('discount', 1)
       params.append('price[min]', this.price[0])
       params.append('price[max]', this.price[1])
+        if (this.sortKey) params.append('sorting', this.sortKey)
       for (const [sectionId, subIds] of Object.entries(this.filtersSelected)) {
         if (Array.isArray(subIds)) {
           subIds.forEach(subId => {
@@ -240,9 +278,9 @@ export default {
         let base = `${url.origin}${url.pathname}`
         let search = url.searchParams.get('search')
 
-        if (search !== null) {
-          base += `?search=${encodeURIComponent(search)}`
-        }
+      if (search !== null) {
+        base += `?search=${encodeURIComponent(search)}`
+      }
         window.location.href = `${base}&${params.toString()}`
       }else{
         window.location.href = `${window.location.pathname}?${params.toString()}`
@@ -339,10 +377,15 @@ export default {
         .sort_data_item{
           padding: 10px;
           border-bottom: 1px solid #014E2E;
+          font-weight: 500;
+          .bold{
+          font-weight: 600;
+        }
         }
         .sort_data_item:last-child{
           border: none;
         }
+        
       }
     }
     .product_data {
