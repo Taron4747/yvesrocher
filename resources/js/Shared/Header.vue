@@ -29,12 +29,11 @@
                    <Link href="/language/en">
                     <span  class="dropdown_items_active"> en</span>
                 </Link> -->
-                
+            <img class="bottom" src="/images/account.svg">
+            <img src="/images/cart.svg">
             <div class="lang" @click="changeLang('arm')" :class="{ active: this.$page.props.locale == 'arm' }">ՀԱՅ</div>
             <div class="lang" @click="changeLang('ru')" :class="{ active: this.$page.props.locale == 'ru' }">РУ</div>
             <div class="lang" @click="changeLang('en')" :class="{ active: this.$page.props.locale == 'en' }">EN</div>
-            <img class="bottom" src="/images/account.svg">
-            <img src="/images/cart.svg">
         </div>
       </div>
     </div>
@@ -279,24 +278,23 @@ export default {
       justify-content: flex-end;
       .lang{
         cursor: pointer;
-        font-size: 14px;
-        color: #014E2E;
+        font-size: 12px;
+        color: #767676;
         margin-left: 10px;
       }
-      .lang:last-child{
-        margin-right: 25[x];
+      .lang:hover{
+        color: #939956;
       }
       .active{
-        text-decoration: underline;
-        font-weight: 600;
+        color: #014E2E!important;
       }
       img{
         cursor: pointer;
-        margin-left: 24px;
+        margin-right: 24px;
       }
-      img:last-child{
-        margin-left: 17.6px;
-      }
+      // img:last-child{
+      //   margin-left: 17.6px;
+      // }
       .bottom{
         margin-bottom: -9px;
       }
