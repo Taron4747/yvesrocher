@@ -311,6 +311,7 @@ export default {
   .banner_bottom{
      width: 100%;
      box-shadow: 0 .25rem .375rem 0 rgba(0, 0, 0, .1);
+     border-top: 1px solid #F7F7F5;
     .banner_bottom_content{
       display: flex;
       align-items: center;
