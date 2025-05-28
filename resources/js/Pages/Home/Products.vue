@@ -433,6 +433,9 @@ export default {
   }
 
   button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 42px;
     font-size: 16px;
@@ -442,7 +445,7 @@ export default {
     font-weight: 600;
     text-transform: uppercase;
     border-radius: 6px;
-    margin: 2px 0 10px 0;
+    margin: 2px auto 10px auto;
     border: none;
   }
 
