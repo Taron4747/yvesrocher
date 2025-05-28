@@ -48,7 +48,10 @@
           >
             <div class="discount" v-if="item.discount">{{ item.discount }}%</div>
             <div class="image">
-              <img :src="item.image" />
+              <img class="product_image" :src="item.image" />
+              <div class="like">
+                <img src="images/like.svg"/>
+              </div>
             </div>
             <div class="text_cotent">
               <div class="title">{{ item[`name_${$page.props.locale}`] }}</div>
@@ -58,6 +61,7 @@
               </div>
               <div class="size">
                 <span>{{ item.size }}</span>
+                <span>{{ item.type }}</span>
               </div>
               <div class="price">
                 <span class="big">{{ item.price }} դ</span>
@@ -330,26 +334,48 @@ export default {
 }
 
 .products_content_item {
-  width: 210px;
-  margin-right: 12.5px;
+  width: 200px;
+  margin-right: 23px;
   flex-shrink: 0;
-  height: 420px;
+  height: 440px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.11);
   border-radius: 5px;
   position: relative;
   background: #fff;
 
-  .image img {
-    width: 195px;
-    height: 195px;
-    margin: 20px auto 0;
-    object-fit: cover;
-    display: block;
+  .image {
+    position: relative;
+    .product_image {
+      width: 200px;
+      height: 230px;
+      // margin-bottom: 12px;
+      object-fit: cover;
+      display: block;
+      border-radius: 8px 8px 0 0;
+    }
+    .like{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      height: 32px;
+      width: 32px;
+      border-radius: 50%;
+      right: 10px;
+      bottom: 10px;
+      background: #FFFFFF;
+      box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      img{
+        height: 16px;
+        width: 16px;
+      }
+    }
   }
 
   .text_cotent {
     padding: 0 10px;
-    height: 135px;
+    height: 155px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -374,33 +400,38 @@ export default {
     .size {
       font-size: 12px;
       color: #767676;
+      span{
+        margin-right: 5px;
+      }
     }
 
     .price {
       .big {
-        font-size: 1.3125rem;
-        color: #ba1051;
-        font-weight: 700;
+        font-size: 18px;
+        color: #014E2E;
+        font-weight: 600;
       }
 
       .small {
         font-size: 12px;
         text-decoration: line-through;
-        margin-left: 5px;
-        color: #767676;
+        font-weight: 500;
+        margin-left: 3px;
+        color: #B3261E;
       }
     }
   }
 
   button {
     width: 100%;
-    height: 60px;
-    font-size: 1.0625rem;
-    background: #014e2e;
+    height: 42px;
+    font-size: 16px;
+    background: #BA1051;
+    width: 180px;
     color: #fff;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
-    border-radius: 5px;
+    border-radius: 6px;
     margin: 2px 0 10px 0;
     border: none;
   }
@@ -413,7 +444,7 @@ export default {
     color: white;
     width: 55px;
     height: 33px;
-    border-radius: 0 5px 0 0;
+    border-radius: 0 8px 0 8px;
     font-weight: 600;
     font-size: 0.875rem;
     display: flex;
