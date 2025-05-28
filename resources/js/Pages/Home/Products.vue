@@ -95,7 +95,7 @@ export default {
       displayProducts: [],
       currentIndex: 5,
       itemWidth: 222.5,
-      transitionEnabled: true,
+      isTransitioning: false,
       categories: [],
       categoryBanners: [
         {
@@ -193,24 +193,34 @@ export default {
       }
     },
     nextSlide() {
+      if (this.isTransitioning) return;
+      this.isTransitioning = true;
       this.transitionEnabled = true;
       this.currentIndex++;
     },
+
     prevSlide() {
+      if (this.isTransitioning) return;
+      this.isTransitioning = true;
       this.transitionEnabled = true;
       this.currentIndex--;
     },
     handleTransitionEnd() {
       const total = this.products.length;
+
       if (this.currentIndex >= total + 5) {
         this.transitionEnabled = false;
         this.currentIndex = 5;
       }
+
       if (this.currentIndex < 5) {
         this.transitionEnabled = false;
         this.currentIndex = total + 4;
       }
-    },
+
+      // ✅ Сброс блокировки
+      this.isTransitioning = false;
+    }
   },
 };
 </script>
