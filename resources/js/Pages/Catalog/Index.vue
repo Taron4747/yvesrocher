@@ -112,6 +112,8 @@ export default {
     prices: Object,
     products: Object,
     categories: Object,
+    subCategory: Object,
+    subSubCategory: Object,
     category: Object,
     filtersWithCounts: Object,
     textBanners: Object,
@@ -185,8 +187,6 @@ export default {
     }
   },
   mounted(){
-    console.log(this.categories)
-    console.log(this.category)
     // console.log(this.products)
     this.showPromo = Cookies.get('hide_promo_banner') ? false : true;
     const urlParams = new URLSearchParams(window.location.search)
@@ -221,8 +221,16 @@ export default {
     if(sorting){
       this.setSortingActive(sorting)
     }
+    this.setBreadcrumbs(url)
   },
   methods: {
+    setBreadcrumbs(url){
+      console.log(this.category)
+      console.log(this.subCategory)
+      console.log(this.subSubCategory)
+      console.log(url)
+
+    },
     setSortingActive(key){
       this.sortKey = key;
       this.sort_data.forEach((sort) => {
