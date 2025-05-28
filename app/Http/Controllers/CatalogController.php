@@ -195,6 +195,7 @@ class CatalogController extends Controller
                 'bestseller' =>$bestseller,
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>$prices,
+                'subCategory'=>$subCategory,
             ]);
     }
 
@@ -233,6 +234,8 @@ class CatalogController extends Controller
                 'new' =>$new,
                 'bestseller' =>$bestseller,
                 'prices'=>$prices,
+                'subSubCategory'=>$subSubCategory,
+                'subCategory'=>$subCategory,
             ]);
    
 
