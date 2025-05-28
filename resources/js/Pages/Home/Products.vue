@@ -96,6 +96,7 @@ export default {
       currentIndex: 5,
       itemWidth: 222.5,
       isTransitioning: false,
+      transitionEnabled: true,
       categories: [],
       categoryBanners: [
         {
@@ -141,6 +142,7 @@ export default {
         const head = this.products.slice(-5);
         const tail = this.products.slice(0, 5);
         this.displayProducts = [...head, ...this.products, ...tail];
+        console.log(this.displayProducts)
       } catch (err) {
         console.error("Ошибка при загрузке продуктов:", err);
       }
