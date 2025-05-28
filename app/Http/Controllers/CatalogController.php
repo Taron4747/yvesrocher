@@ -53,6 +53,8 @@ class CatalogController extends Controller
                 'bestseller' =>$bestseller,
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>$prices,
+                'subCategory'=>[],
+                'subSubCategory'=>[],
             ]);
     }
     private function sortData($query, $data)
@@ -196,6 +198,8 @@ class CatalogController extends Controller
                 'filtersWithCounts' =>$filtersWithCounts,
                 'prices'=>$prices,
                 'subCategory'=>$subCategory,
+                'subSubCategory'=>[],
+
             ]);
     }
 
@@ -207,7 +211,8 @@ class CatalogController extends Controller
 
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subSubCategory =Category::where('id',$id)->first();
-        $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
+        $subCategory =Category::where('id',$subSubCategory->parent_id)->first();
+
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
         $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_sub_category_id',$category);
         $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0);
@@ -221,7 +226,6 @@ class CatalogController extends Controller
         $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
         $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
-
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
                 'textBanners' =>$banners,
