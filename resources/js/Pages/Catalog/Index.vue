@@ -232,6 +232,7 @@ export default {
       this.setSortingActive(sorting)
     }
     this.setBreadcrumbs(url.href)
+    console.log(this.products)
   },
   methods: {
     setBreadcrumbs(url){
@@ -258,7 +259,7 @@ export default {
       this.categoryInfoData['second_image'] = this.category.second_image;
 
       
-      console.log(this.categoryInfoData)
+      // console.log(this.categoryInfoData)
     },
     setSortingActive(key){
       this.sortKey = key;
@@ -443,6 +444,7 @@ export default {
         margin-bottom: 24px;
         box-shadow: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
         .product_image {
+          position: relative;
           width: 100%;
           height: 230px;
           img {

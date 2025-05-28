@@ -49,6 +49,8 @@
             <div class="discount" v-if="item.discount">{{ item.discount }}%</div>
             <div class="image">
               <img class="product_image" :src="item.image" />
+              <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
+              <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.Bestsellers }}</div>
               <div class="like">
                 <img src="images/like.svg"/>
               </div>
@@ -364,6 +366,14 @@ export default {
       object-fit: cover;
       display: block;
       border-radius: 8px 8px 0 0;
+    }
+    .product_type{
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      color: #014E2E;
+      font-size: 12px;
+      font-weight: 500;
     }
     .like{
       display: flex;
