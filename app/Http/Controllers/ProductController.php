@@ -21,25 +21,7 @@ use Illuminate\Validation\Rule;
 class ProductController extends Controller
 {
 
-//     public function index(Request $request)
-// {
-//     $query = Product::with('attributeValues.attribute');
 
-//     if ($filters = $request->input('filters')) {
-//         foreach ($filters as $attribute => $values) {
-//             $query->whereHas('attributeValues.attribute', function ($q) use ($attribute, $values) {
-//                 $q->where('name', $attribute)
-//                   ->whereIn('attribute_values.value', $values);
-//             });
-//         }
-//     }
-
-//     return Inertia::render('Products/Index', [
-//         'products' => $query->paginate(12),
-//         'filters' => Attribute::with('values')->where('filterable', true)->get(),
-//         'selected' => $request->filters ?? [],
-//     ]);
-// }
     public function index(): Response
     {
         return Inertia::render('Products/Index', [
@@ -98,7 +80,6 @@ class ProductController extends Controller
                 'composition_ru' => ['required'],
                 'composition_arm' => ['required'],
                 'composition_en' => ['required'],
-                // 'product_code' => ['required|unique:products'],
                 'product_code' => ['required', 'unique:products'], 
 
                 'image' => ['required'],

@@ -64,4 +64,25 @@ class Product extends Model
 
         return $this->sizeType?->{$field};
     }
+
+            public function ratings()
+        {
+            return $this->hasMany(ProductRating::class);
+        }
+
+        // Средний рейтинг
+        public function averageRating()
+        {
+            return $this->ratings()->avg('rating');
+        }
+
+        // Кол-во голосов
+        public function ratingCount()
+        {
+            return $this->ratings()->count();
+        }
+        public function favoritedBy()
+        {
+            return $this->belongsToMany(User::class, 'favorites');
+        }
 }

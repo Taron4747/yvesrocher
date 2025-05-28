@@ -32,6 +32,7 @@ class CatalogController extends Controller
         $filtersWithCounts =$this->filtersWithCounts($id,$data,'category_id',$category);
         $products = Product::where('category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
+        $products = $this->sortData($products,$data);
         $minPrice = (clone $products)->min('price');
         $maxPrice = (clone $products)->max('price');
         $new = (clone $products)->where('is_new',1)->count();
@@ -54,7 +55,32 @@ class CatalogController extends Controller
                 'prices'=>$prices,
             ]);
     }
-    public function filtersWithCounts($id,$data,$key,$category){
+    private function sortData($query, $data)
+{
+    if (!isset($data['sorting'])) {
+        return $query;
+    }
+
+    switch ($data['sorting']) {
+        case 'name_asc':
+            return $query->orderBy('name_' . app()->getLocale(), 'asc');
+
+        case 'name_desc':
+            return $query->orderBy('name_' . app()->getLocale(), 'desc');
+
+        case 'price_asc':
+            return $query->orderBy('price', 'asc');
+        case 'price_desc':
+            return $query->orderBy('price', 'desc');
+        case 'discount_asc':
+            return $query->orderBy('discount', 'asc');
+        case 'discount_desc':
+            return $query->orderBy('discount', 'desc');
+        default:
+            return $query;
+    }
+}
+    private function filtersWithCounts($id,$data,$key,$category){
         // $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
 
         $filtersWithCounts = $category->filters->map(function ($filter) use($id,$data,$key){
@@ -109,7 +135,7 @@ class CatalogController extends Controller
         });
         return $filtersWithCounts;
     }
-    public function filterData($products,$data){
+    private function filterData($products,$data){
         if (count($data)==0) {
            return $products;
         }else{
@@ -145,34 +171,11 @@ class CatalogController extends Controller
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
-        $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_category_id',$category);
-
-        // $filtersWithCounts = $category->filters->map(function ($filter) use($id) {
-        //     $filterProductCount = $filter->products()->where('sub_category_id',$id)->count();
-
-        //     $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter) use($id)  {
-        //         return [
-        //             'id' => $subFilter->id,
-        //            'name_ru' => $subFilter->name_ru,
-        //             'name_arm' => $subFilter->name_arm,
-        //             'name_en' => $subFilter->name_en,
-        //             'product_count' => $subFilter->products()->where('sub_category_id',$id)->count(),
-        //         ];
-        //     });
-
-        //     return [
-        //         'id' => $filter->id,
-        //         'name_ru' => $filter->name_ru,
-        //         'name_arm' => $filter->name_arm,
-        //         'name_en' => $filter->name_en,
-        //         'type' => $filter->type,
-        //         'product_count' => $filterProductCount,
-        //         'sub_filters' => $subFiltersWithCounts,
-        //     ];
-        // });
-    
+        $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_category_id',$category);    
         $products = Product::where('sub_category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
+        $products = $this->sortData($products,$data);
+
         $minPrice = (clone $products)->min('price');
         $maxPrice = (clone $products)->max('price');
         $new = (clone $products)->where('is_new',1)->count();
@@ -206,33 +209,10 @@ class CatalogController extends Controller
         $subCategory =Category::where('parent_id',$subSubCategory->parent_id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
         $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_sub_category_id',$category);
-
-        // $filtersWithCounts = $category->filters->map(function ($filter) use($id){
-        //     $filterProductCount = $filter->products()->where('sub_sub_category_id',$id)->count();
-
-        //     $subFiltersWithCounts = $filter->subFilters->map(function ($subFilter)use($id) {
-        //         return [
-        //             'id' => $subFilter->id,
-        //            'name_ru' => $subFilter->name_ru,
-        //             'name_arm' => $subFilter->name_arm,
-        //             'name_en' => $subFilter->name_en,
-        //             'product_count' => $subFilter->products()->where('sub_sub_category_id',$id)->count(),
-        //         ];
-        //     });
-
-        //     return [
-        //         'id' => $filter->id,
-        //         'name_ru' => $filter->name_ru,
-        //         'name_arm' => $filter->name_arm,
-        //         'name_en' => $filter->name_en,
-        //         'type' => $filter->type,
-        //         'product_count' => $filterProductCount,
-        //         'sub_filters' => $subFiltersWithCounts,
-        //     ];
-        // });
-    
         $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0);
         $products = $this->filterData($products,$data);
+        $products = $this->sortData($products,$data);
+
         $minPrice = (clone $products)->min('price');
         $maxPrice = (clone $products)->max('price');
         $new = (clone $products)->where('is_new',1)->count();

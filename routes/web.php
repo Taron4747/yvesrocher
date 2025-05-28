@@ -15,6 +15,8 @@ use App\Http\Controllers\BannersController;
 use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ShopsController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\ProposalsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
@@ -415,6 +417,38 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
        Route::put('shops/{shop}/restore', [ShopsController::class, 'restore'])
            ->name('shops.restore')
            ->middleware('auth');
+
+
+             // Proposals
+
+        Route::get('proposals', [ProposalsController::class, 'index'])
+        ->name('proposals')
+        ->middleware('auth');
+
+    Route::get('proposals/create', [ProposalsController::class, 'create'])
+        ->name('proposals.create')
+        ->middleware('auth');
+
+    Route::post('proposals', [ProposalsController::class, 'store'])
+        ->name('proposals.store')
+        ->middleware('auth');
+
+    Route::get('proposals/{proposal}/edit', [ProposalsController::class, 'edit'])
+        ->name('proposals.edit')
+        ->middleware('auth');
+
+    Route::post('proposals/{proposal}', [ProposalsController::class, 'update'])
+        ->name('proposals.update')
+        ->middleware('auth');
+
+    Route::delete('proposals/{proposal}', [ProposalsController::class, 'destroy'])
+        ->name('proposals.destroy')
+        ->middleware('auth');
+
+    Route::put('proposals/{proposal}/restore', [ProposalsController::class, 'restore'])
+        ->name('proposals.restore')
+        ->middleware('auth');
+
     });
     Route::get('category/{id}', [CatalogController::class, 'getByCategory'])
     ->name('category');
@@ -430,7 +464,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('products', [CatalogController::class, 'products'])
     ->name('products');
     Route::get('random-categories', [CatalogController::class, 'randomCategories']);
-
+    Route::post('rate', [HomeController::class, 'rate'])->middleware('auth');
+    Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
+    Route::get('/favorites', [FavoriteController::class, 'list']);
 });
    
    
