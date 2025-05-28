@@ -1,21 +1,20 @@
 <template>
   <div class="category_info_content">
     <div class="category_info_content_top">
-      <span>Главная</span><span>></span><span>{{category[`name_${$page.props.locale}`]}}</span>
+      <span>{{ this.$page.props.language.home }}</span><span>></span><span>{{category[`name_${$page.props.locale}`]}}</span>
     </div>
     <div class="category_info_content_middle">
       <div class="content_middle_left">
         <div class="title">{{category[`name_${$page.props.locale}`]}}</div>
-        <div class="text">Buy 1, get 1 at 50% off on all face care products*</div>
-        <div class="text">96 item(s) found</div>
+        <div class="text" v-html="category[`description_${$page.props.locale}`]"></div>
       </div>
       <div class="content_middle_right">
         <img :src="category.second_image">
       </div>
     </div>
-    <div class="category_info_content_bottom">
+    <!-- <div class="category_info_content_bottom">
       *The lower priced item will be offered at 50% off in the cart. Can be combined with other categories with the same offer. Excludes limited editions, clearance and sets. Promotional offers on the same product are not cumulative.
-    </div>
+    </div> -->
   </div>
 </template>
 
