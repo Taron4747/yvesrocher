@@ -274,7 +274,7 @@ class CategoriesController extends Controller
             ])
         );
 
-        return Redirect::route('sub-categories')->with('success', 'Sub category created.');
+        return Redirect::route('subcategories')->with('success', 'Категория создана .');
     }
 
     public function editSub(Category $category): Response
@@ -381,7 +381,7 @@ class CategoriesController extends Controller
             ])
         );
 
-        return Redirect::route('sub-sub-categories')->with('success', 'Sub sub category created.');
+        return Redirect::route('subsubcategories')->with('success', 'Саб Категория создана .');
     }
 
     public function editSubSub(Category $category): Response
