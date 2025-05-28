@@ -5,22 +5,22 @@
       <div class="content_item content_item_1">
         <div class="title">Our product, our expertise</div>
         <div class="text">Routines, collections and diagnosis</div>
-        <div class="link">Discover</div>
+        <div class="link">{{ this.$page.props.language.discover }}</div>
       </div>
       <div class="content_item content_item_2">
         <div class="title">Our history</div>
         <div class="text">Pioneer of Botanical Beauty</div>
-        <div class="link">Learn More</div>
+        <div class="link">{{ this.$page.props.language.learn_more }}</div>
       </div>
       <div class="content_item content_item_3">
         <div class="title">Our Commitments</div>
         <div class="text">Our love acts speak louder than words</div>
-        <div class="link">Learn More</div>
+        <div class="link">{{ this.$page.props.language.learn_more }}</div>
       </div>
       <div class="content_item content_item_4">
         <div class="title">Our Blog</div>
         <div class="text">To inspire, share and engage</div>
-        <div class="link">Learn More</div>
+        <div class="link">{{ this.$page.props.language.learn_more }}</div>
       </div>
 
     </div>
@@ -94,6 +94,7 @@ export default {
         font-weight: 500;
         line-height: 100%;
         text-decoration: underline;
+        cursor: pointer;
       }
     }
     .content_item_1{
