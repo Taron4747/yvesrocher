@@ -240,17 +240,17 @@ export default {
         this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
         this.categoryInfoData['description'] = this.subSubCategory[`description_${this.$page.props.locale}`];
-        this.categoryInfoData['image'] = this.subSubCategory.second_image;
+        this.categoryInfoData['second_image'] = this.subSubCategory.second_image;
       }else if(hasSubCategory){
         this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
         this.categoryInfoData['description'] = this.subCategory[`description_${this.$page.props.locale}`];
-        this.categoryInfoData['image'] = this.subCategory.second_image;
+        this.categoryInfoData['second_image'] = this.subCategory.second_image;
 
       }else{
         this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
         this.categoryInfoData['description'] = this.category[`description_${this.$page.props.locale}`];
-        this.categoryInfoData['image'] = this.category.second_image;
+        this.categoryInfoData['second_image'] = this.category.second_image;
       }    
       console.log(this.category)
       console.log(this.subCategory)
