@@ -25,8 +25,8 @@
           <TextAreaInput v-model="form.description_en" :error="form.errors.description_en" class="pb-8 pr-6 w-full " label="English"/>
         </div>
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Delete sub category</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить податегорию</loading-button>
+          <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить подкатегорию</button>
+          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить подкатегорию</loading-button>
         </div>
       </form>
     </div>
