@@ -259,7 +259,9 @@ export default {
       this.categoryInfoData['second_image'] = this.category.second_image;
 
       
-      // console.log(this.categoryInfoData)
+      console.log(this.category)
+      console.log(this.subCategory)
+      console.log(this.subSubCategory)
     },
     setSortingActive(key){
       this.sortKey = key;
