@@ -39,7 +39,7 @@ export default {
     categoryInfoData:Object
   },
   mounted(){
-    // console.log(this.categoryInfoData);
+    console.log(this.categoryInfoData);
   },
   data() {
     return {
