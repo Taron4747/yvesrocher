@@ -1,20 +1,21 @@
 <template>
   <div class="category_info_content">
     <div class="category_info_content_top">
-      <span>{{ this.$page.props.language.home }}</span><span>></span><span>{{category[`name_${$page.props.locale}`]}}</span>
+      <span>{{ this.$page.props.language.home }}</span><span>></span><span>{{categoryInfoData.category}}</span><span v-if="categoryInfoData.subCategory">></span><span v-if="categoryInfoData.subCategory">{{categoryInfoData.subCategory}}</span><span v-if="categoryInfoData.subsubcategory">></span><span v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subsubcategory}}</span>
     </div>
     <div class="category_info_content_middle">
       <div class="content_middle_left">
-        <div class="title">{{category[`name_${$page.props.locale}`]}}</div>
-        <div class="text" v-html="category[`description_${$page.props.locale}`]"></div>
+        <div class="title" v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subsubcategory}}</div>
+        <div class="title" v-else-if="categoryInfoData.subCategory">{{categoryInfoData.subCategory}}</div>
+        <div class="title" v-else>{{categoryInfoData.category}}</div>
+        <div class="text"  v-if="categoryInfoData.subsubcategoryDesc" v-html="categoryInfoData.subsubcategoryDesc"></div>
+        <div class="text" v-else-if="categoryInfoData.subCategoryDesc" v-html="categoryInfoData.subCategoryDesc"></div>
+        <div class="text" v-else v-html="categoryInfoData.categoryDesc"></div>
       </div>
       <div class="content_middle_right">
-        <img :src="category.second_image">
+        <img :src="categoryInfoData.second_image">
       </div>
     </div>
-    <!-- <div class="category_info_content_bottom">
-      *The lower priced item will be offered at 50% off in the cart. Can be combined with other categories with the same offer. Excludes limited editions, clearance and sets. Promotional offers on the same product are not cumulative.
-    </div> -->
   </div>
 </template>
 
@@ -26,10 +27,10 @@ export default {
    
   },
   props: {
-    category:Object
+    categoryInfoData:Object
   },
   mounted(){
-    // console.log(this.category)
+    // console.log(this.categoryInfoData);
   },
   data() {
     return {

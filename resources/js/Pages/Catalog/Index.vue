@@ -2,7 +2,7 @@
   <Head title="Интернет-магазин растительной косметики и парфюмерии из Франции с доставкой — Yves Rocher" />
   <Header :categories="categories" :banners="textBanners" @hidePromo="hidePromo"/>
   <div class="page_content" :class="{ 'page_content_small': !showPromo }">
-    <CategoryInfo :category="category" />
+    <CategoryInfo :categoryInfoData="categoryInfoData" />
     <div class="subacategory_content" v-if="category.children"> 
       <div class="subacategory_content_item" v-for="item in category.children" :key="item.id">
         <a :href="'/subcategory/' + item.id">{{ item[`name_${$page.props.locale}`] }}</a>
@@ -121,6 +121,13 @@ export default {
   data() {
     return {
       showPromo: true,
+      categoryInfoData:{
+        category:'',
+        category:'',
+        category:'',
+        category:'',
+        category:''
+      },
       priceFilter: false,
       price: [this.prices.min_price, this.prices.max_price],
       isNew: false,
@@ -221,15 +228,30 @@ export default {
     if(sorting){
       this.setSortingActive(sorting)
     }
-    this.setBreadcrumbs(url)
+    this.setBreadcrumbs(url.href)
   },
   methods: {
     setBreadcrumbs(url){
-      console.log(this.category)
-      console.log(this.subCategory)
-      console.log(this.subSubCategory)
-      console.log(url)
+      const hasSubsubcategory = url.indexOf("subsubcategory") !== -1;
+      const hasSubCategory = url.indexOf("subcategory") !== -1;
+      
+      if(hasSubsubcategory){
+        this.categoryInfoData['subsubcategory'] = this.subSubCategory[`name_${this.$page.props.locale}`];
+        this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
+        this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
+        this.categoryInfoData['description'] = this.subSubCategory[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['image'] = this.subSubCategory.second_image;
+      }else if(hasSubCategory){
+        this.categoryInfoData['subCategory'] = this.subCategory[`name_${this.$page.props.locale}`];
+        this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
+        this.categoryInfoData['description'] = this.subCategory[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['image'] = this.subCategory.second_image;
 
+      }else{
+        this.categoryInfoData['category'] = this.category[`name_${this.$page.props.locale}`];
+        this.categoryInfoData['description'] = this.category[`description_${this.$page.props.locale}`];
+        this.categoryInfoData['image'] = this.category.second_image;
+      }    
     },
     setSortingActive(key){
       this.sortKey = key;
