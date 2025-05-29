@@ -25,7 +25,7 @@
         <Link class="group flex items-center py-3" href="/admin/sub-categories">
         <icon name="office" class="mr-2 w-4 h-4"
           :class="isUrl('admin/sub-categories') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-        <div :class="isUrl('admin/sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Категория
+        <div :class="isUrl('admin/sub-categories') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Категории
         </div>
         </Link>
       </div>
