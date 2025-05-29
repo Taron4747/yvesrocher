@@ -57,7 +57,7 @@ class HomeController extends Controller
         $new = (clone $products)->where('is_new',1)->count();
         $bestseller = (clone $products)->where('is_bestseller',1)->count();
         $discount = (clone $products)->where('discount','>',0)->count();
-        $products =   $products->with(['filters', 'subFilters']);
+        $products =   $products->with(['filters', 'subFilters','images']);
         if (isset($data['new'])) {
             $products =$products->where('is_new',1);
         }
