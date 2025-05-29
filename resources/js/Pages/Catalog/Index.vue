@@ -259,9 +259,9 @@ export default {
       this.categoryInfoData['second_image'] = this.category.second_image;
 
       
-      console.log(this.category)
-      console.log(this.subCategory)
-      console.log(this.subSubCategory)
+      // console.log(this.category)
+      // console.log(this.subCategory)
+      // console.log(this.subSubCategory)
     },
     setSortingActive(key){
       this.sortKey = key;
@@ -417,6 +417,7 @@ export default {
         padding: 15px;
         right: 0;
         top: 20px;
+        z-index: 2;
         .sort_data_item{
           padding: 10px;
           border-bottom: 1px solid #014E2E;
