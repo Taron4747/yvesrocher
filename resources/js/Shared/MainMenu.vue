@@ -7,6 +7,13 @@
       <div :class="isUrl('admin') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Панель</div>
       </Link>
     </div>
+    <div class="margin_1">
+      <Link class="group flex items-center py-3" href="/admin/filter">
+      <icon name="printer" class="mr-2 w-4 h-4"
+        :class="isUrl('admin/filters') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
+      <div :class="isUrl('admin/filters') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Фильтры</div>
+      </Link>
+    </div>
     <div class="margin_1 group flex items-center" style="cursor: pointer;" @click="active = !active">
       <icon name="office" class="mr-2 w-4 h-4"
         :class="active ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
@@ -37,13 +44,7 @@
         </Link>
       </div>
     </div>
-    <div class="margin_1">
-      <Link class="group flex items-center py-3" href="/admin/filter">
-      <icon name="printer" class="mr-2 w-4 h-4"
-        :class="isUrl('admin/filters') ? 'fill-white' : 'fill-indigo-400 group-hover:fill-white'" />
-      <div :class="isUrl('admin/filters') ? 'text-white' : 'text-indigo-300 group-hover:text-white'">Фильтры</div>
-      </Link>
-    </div>
+ 
     <div class="margin_1">
       <Link class="group flex items-center py-3" href="/admin/product">
       <icon name="printer" class="mr-2 w-4 h-4"

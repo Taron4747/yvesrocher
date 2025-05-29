@@ -53,7 +53,7 @@
           /> -->
         </div>
         <div class="flex items-center justify-end px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать семейство продуктов</loading-button>
+          <loading-button :loading="form.processing" class="btn-indigo" type="submit">Создать семейство продукта</loading-button>
         </div>
       </form>
     </div>
