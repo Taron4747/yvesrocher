@@ -30,7 +30,7 @@ class CatalogController extends Controller
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
         $filtersWithCounts =$this->filtersWithCounts($id,$data,'category_id',$category);
-        $products = Product::where('category_id',$id)->where('count','!=',0);
+        $products = Product::where('category_id',$id)->where('count','!=',0)->with('images');
         $products = $this->filterData($products,$data);
         $products = $this->sortData($products,$data);
         $minPrice = (clone $products)->min('price');
@@ -174,7 +174,7 @@ class CatalogController extends Controller
         $subCategory =Category::where('id',$id)->first();
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
         $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_category_id',$category);    
-        $products = Product::where('sub_category_id',$id)->where('count','!=',0);
+        $products = Product::where('sub_category_id',$id)->where('count','!=',0)->with('images');
         $products = $this->filterData($products,$data);
         $products = $this->sortData($products,$data);
 
@@ -215,7 +215,7 @@ class CatalogController extends Controller
 
         $category = Category::with(['filters.subFilters'])->findOrFail($subCategory->parent_id);
         $filtersWithCounts =$this->filtersWithCounts($id,$data,'sub_sub_category_id',$category);
-        $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0);
+        $products = Product::where('sub_sub_category_id',$id)->where('count','!=',0)->with('images');
         $products = $this->filterData($products,$data);
         $products = $this->sortData($products,$data);
 
