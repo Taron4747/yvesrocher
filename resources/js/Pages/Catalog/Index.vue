@@ -69,7 +69,8 @@
             <a :href="/product/+item.id" class="product_image">
               <div class="img_wrapper">
                 <img :src="item.image" class="main_img">
-                <img :src="item.images[0].path" class="hover_img">
+                <img :src="item.images[0].path" class="hover_img" v-if="item.images[0].path">
+                <img :src="item.image" class="hover_img" v-esle>
               </div>
               <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
               <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.Bestsellers }}</div>
