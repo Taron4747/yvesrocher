@@ -202,23 +202,24 @@ export default {
     });
     },
     store() {
-      this.errorMessage = "";
-      const selectedFilters = this.filtersData.filter(filter => filter.type === true);
+     this.errorMessage = "";
+const selectedFilters = this.filtersData.filter(filter => filter.type === true);
 
-      if (selectedFilters.length === 0) {
-        this.errorMessage = 'Выберите хотя бы один фильтр';
-        return false;
-      } else {
-          // Проверка 2: у каждого выбранного фильтра должен быть хотя бы один активный подфильтр
-          const hasInvalidSubFilters = selectedFilters.some(filter => {
-              return !filter.sub_filters.some(sub => sub.type === true);
-          });
+if (selectedFilters.length === 0) {
+  this.errorMessage = 'Выберите хотя бы один фильтр';
+  return false;
+} else {
+  // Проверка 2: у каждого выбранного фильтра должен быть хотя бы один активный подфильтр
+  const hasInvalidSubFilters = selectedFilters.some(filter => {
+    // Безопасная проверка: sub_filters должен быть массивом
+    return !Array.isArray(filter.sub_filters) || !filter.sub_filters.some(sub => sub.type === true);
+  });
 
-          if (hasInvalidSubFilters) {
-              this.errorMessage = 'Значение фильтра обязательно';
-              return false;
-          } 
-      }
+  if (hasInvalidSubFilters) {
+    this.errorMessage = 'Значение фильтра обязательно';
+    return false;
+  } 
+}
       this.form.button_filters = this.selected;
       this.form.filters = this.filtersData;
       this.form.post('/admin/product')
