@@ -48,7 +48,7 @@
               </Link>
             </td>
             <td class="border-t ">
-                 <input type="number" class="width_30 number_input" v-model="banner.position"/>
+                 <input type="number" class="width_60 number_input" v-model="banner.position"/>
 
             </td>
             <td class="border-t ">

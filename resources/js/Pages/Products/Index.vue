@@ -44,10 +44,10 @@
             </Link>
           </td>
           <td class="border-t">
-            <input type="number" class="width_30 number_input" v-model="product.price"/>
+            <input type="number" class="width_60 number_input" v-model="product.price"/>
           </td>
           <td class="border-t">
-            <input type="number" class="width_30 number_input" v-model="product.count"/>
+            <input type="number" class="width_60 number_input" v-model="product.count"/>
           </td>
           <td class="border-t">
             <div class="btn-indigo" @click="changePriceCount(product)" style="cursor: pointer;width: fit-content;">
