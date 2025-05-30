@@ -82,6 +82,8 @@
       <div class="product_description">
         <div class="title">{{ this.$page.props.language.description }}</div>
         <div v-html="product[`description_${$page.props.locale}`]" class="description"></div>
+         <div class="title">{{ this.$page.props.language.ingredients }}</div>
+        <div v-html="product[`composition_${$page.props.locale}`]" class="description"></div>
       </div>
     </div>
     
