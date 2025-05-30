@@ -234,7 +234,7 @@ class ProductController extends Controller
             'discount'  => ['nullable'],
             'count'  => ['nullable'],
             'is_new'  => ['required'],
-            'is_ecco'  => ['required'],
+            'is_ecco'  => ['nullable'],
             'is_bestseller'  => ['required'],
             'product_code'    => [
                 'required',
