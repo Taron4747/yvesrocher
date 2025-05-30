@@ -55,6 +55,7 @@
           <div class="categores_data_item old_pink">{{ this.$page.props.language.discounts }}</div>
           <div
             class="categores_data_item old_green"
+            style="color: #014E2E ;"
             v-for="item in categoriesData.filter(item => item.hasImage)"
             :key="item.id"
             :class="{ border_underline: choosedCategory == item.id}"
