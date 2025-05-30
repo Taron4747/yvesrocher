@@ -121,7 +121,7 @@ class CategoriesController extends Controller
                         'name_ru' => $subFilter->name_ru,
                         'name_en' => $subFilter->name_en,
                     ];
-                })->values(),
+                }),
             ];
         });
 
@@ -500,7 +500,7 @@ class CategoriesController extends Controller
                         'name_ru' => $subFilter->name_ru,
                         'name_en' => $subFilter->name_en,
                     ];
-                })->toArray(),
+                })->toArray()->values(),
             ];
         });
 
