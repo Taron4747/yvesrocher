@@ -62,6 +62,7 @@ class ProductController extends Controller
     {
 
         $data =Request::all();
+        // dd($data);
         $filters =isset($data['filters']) ?$data['filters'] :null;
         unset($data['filters']);
         unset($data['images']);
