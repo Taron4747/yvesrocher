@@ -52,7 +52,7 @@
           </div>
           <div class="categores_data_item old_green">{{ this.$page.props.language.new }}</div>
           <div class="categores_data_item old_green">{{ this.$page.props.language.ecoformats }}</div>
-          <div class="categores_data_item old_green">{{ this.$page.props.language.discounts }}</div>
+          <div class="categores_data_item old_pink">{{ this.$page.props.language.discounts }}</div>
           <div
             class="categores_data_item old_green"
             v-for="item in categoriesData.filter(item => item.hasImage)"
@@ -398,6 +398,11 @@ export default {
 }
 .old_green{
   color: #939956;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.old_pink{
+  color: #BA1051;
   font-weight: 600;
   text-transform: uppercase;
 }

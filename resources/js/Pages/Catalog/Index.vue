@@ -24,11 +24,11 @@
           <span class="checkmark"></span>
         </label>
         <div class="product_filter">
-          <div class="filter_title" @click="priceFilter = !priceFilter">
+          <!-- <div class="filter_title" @click="priceFilter = !priceFilter">
             <span>{{ this.$page.props.language.price }}</span>
             <img :class="{ transform: priceFilter }" src="/images/vector.svg"/>
-          </div>
-          <div class="price_slider" v-if="priceFilter">
+          </div> -->
+          <div class="price_slider" >
             <Slider v-model="price" :min="this.prices.min_price" :max="this.prices.max_price" @change="onPriceChange" />
           </div>
         </div>
