@@ -3,12 +3,14 @@
   <Header :categories="categories" :banners="textBanners" @hidePromo="hidePromo"/>
   <div class="page_content" :class="{ 'page_content_small': !showPromo }">
     <CategoryInfo :categoryInfoData="categoryInfoData" />
+    <div class="found_count">Найдено продуктов: {{products.data.length}}</div>
     <div class="subacategory_content" v-if="category.children"> 
       <div class="subacategory_content_item" v-for="item in category.children" :key="item.id">
         <a :href="'/subcategory/' + item.id">{{ item[`name_${$page.props.locale}`] }}</a>
       </div>
     </div>
     <div class="product_page">
+      
       <div class="product_filters" v-if="products.data.length > 0">
         <div class="title">{{ this.$page.props.language.filter_results }}</div>
         <label class="custom_checkbox custom_checkbox_small">{{ this.$page.props.language.bestsellers }}
@@ -365,6 +367,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.found_count{
+  width: 1140px;
+  margin: 25px auto 0 auto;
+}
 .subacategory_content {
   width: 1140px;
   margin: 25px auto 0 auto;
@@ -387,6 +393,7 @@ export default {
   width: 1140px;
   margin: 0 auto;
   margin-top: 32px;
+
   .product_filters {
     width: 270px;
     .title {

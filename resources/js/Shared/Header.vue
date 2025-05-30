@@ -54,8 +54,7 @@
           <a href="/promotions/ecco" class="categores_data_item old_green">{{ this.$page.props.language.ecoformats }}</a>
           <a href="/promotions/discount" class="categores_data_item old_pink">{{ this.$page.props.language.discounts }}</a>
           <div
-            class="categores_data_item old_green"
-            style="color: #014E2E ;"
+            class="categores_data_item dark_green"
             v-for="item in categoriesData.filter(item => item.hasImage)"
             :key="item.id"
             :class="{ border_underline: choosedCategory == item.id}"
@@ -326,9 +325,13 @@ export default {
         width: 100%;
         justify-content: space-between;
         .categores_data_item{
+          text-transform: uppercase;
           font-size: 12px;
           line-height: 13.8px;
           cursor: pointer;
+        }
+        .categores_data_item:hover{
+          border-bottom: 1px solid;
         }
         .dropdown_content{
           display: flex;
@@ -402,10 +405,24 @@ export default {
   font-weight: 600;
   text-transform: uppercase;
 }
+.old_green:hover{
+  border-bottom: 1px solid #939956;
+}
+.dark_green{
+  color: #014E2E;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.dark_green:hover{
+  border-bottom: 1px solid #014E2E;
+}
 .old_pink{
   color: #BA1051;
   font-weight: 600;
   text-transform: uppercase;
+}
+.old_pink:hover{
+  border-bottom: 1px solid #BA1051;
 }
 .border_underline{
   border-bottom: 2px solid #000000;
