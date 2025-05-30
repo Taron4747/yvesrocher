@@ -326,10 +326,10 @@ class CatalogController extends Controller
              'categories' =>$categories,
         ];
     }
-    public function promotions()
+    public function promotions($type)
     {
         $data =Request::all();
-        $type = $data['type'] ?? null;
+        // $type = $data['type'] ?? null;
 
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         // $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
