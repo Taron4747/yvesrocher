@@ -246,7 +246,8 @@ class CatalogController extends Controller
    
     }
     public function product($id)  {
-        $product = Product::where('id',$id)->where('count','!=',0)->with('images')->first();
+        $product = Product::where('id',$id)->where('count','!=',0)->with('images','category','subCategory','subSubCategory')->first();
+        // dd( $product);
         return Inertia::render('SingleProduct/Index', [
             'product' =>$product,
             'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
