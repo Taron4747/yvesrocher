@@ -50,7 +50,7 @@
           >
            <a :href="'/category/'+item.id" >{{ item[`name_${$page.props.locale}`] }}</a>
           </div>
-          <div class="categores_data_item old_green">{{ this.$page.props.language.new }}</div>
+          <div class="categores_data_item ">{{ this.$page.props.language.new }}</div>
           <div class="categores_data_item old_green">{{ this.$page.props.language.ecoformats }}</div>
           <div class="categores_data_item old_pink">{{ this.$page.props.language.discounts }}</div>
           <div
