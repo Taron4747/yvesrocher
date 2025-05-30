@@ -71,7 +71,7 @@ export default {
       flex-direction: column;
       justify-content: center;
       .title{
-        font-size: 38px;
+        font-size: 22px;
         color: #014E2E;
       }
       .text{
