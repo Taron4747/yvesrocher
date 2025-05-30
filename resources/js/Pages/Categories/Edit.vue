@@ -2,7 +2,7 @@
   <div>
     <Head :title="`${form.name_arm} `" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Семейство продуктов</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Семейства продуктов</Link>
       <span class="text-indigo-400 font-medium">/</span>
       {{ form.name_ru }} 
     </h1>

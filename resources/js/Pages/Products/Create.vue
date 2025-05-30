@@ -12,7 +12,7 @@
           <div class="title_big">Код Продукта</div>
           <text-input v-model="form.product_code" :error="form.errors.product_code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
           <div class="title_big">Категоризация</div>
-          <SelectInput v-model="form.category_id" :error="form.errors.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейство продуктов">
+          <SelectInput v-model="form.category_id" :error="form.errors.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейства продуктов">
             <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData.filter(cat => !cat.parent_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>    
@@ -70,15 +70,15 @@
           <text-input v-model="form.discount" placeholder="10" :error="form.errors.discount" class="pb-8 pr-6 w-full lg:w-1/3" label="Скидка (%)" />
           <text-input v-model="form.count" placeholder="4" :error="form.errors.count" class="pb-8 pr-6 w-full lg:w-1/3" label="Колличество" />     
           <label class="custom_checkbox text_color">Новинка
-              <input v-model="form.is_new" type="checkbox" checked="checked">
+              <input v-model="form.is_new" type="checkbox"  :true-value="1" :false-value="0">
               <span class="checkmark"></span>
           </label>
           <label class="custom_checkbox text_color">Бестселлеры
-              <input v-model="form.is_bestseller" type="checkbox" checked="checked">
+              <input v-model="form.is_bestseller" type="checkbox"  :true-value="1" :false-value="0">
               <span class="checkmark"></span>
           </label>
           <label class="custom_checkbox text_color">Экоформат
-              <input v-model="form.is_ecco" type="checkbox" checked="checked">
+              <input v-model="form.is_ecco" type="checkbox"  :true-value="1" :false-value="0">
               <span class="checkmark"></span>
           </label>
           

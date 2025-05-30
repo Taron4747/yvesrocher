@@ -3,14 +3,14 @@
     <Head title="filters" />
     <h1 class="mb-8 text-3xl font-bold">Продукты</h1>
     <div class="flex items-center justify-between mb-6">
-      <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
+      <!-- <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Удалить:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />
           <option value="with">С удаленными</option>
           <option value="only">Только удаленные</option>
         </select>
-      </search-filter>
+      </search-filter> -->
       <Link class="btn-indigo" href="/admin/product/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp;Продукт</span>
@@ -27,27 +27,27 @@
           <th class="pb-4 pt-6 px-6"></th>
         </tr>
         <tr v-for="product in products.data" :key="product.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
-          <td class="border-t">
+          <td class="border-t whitespace-normal">
             <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/product/${product.id}/edit`">
               {{ product.name_arm }}
               <icon v-if="product.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
-          <td class="border-t">
+          <td class="border-t whitespace-normal">
             <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
                 {{ product.name_ru }}
             </Link>
           </td>
-          <td class="border-t">
+          <td class="border-t whitespace-normal">
             <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
               {{ product.name_en }}
             </Link>
           </td>
           <td class="border-t">
-            <input type="number" class="width_30 number_input" v-model="product.price"/>
+            <input type="number" class="width_60 number_input" v-model="product.price"/>
           </td>
           <td class="border-t">
-            <input type="number" class="width_30 number_input" v-model="product.count"/>
+            <input type="number" class="width_60 number_input" v-model="product.count"/>
           </td>
           <td class="border-t">
             <div class="btn-indigo" @click="changePriceCount(product)" style="cursor: pointer;width: fit-content;">

@@ -3,14 +3,14 @@
     <Head title="Баннеры" />
     <h1 class="mb-8 text-3xl font-bold">Баннеры</h1>
     <div class="flex items-center justify-between mb-6">
-      <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
+      <!-- <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Trashed:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />
           <option value="with">С удаленными</option>
           <option value="only">Только удаленные</option>
         </select>
-      </search-filter>
+      </search-filter> -->
       <Link class="btn-indigo" href="/admin/banners/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp; Баннер </span>
@@ -37,21 +37,21 @@
                 <icon v-if="banner.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
               </Link>
             </td>
-            <td class="border-t">
-              <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/banners/${banner.id}/edit`">
+            <td class="border-t whitespace-normal">
+              <Link class="flex items-center px-6 py-4 " :href="`/admin/banners/${banner.id}/edit`">
                 {{ banner.title_ru }}
               </Link>
             </td>
-            <td class="border-t">
+            <td class="border-t whitespace-normal">
               <Link class="flex items-center px-6 py-4" :href="`/admin/banners/${banner.id}/edit`" tabindex="-1">
                 {{ banner.text_ru }}
               </Link>
             </td>
-            <td class="border-t">
-                 <input type="number" class="width_30 number_input" v-model="banner.position"/>
+            <td class="border-t ">
+                 <input type="number" class="width_60 number_input" v-model="banner.position"/>
 
             </td>
-            <td class="border-t">
+            <td class="border-t ">
               <label class="custom_checkbox text_color"style="margin:25px" >
                 <input v-model="banner.is_active" @click="changeActive(banner)" type="checkbox" :true-value="1" :false-value="0" />
                 <span class="checkmark"></span>

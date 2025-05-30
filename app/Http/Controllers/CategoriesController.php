@@ -114,14 +114,14 @@ class CategoriesController extends Controller
                 'name_en' => $filter->name_en,
               
                 'filterable' => $filter->filterable,
-                'sub_filters' => $filter->subFilters->whereIn('id', $categorySubFilterIds)->map(function ($subFilter) {
+                'sub_filters' => array_values($filter->subFilters->whereIn('id', $categorySubFilterIds)->map(function ($subFilter) {
                     return [
                         'id' => $subFilter->id,
                         'name_arm' => $subFilter->name_arm,
                         'name_ru' => $subFilter->name_ru,
                         'name_en' => $subFilter->name_en,
                     ];
-                }),
+                })),
             ];
         });
 

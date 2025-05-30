@@ -3,14 +3,14 @@
     <Head title="Предложения бизнеса " />
     <h1 class="mb-8 text-3xl font-bold">Предложения бизнеса </h1>
     <div class="flex items-center justify-between mb-6">
-      <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
+      <!-- <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Trashed:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />
           <option value="with">With Trashed</option>
           <option value="only">Only Trashed</option>
         </select>
-      </search-filter>
+      </search-filter> -->
       <Link class="btn-indigo" href="/admin/proposals/create">
         <span>Создать  </span>
         <span class="hidden md:inline">&nbsp;предложение</span>

@@ -126,16 +126,16 @@ class BannersController extends Controller
         $banner->update(
            
             Request::validate([
-                'text_arm' => ['required', 'max:500'],
-                'text_ru' => ['required', 'max:500'],
-                'text_en' => ['required', 'max:500'],
-                'title_arm' => ['required', 'max:500'],
-                'title_ru' => ['required', 'max:500'],
-                'title_en' => ['required', 'max:500'],
+                'text_arm' => ['required'],
+                'text_ru' => ['required'],
+                'text_en' => ['required'],
+                'title_arm' => ['required'],
+                'title_ru' => ['required'],
+                'title_en' => ['required'],
                 'position' => ['required', 'integer'],
-                // 'proposition_arm' => ['required', 'max:500'],
-                // 'proposition_ru' => ['required', 'max:500'],
-                // 'proposition_en' => ['required', 'max:500'],
+                'proposition_arm' => ['nullable'],
+                'proposition_ru' => ['nullable'],
+                'proposition_en' => ['nullable'],
                 'link' => ['required','regex:/^https?:\/\/(www\.)?yves-rocher\.am(\/.*)?$/i'],
                 'is_active' => ['required', 'boolean', new MaxActiveLimit(\App\Models\Banner::class)],
             ], [
