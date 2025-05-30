@@ -204,7 +204,7 @@ export default {
     store() {
      this.errorMessage = "";
 const selectedFilters = this.filtersData.filter(filter => filter.type === true);
-
+console.log(selectedFilters)
 if (selectedFilters.length === 0) {
   this.errorMessage = 'Выберите хотя бы один фильтр';
   return false;
