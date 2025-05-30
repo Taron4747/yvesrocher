@@ -9,8 +9,8 @@
     <div class="product_info_content">
       <div class="product_info_content_top">
          <a href="/">{{ this.$page.props.language.home }}</a><span v-if="product.category">></span>
-      <a :href="/category/+product.category.id" v-if="product.subCategory || product.subsubcategory">{{product.category[`name_${$page.props.locale}`]}}</a>
-      <span v-else>{{product.category[`name_${$page.props.locale}`]}}</span>
+      <a :href="/category/+product.category.id" >{{product.category[`name_${$page.props.locale}`]}}</a>
+      <!-- <span v-else>{{product.category[`name_${$page.props.locale}`]}}</span> -->
       <span v-if="product.sub_category">></span>
       <span v-if="product.sub_category">
         <a :href="/subcategory/+product.sub_category.id" v-if="product.sub_category">{{product.sub_category[`name_${$page.props.locale}`]}}</a>
