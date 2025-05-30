@@ -14,9 +14,9 @@
     </div>
     <div class="category_info_content_middle">
       <div class="content_middle_left">
-        <div class="title" v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subsubcategoryDesc}}</div>
-        <div class="title" v-else-if="categoryInfoData.subCategory">{{categoryInfoData.subCategoryDesc}}</div>
-        <div class="title" v-else>{{categoryInfoData.categoryDesc}}</div>
+        <div class="title" v-if="categoryInfoData.subsubcategory" v-html="categoryInfoData.subsubcategoryDesc"></div>
+        <div class="title" v-else-if="categoryInfoData.subCategory" v-html="categoryInfoData.subCategoryDesc"></div>
+        <div class="title" v-else v-html="categoryInfoData.categoryDesc"></div>
       </div>
       <div class="content_middle_right" v-if="categoryInfoData.category">
         <img :src="categoryInfoData.second_image">
