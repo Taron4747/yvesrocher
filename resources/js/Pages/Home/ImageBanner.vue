@@ -12,7 +12,7 @@
         class="w-full flex-shrink-0"
         @mouseenter="stopSlider"
         @mouseleave="startSlider"
-      > <a :href="slide.link">
+      > <a target="_blank" :href="slide.link">
         
           <img :src="slide.image_big" alt="Slide image" class="w-full h-[400px]" />
         </a>
