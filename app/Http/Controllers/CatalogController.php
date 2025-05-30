@@ -39,6 +39,17 @@ class CatalogController extends Controller
         $bestseller = (clone $products)->where('is_bestseller',1)->count();
         $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
+        $products->getCollection()->transform(function ($product) {
+            if ($product->images->isEmpty() && $product->image) {
+                $product->setRelation('images', collect([
+                    (object)[
+                        'id' => null,
+                        'path' => $product->image, // предполагается, что это путь или URL
+                    ]
+                ]));
+            }
+            return $product;
+        });
         $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
 
             return Inertia::render('Catalog/Index', [
