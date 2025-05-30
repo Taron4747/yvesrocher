@@ -1,7 +1,7 @@
 <template>
   <div>
     <Head title="Categories" />
-    <h1 class="mb-8 text-3xl font-bold">Семейство продуктов</h1>
+    <h1 class="mb-8 text-3xl font-bold">Семействa продуктов</h1>
     <div class="flex items-center justify-between mb-6">
       <!-- <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Удалить:</label>
@@ -13,7 +13,7 @@
       </search-filter> -->
       <Link class="btn-indigo" href="/admin/categories/create">
         <span>Создать</span>
-        <span class="hidden md:inline">&nbsp;Семейство продуктов</span>
+        <span class="hidden md:inline">&nbsp;Семействa продуктов</span>
       </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
