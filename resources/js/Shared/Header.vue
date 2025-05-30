@@ -120,22 +120,22 @@ export default {
       aboutImageBanners: [
         {
             id:1,
-            title: 'Кто мы?',
+            title: this.$page.props.language.banner_1,
             image_medium:'/images/about_us_1.webp',
         },
         {
             id:2,
-            title: 'Наша Растительная Экспертиза',
+            title: this.$page.props.language.banner_2,
             image_medium:'/images/about_us_2.webp',
         },
         {
             id:3,
-            title: 'Наши обязательства',
+            title: this.$page.props.language.banner_3,
             image_medium:'/images/about_us_3.webp',
         },
         {
             id:4,
-            title: 'Наши сертификаты и партнеры',
+            title: this.$page.props.language.banner_4,
             image_medium:'/images/about_us_4.webp',
         },
       ],

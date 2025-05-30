@@ -3,7 +3,7 @@
   <Header :categories="categories" :banners="textBanners" @hidePromo="hidePromo"/>
   <div class="page_content" :class="{ 'page_content_small': !showPromo }">
     <CategoryInfo :categoryInfoData="categoryInfoData" />
-    <div class="found_count">Найдено продуктов: {{products.data.length}}</div>
+    <div class="found_count">{{ this.$page.props.language.found }} {{products.data.length}}</div>
     <div class="subacategory_content" v-if="category.children"> 
       <div class="subacategory_content_item" v-for="item in category.children" :key="item.id">
         <a :href="'/subcategory/' + item.id">{{ item[`name_${$page.props.locale}`] }}</a>

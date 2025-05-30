@@ -32,5 +32,10 @@
     "count":"Count",
     "description":"Description",
     "ingredients":"Ingredients",
-    "ecoformats":"Ecoformats"
+    "ecoformats":"Ecoformats",
+    "found":"Products found:",
+    "banner_1":"Who we are?",
+    "banner_2":"Our Botanical Expertise",
+    "banner_3":"Our commitments",
+    "banner_4":"Our certifications"
 }
