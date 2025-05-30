@@ -38,7 +38,7 @@
               </Link>
             </td>
             <td class="border-t whitespace-normal">
-              <Link class=" items-center px-6 py-4 " :href="`/admin/banners/${banner.id}/edit`">
+              <Link class="flex items-center px-6 py-4 " :href="`/admin/banners/${banner.id}/edit`">
                 {{ banner.title_ru }}
               </Link>
             </td>

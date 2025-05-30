@@ -28,18 +28,18 @@
         </tr>
         <tr v-for="product in products.data" :key="product.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
           <td class="border-t whitespace-normal">
-            <Link class=" items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/product/${product.id}/edit`">
+            <Link class="flex items-center px-6 py-4 focus:text-indigo-500" :href="`/admin/product/${product.id}/edit`">
               {{ product.name_arm }}
               <icon v-if="product.deleted_at" name="trash" class="shrink-0 ml-2 w-3 h-3 fill-gray-400" />
             </Link>
           </td>
           <td class="border-t whitespace-normal">
-            <Link class=" items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
                 {{ product.name_ru }}
             </Link>
           </td>
           <td class="border-t whitespace-normal">
-            <Link class=" items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
+            <Link class="flex items-center px-6 py-4" :href="`/admin/product/${product.id}/edit`" tabindex="-1">
               {{ product.name_en }}
             </Link>
           </td>
