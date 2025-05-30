@@ -51,7 +51,7 @@
            <a :href="'/category/'+item.id" >{{ item[`name_${$page.props.locale}`] }}</a>
           </div>
           <div class="categores_data_item old_green">{{ this.$page.props.language.new }}</div>
-          <div class="categores_data_item old_green">{{ this.$page.props.language.bestsellers }}</div>
+          <div class="categores_data_item old_green">{{ this.$page.props.language.ecoformats }}</div>
           <div class="categores_data_item old_green">{{ this.$page.props.language.discounts }}</div>
           <div
             class="categores_data_item old_green"
@@ -318,7 +318,7 @@ export default {
       justify-content: center;
       margin: 0 auto;
       max-width: 1140px;
-      height: 65px;
+      height: 35px;
       .categores_data{
         display: flex;
         align-items: center;
