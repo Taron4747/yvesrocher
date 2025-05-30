@@ -335,7 +335,7 @@ class CatalogController extends Controller
         // $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
         // $filtersWithCounts =$this->filtersWithCounts($id,$data,'category_id',$category);
         $products = Product::where('count','!=',0)->with('images');
-        // $products = $this->filterData($products,$data);
+        $products = $this->filterData($products,$data);
         $products = $this->sortData($products,$data);
         $minPrice = (clone $products)->min('price');
         $maxPrice = (clone $products)->max('price');
