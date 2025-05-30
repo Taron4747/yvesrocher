@@ -13,6 +13,8 @@ use Inertia\Response;
 use App\Models\Category;
 use App\Models\Banner;
 use Illuminate\Support\Arr;
+use App\Models\Filter;
+use App\Models\Proposal;
 
 class CatalogController extends Controller
 {
@@ -25,7 +27,6 @@ class CatalogController extends Controller
     }
     public function getByCategory($id)
     {
-        // dd(Request::all());
         $data =Request::all();
         $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
         $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
@@ -195,6 +196,17 @@ class CatalogController extends Controller
         $bestseller = (clone $products)->where('is_bestseller',1)->count();
         $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
+        $products->getCollection()->transform(function ($product) {
+            if ($product->images->isEmpty() && $product->image) {
+                $product->setRelation('images', collect([
+                    (object)[
+                        'id' => null,
+                        'path' => $product->image, // предполагается, что это путь или URL
+                    ]
+                ]));
+            }
+            return $product;
+        });
                 $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
@@ -236,6 +248,17 @@ class CatalogController extends Controller
         $bestseller = (clone $products)->where('is_bestseller',1)->count();
         $discount = (clone $products)->where('discount','>',0)->count();
         $products= $products->paginate(20);
+        $products->getCollection()->transform(function ($product) {
+            if ($product->images->isEmpty() && $product->image) {
+                $product->setRelation('images', collect([
+                    (object)[
+                        'id' => null,
+                        'path' => $product->image, // предполагается, что это путь или URL
+                    ]
+                ]));
+            }
+            return $product;
+        });
         $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
             return Inertia::render('Catalog/Index', [
                 'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
@@ -303,5 +326,114 @@ class CatalogController extends Controller
              'categories' =>$categories,
         ];
     }
+    public function promotions()
+    {
+        $data =Request::all();
+        $type = $data['type'] ?? null;
 
+        $banners = Banner::where('is_active',1)->orderBy('position','asc')->get()   ;         
+        // $category = Category::with(['filters.subFilters','children'])->findOrFail($id);
+        // $filtersWithCounts =$this->filtersWithCounts($id,$data,'category_id',$category);
+        $products = Product::where('count','!=',0)->with('images');
+        // $products = $this->filterData($products,$data);
+        $products = $this->sortData($products,$data);
+        $minPrice = (clone $products)->min('price');
+        $maxPrice = (clone $products)->max('price');
+        $new = (clone $products)->where('is_new',1)->count();
+        $bestseller = (clone $products)->where('is_bestseller',1)->count();
+        $discount = (clone $products)->where('discount','>',0)->count();
+        if ($type === 'new') {
+            $products->where('is_new', 1);
+        } elseif ($type === 'bestseller') {
+            $products->where('is_bestseller', 1);
+        } elseif ($type === 'ecco') {
+            $products->where('is_ecco', 1);
+        } elseif ($type === 'discount') {
+            $products->where('discount', '>', 0);
+        }
+        $productIds = $products->pluck('id');
+        $filters = Filter::whereHas('products', function ($q) use ($productIds) {
+            $q->whereIn('products.id', $productIds);
+        })->with(['subFilters' => function ($query) use ($productIds) {
+            $query->whereHas('products', function ($q) use ($productIds) {
+                $q->whereIn('products.id', $productIds);
+            });
+        }])->get();
+        $filtersWithCounts = $filters->map(function ($filter) use ($productIds) {
+            $subFilters = $filter->subFilters->map(function ($subFilter) use ($productIds) {
+                return [
+                    'id' => $subFilter->id,
+                    'name_ru' => $subFilter->name_ru,
+                    'name_arm' => $subFilter->name_arm,
+                    'name_en' => $subFilter->name_en,
+                    'product_count' => $subFilter->products()->whereIn('products.id', $productIds)->count(),
+                ];
+            });
+        
+            return [
+                'id' => $filter->id,
+                'name_ru' => $filter->name_ru,
+                'name_arm' => $filter->name_arm,
+                'name_en' => $filter->name_en,
+                'type' => $filter->type,
+                'product_count' => $filter->products()->whereIn('products.id', $productIds)->count(),
+                'sub_filters' => $subFilters,
+            ];
+        });
+        if (isset($data['filters'])) {
+            $subFilterIds = Arr::flatten($data['filters']);
+            $products =$products->whereHas('subFilters', function ($query) use ($subFilterIds) {
+                $query->whereIn('sub_filter_id', $subFilterIds);
+            });
+        }
+        $products= $products->paginate(20);
+        $products->getCollection()->transform(function ($product) {
+            if ($product->images->isEmpty() && $product->image) {
+                $product->setRelation('images', collect([
+                    (object)[
+                        'id' => null,
+                        'path' => $product->image, // предполагается, что это путь или URL
+                    ]
+                ]));
+            }
+            return $product;
+        });
+        $prices = Product::selectRaw('MIN(price) as min_price, MAX(price) as max_price')->first();
+        $typeMapping = [
+            'new' => 'Новинки',
+            'bestseller' => 'Бестселлеры',
+            'discount' => 'Скидки',
+            'ecco' => 'Экоформаты',
+        ];
+    
+        $proposals = collect();
+        if (isset($typeMapping[$type])) {
+            $proposals = Proposal::where('type', $typeMapping[$type])->first();
+        }
+        $category = [
+            'name_en'=>$proposals->description_en,
+            'name_ru'=>$proposals->description_ru,
+            'name_arm'=>$proposals->description_arm,
+      
+            'description_arm'=>$proposals->proposition_arm,
+            'description_ru'=>$proposals->proposition_ru,
+            'description_en'=>$proposals->proposition_en,
+            'second_image'=>$proposals->image,
+        ];
+            return Inertia::render('Catalog/Index', [
+                'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+                'textBanners' =>$banners,
+                'category' =>$category,
+                'products' =>$products,
+                'maxPrice' =>$maxPrice,
+                'minPrice' =>$minPrice,
+                'discount' =>$discount,
+                'new' =>$new,
+                'bestseller' =>$bestseller,
+                'filtersWithCounts' =>$filtersWithCounts,
+                'prices'=>$prices,
+                'subCategory'=>[],
+                'subSubCategory'=>[],
+            ]);
+    }
 }

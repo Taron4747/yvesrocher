@@ -468,6 +468,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::post('rate', [HomeController::class, 'rate'])->middleware('auth');
     Route::post('/favorites/toggle', [FavoriteController::class, 'toggle']);
     Route::get('/favorites', [FavoriteController::class, 'list']);
+    Route::get('/promotions', [CatalogController::class, 'promotions']);
 });
    
    

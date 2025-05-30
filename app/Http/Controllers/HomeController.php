@@ -82,7 +82,17 @@ class HomeController extends Controller
         $products = $this->sortData($products,$data);
 
         $products =$products->paginate(20);
-    
+        $products->getCollection()->transform(function ($product) {
+            if ($product->images->isEmpty() && $product->image) {
+                $product->setRelation('images', collect([
+                    (object)[
+                        'id' => null,
+                        'path' => $product->image, // предполагается, что это путь или URL
+                    ]
+                ]));
+            }
+            return $product;
+        });
     $productIds = $products->pluck('id');
     
     // Получаем уникальные фильтры
