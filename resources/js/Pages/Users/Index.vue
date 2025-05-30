@@ -16,11 +16,11 @@
           <option value="with">With Trashed</option>
           <option value="only">Only Trashed</option>
         </select>
-      </search-filter>
+      </search-filter> -->
       <Link class="btn-indigo" href="/admin/users/create">
         <span>Добавить  </span>
         <span class="hidden md:inline">&nbsp;Пользователя</span>
-      </Link> -->
+      </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">

@@ -193,6 +193,7 @@ class ProductController extends Controller
                 'product_code' => $product->product_code,
                 'is_new' => $product->is_new,
                 'is_bestseller' => $product->is_bestseller,
+                'is_ecco' => $product->is_ecco,
                 'image' => $product->image,
                 'images' => $product->images,
                 'price' => $product->price,
@@ -234,7 +235,7 @@ class ProductController extends Controller
             'discount'  => ['nullable'],
             'count'  => ['nullable'],
             'is_new'  => ['required'],
-            'is_ecco'  => ['nullable'],
+            'is_ecco'  => ['required'],
             'is_bestseller'  => ['required'],
             'product_code'    => [
                 'required',

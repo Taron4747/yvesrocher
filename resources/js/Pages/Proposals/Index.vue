@@ -10,11 +10,11 @@
           <option value="with">With Trashed</option>
           <option value="only">Only Trashed</option>
         </select>
-      </search-filter>
+      </search-filter> -->
       <Link class="btn-indigo" href="/admin/proposals/create">
         <span>Создать  </span>
         <span class="hidden md:inline">&nbsp;предложение</span>
-      </Link> -->
+      </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">

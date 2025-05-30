@@ -10,11 +10,11 @@
           <option value="with">С удаленными</option>
           <option value="only">Только удаленные</option>
         </select>
-      </search-filter>
+      </search-filter> -->
       <Link class="btn-indigo" href="/admin/sub-categories/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp;Категорию</span>
-      </Link> -->
+      </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">
       <table class="w-full whitespace-nowrap">
