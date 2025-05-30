@@ -11,7 +11,14 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
+    public function subCategory()
+    {
+        return $this->belongsTo(Category::class,'sub_category_id','id');
+    }
+    public function subSubCategory()
+    {
+        return $this->belongsTo(Category::class,'sub_sub_category_id','id');
+    }
     public function filters()
     {
         return $this->belongsToMany(Filter::class, 'product_filter');
