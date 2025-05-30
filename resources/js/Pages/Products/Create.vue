@@ -210,13 +210,10 @@ export default {
         return false;
       } else {
           // Проверка 2: у каждого выбранного фильтра должен быть хотя бы один активный подфильтр
-          // const hasInvalidSubFilters = selectedFilters.some(filter => {
-          //     return !filter.sub_filters.some(sub => sub.type === true);
-          // });
           const hasInvalidSubFilters = selectedFilters.some(filter => {
-                const subs = Array.isArray(filter.sub_filters) ? filter.sub_filters : [];
-                return !subs.some(sub => sub.type === true);
-            });
+              return !filter.sub_filters.some(sub => sub.type === true);
+          });
+
           if (hasInvalidSubFilters) {
               this.errorMessage = 'Значение фильтра обязательно';
               return false;
