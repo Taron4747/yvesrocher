@@ -247,8 +247,10 @@ class CatalogController extends Controller
     }
     public function product($id)  {
         $product = Product::where('id',$id)->where('count','!=',0)->with('images')->first();
-        return Inertia::render('Home/Index', [
+        return Inertia::render('SingleProduct/Index', [
             'product' =>$product,
+            'categories' =>Category::with('children.children')->whereNull('parent_id')->get(),
+            'banners' =>Banner::where('is_active',1)->orderBy('position','asc')->get()
         ]);
     }
 

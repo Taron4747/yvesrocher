@@ -66,11 +66,11 @@
         </div>
         <div class="product_data">
           <div class="product_data_item" v-for="item in products.data" :key="item.id">
-            <div class="product_image">
+            <a :href="/product/+item.id" class="product_image">
               <img :src="item.image">
               <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
               <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.Bestsellers }}</div>
-            </div>
+            </a>
             <div class="product_text">
               <div class="title">{{ item[`name_${$page.props.locale}`] }}</div>
               <div class="size"> 
