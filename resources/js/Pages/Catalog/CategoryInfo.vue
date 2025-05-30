@@ -13,7 +13,7 @@
       <span v-if="categoryInfoData.subsubcategory">{{categoryInfoData.subsubcategory}}</span>
     </div>
     <div class="category_info_content_middle">
-      <div class="content_middle_left">
+      <div class="content_middle_left" :class="{'max-width':categoryInfoData.category}">
         <div class="title" v-if="categoryInfoData.subsubcategory" v-html="categoryInfoData.subsubcategoryDesc"></div>
         <div class="title" v-else-if="categoryInfoData.subCategory" v-html="categoryInfoData.subCategoryDesc"></div>
         <div class="title" v-else v-html="categoryInfoData.categoryDesc"></div>
@@ -77,6 +77,9 @@ export default {
       .text{
         margin-top: 12px;
       }
+    }
+    .max-width{
+      max-width: calc(1140 - 369px);
     }
     .content_middle_right{
       width: 369px;
