@@ -48,7 +48,9 @@
           >
             <div class="discount" v-if="item.discount">{{ item.discount }}%</div>
             <div class="image">
+              <a :href="'/product/'+item.id">
               <img class="product_image" :src="item.image" />
+              </a>
               <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
               <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.Bestsellers }}</div>
               <div class="like">

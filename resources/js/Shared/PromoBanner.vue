@@ -4,7 +4,7 @@
       <img src="/images/vector_banner.svg">
     </button>
 
-    <div class="relative flex-1 overflow-hidden mx-4">
+    <div class="relative flex-1 overflow-hidden mx-4" style="line-height: 21px;">
       <transition :name="transitionName" mode="out-in">
         <div :key="currentIndex" class="text-center font-medium hover_text">
           <a :href="currentLink" v-html="currentMessage" />

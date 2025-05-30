@@ -67,7 +67,10 @@
         <div class="product_data">
           <div class="product_data_item" v-for="item in products.data" :key="item.id">
             <a :href="/product/+item.id" class="product_image">
-              <img :src="item.image">
+              <div class="img_wrapper">
+                <img :src="item.image" class="main_img">
+                <img :src="item.images[0].path" class="hover_img">
+              </div>
               <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
               <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.Bestsellers }}</div>
             </a>
@@ -459,6 +462,34 @@ export default {
           position: relative;
           width: 100%;
           height: 230px;
+          .img_wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+          }
+
+          .img_wrapper img {
+            width: 100%;
+            height: 100%;
+            transition: opacity 0.4s ease;
+            display: block;
+            object-fit: cover;
+          }
+
+          .hover_img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+          }
+
+          .img_wrapper:hover .hover_img {
+            opacity: 1;
+          }
+
+          .img_wrapper:hover .main_img {
+            opacity: 0;
+          }
           img {
             width: 100%;
             height: 100%;

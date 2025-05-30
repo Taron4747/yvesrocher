@@ -28,5 +28,7 @@
     "discount_desc": "Discount: High to Low",
     "about_mark":"The brand",
     "price":"Price",
-    "no_result":"We did not find any products corresponding to your search"
+    "no_result":"We did not find any products corresponding to your search",
+    "count":"Count",
+    "description":"Description"
 }
