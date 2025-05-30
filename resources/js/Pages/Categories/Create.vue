@@ -2,7 +2,7 @@
   <div>
     <Head title="Create Contact" />
     <h1 class="mb-8 text-3xl font-bold">
-      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Семейство продуктов</Link>
+      <Link class="text-indigo-400 hover:text-indigo-600" href="/admin/categories">Семейства продуктов</Link>
       <span class="text-indigo-400 font-medium">/</span> Создать
     </h1>
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">

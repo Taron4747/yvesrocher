@@ -8,8 +8,8 @@
     <div class="max-w-3xl bg-white rounded-md shadow overflow-hidden">
       <form @submit.prevent="store">
         <div class="-mb-8 -mr-6 p-8">
-          <div class="title_big">Семейство продуктов</div>
-          <select-input v-model="form.parent_id" :error="form.errors.parent_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Семейство продуктов">
+          <div class="title_big">Семейства продуктов</div>
+          <select-input v-model="form.parent_id" :error="form.errors.parent_id" class="pb-8 pr-6 w-full lg:w-1/2" label="Семейства продуктов">
             <option :value="null" />
             <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name_arm }}</option>
           </select-input>

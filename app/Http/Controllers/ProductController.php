@@ -66,12 +66,12 @@ class ProductController extends Controller
         unset($data['filters']);
         unset($data['images']);
         $validator = Validator::make(Request::all(), [
-                'name_arm' => ['required', 'max:50'],
+                'name_arm' => ['required' ],
                 'category_id' => ['required'],
                 'sub_category_id' => ['required'],
                 'sub_sub_category_id' => ['required'],
-                'name_ru' => ['required', 'max:50'],
-                'name_en' => ['required', 'max:50'],
+                'name_ru' => ['required' ],
+                'name_en' => ['required' ],
                 // 'size' => ['required', 'numeric'],
                 'count' => ['required'],
                 'description_arm' => ['required'],
@@ -218,9 +218,9 @@ class ProductController extends Controller
         // dd($product->id, $request->all());
         $data =$request->all();
         $validated = $request->validate([
-            'name_arm'        => ['required', 'max:50'],
-            'name_ru'         => ['required', 'max:50'],
-            'name_en'         => ['required', 'max:50'],
+            'name_arm'        => ['required'],
+            'name_ru'         => ['required'],
+            'name_en'         => ['required'],
             'size'            => ['required', 'numeric'],
             'description_arm' => ['required'],
             'description_ru'  => ['required'],
@@ -228,7 +228,13 @@ class ProductController extends Controller
             'composition_ru'  => ['required'],
             'composition_arm' => ['required'],
             'composition_en'  => ['required'],
+            'category_id'  => ['required'],
+            'sub_sub_category_id'  => ['required'],
+            'sub_category_id'  => ['required'],
+            'discount'  => ['nullable'],
+            'count'  => ['nullable'],
             'is_new'  => ['required'],
+            'is_ecco'  => ['required'],
             'is_bestseller'  => ['required'],
             'product_code'    => [
                 'required',
@@ -239,8 +245,7 @@ class ProductController extends Controller
             'size_type_id'           => ['nullable'],
             'is_ecci'           => ['nullable'],
         ]);
-
-      
+   
         $product->update($validated);
         if (isset(Request::file('image')[0])) {
             $path = Request::file('image')[0]->store('images', 's3', 'public');
