@@ -79,7 +79,7 @@ export default {
       }
     }
     .max-width{
-      max-width: calc(1140 - 369px);
+      max-width: calc(1140px - 369px);
     }
     .content_middle_right{
       width: 369px;
