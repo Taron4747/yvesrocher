@@ -71,7 +71,10 @@
             </div>
             <div class="product_text">
               <div class="title">{{ item[`name_${$page.props.locale}`] }}</div>
-              <div class="size">Размер {{ item.size }}</div>
+              <div class="size"> 
+                <span>{{ item.size }}</span>
+                <span>{{ item.type }}</span>
+              </div>
               <div class="rating">
                 <img src="/images/stars.png">
                 <div>(100)</div>
@@ -468,6 +471,9 @@ export default {
             font-size: 12px;
             color: #767676;
             margin-bottom: 5px;
+            span{
+              margin-right: 5px;
+            }
           }
           .rating {
             display: flex;
