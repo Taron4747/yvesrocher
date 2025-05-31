@@ -74,7 +74,7 @@
                 <img :src="item.images[0].path" class="hover_img">
               </div>
               <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
-              <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.bestsellers }}</div>
+              <div class="product_type" v-else-if="item.is_bestseller == 1">{{ this.$page.props.language.bestsellers }}</div>
             </a>
             <div class="product_text">
               <div class="title">{{ item[`name_${$page.props.locale}`] }}</div>
