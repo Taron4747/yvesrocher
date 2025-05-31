@@ -12,7 +12,7 @@
           <div class="title_big">Код Продукта</div>
           <text-input v-model="form.product_code" :error="form.errors.product_code" class="pb-8 pr-6 w-full lg:w-1/3" label="Код" />
           <div class="title_big">Категоризация</div>
-          <SelectInput v-model="form.category_id"  :error="form.errors.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейства продуктов">
+          <SelectInput v-model="form.category_id"  :error="form.errors.category_id" class="pb-8 pr-6 w-full lg:w-1/3" label="Семейство продуктов">
             <option disabled value="">Выберите категорию</option>
             <option v-for="opt in categoriesData.filter(cat => !cat.parent_id)" :key="opt.id" :value="opt.id">{{ opt.name_ru }}</option>
           </SelectInput>    
@@ -171,7 +171,7 @@ export default {
     return {
       errorMessage:'',
       categoriesData:this.categories,
-      filtersData:this.categoryfilters,
+      filtersData:this.filters,
       butonFiltersData:this.butonFilters,
       dataTypes:this.types,
       selected: [],
@@ -207,6 +207,11 @@ export default {
     }
   },
   mounted(){
+    axios.get("/admin/category/filters/" + newVal).then((response) => {
+        this.butonFiltersData = response.data.categorySubFilters;
+        this.filtersData = response.data.categoryfilters;
+        this.setFilters()
+      });
     this.setFilters()
     const productFiltersArray = Object.values(this.product.filters);
     this.filtersData.forEach((filter) => {
