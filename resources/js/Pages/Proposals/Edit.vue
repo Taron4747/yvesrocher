@@ -103,7 +103,7 @@ export default {
   },
   methods: {
     update() {
-      this.form.put(`/admin/proposals/${this.proposal.id}`)
+      this.form.post(`/admin/proposals/${this.proposal.id}`)
     },
     destroy() {
       if (confirm('Are you sure you want to delete this proposal?')) {
