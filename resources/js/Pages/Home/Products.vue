@@ -52,7 +52,7 @@
               <img class="product_image" :src="item.image" />
               </a>
               <div class="product_type" v-if="item.is_new == 1">{{ this.$page.props.language.new }}</div>
-              <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.Bestsellers }}</div>
+              <div class="product_type" v-if="item.is_bestseller == 1">{{ this.$page.props.language.bestsellers }}</div>
               <div class="like">
                 <img src="images/like.svg"/>
               </div>

@@ -337,7 +337,6 @@ export default {
           display: flex;
           justify-content: space-between;
           width: 1200px;
-          height: 500px;
           box-shadow: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
           background: #FFFFFF;
           top: 26px;
