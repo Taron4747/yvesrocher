@@ -46,7 +46,7 @@
             v-for="(item, index) in displayProducts"
             :key="index"
           >
-            <div class="discount" v-if="item.discount">{{ item.discount }}%</div>
+            <div class="discount" v-if="item.discount || item.discount > 0">{{ item.discount }}%</div>
             <div class="image">
               <a :href="'/product/'+item.id">
               <img class="product_image" :src="item.image" />

@@ -89,7 +89,7 @@
               <div class="price">
                 <span class="big">{{ item.price }} դ</span>
                 <span
-                  v-if="item.discount"
+                  v-if="item.discount || item.discount > 0"
                   class="small"
                 >{{ item.price + (item.price * item.discount / 100) }} դ</span>
               </div>
@@ -464,7 +464,7 @@ export default {
         margin-right: 15px;
         height: 440px;
         margin-bottom: 24px;
-        box-shadow: inset 0 4px 6px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, .11);
         .product_image {
           position: relative;
           width: 100%;
@@ -561,7 +561,7 @@ export default {
           color: #FFF;
           font-weight: 600;
           width: calc(100% - 22px);
-          margin: 0 auto;
+          margin: 0 auto 10px auto;
         }
       }
       .product_data_item:nth-child(4n) {
