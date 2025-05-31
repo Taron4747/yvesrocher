@@ -3,14 +3,14 @@
     <Head title="Categories" />
     <h1 class="mb-8 text-3xl font-bold">Категории</h1>
     <div class="flex items-center justify-between mb-6">
-      <!-- <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
+      <search-filter v-model="form.search" class="mr-4 w-full max-w-md" @reset="reset">
         <label class="block text-gray-700">Trashed:</label>
         <select v-model="form.trashed" class="form-select mt-1 w-full">
           <option :value="null" />
           <option value="with">С удаленными</option>
           <option value="only">Только удаленные</option>
         </select>
-      </search-filter> -->
+      </search-filter>
       <Link class="btn-indigo" href="/admin/sub-categories/create">
         <span>Создать</span>
         <span class="hidden md:inline">&nbsp;Категорию</span>
