@@ -147,7 +147,7 @@ class ProductController extends Controller
                         'name_ru' => $subFilter->name_ru,
                         'name_en' => $subFilter->name_en,
                     ];
-                })->toArray(),
+                })->values()->toArray(),
             ];
         });
 
@@ -175,7 +175,7 @@ class ProductController extends Controller
             ];
         });
 
-      
+    //   dd($categoryfilters->values()->toArray(),$filters->where('filterable',true)->values()->toArray());
         return Inertia::render('Products/Edit', [
             'product' => [
                 'id' => $product->id,
@@ -205,9 +205,9 @@ class ProductController extends Controller
                 'sub_sub_category_id' => $product->sub_sub_category_id,
                 'size_type_id' => $product->size_type_id,
             ],
-            'categoryfilters'=>$categoryfilters->toArray(),
+            'categoryfilters'=>$categoryfilters->values()->toArray(),
             'categories' =>Category::with('children.children')->get()->toArray(),
-            'filters'=> $filters->where('filterable',true)->values()->toArray(),
+            'filters'=> $categoryfilters->values()->toArray(),
             'butonFilters'=> $filters->where('filterable',false)->values()->toArray(),
             'types' =>SizeType::all()->toArray(),
 

@@ -207,11 +207,6 @@ export default {
     }
   },
   mounted(){
-    axios.get("/admin/category/filters/" + this.product.category_id).then((response) => {
-        this.butonFiltersData = response.data.categorySubFilters;
-        this.filtersData = response.data.categoryfilters;
-        this.setFilters()
-      });
     this.setFilters()
     const productFiltersArray = Object.values(this.product.filters);
     this.filtersData.forEach((filter) => {
