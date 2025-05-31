@@ -13,7 +13,7 @@
       </search-filter> -->
       <Link class="btn-indigo" href="/admin/categories/create">
         <span>Создать</span>
-        <span class="hidden md:inline">&nbsp;Семействa продуктов</span>
+        <span class="hidden md:inline">&nbsp;Семейство продуктов</span>
       </Link>
     </div>
     <div class="bg-white rounded-md shadow overflow-x-auto">

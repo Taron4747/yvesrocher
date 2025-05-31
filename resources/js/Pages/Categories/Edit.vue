@@ -67,8 +67,8 @@
         </div>
        
         <div class="flex items-center px-8 py-4 bg-gray-50 border-t border-gray-100">
-          <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить категорию</button>
-          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить семейство продукта</loading-button>
+          <button v-if="!category.deleted_at" class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить Семейство продукта</button>
+          <loading-button :loading="form.processing" class="btn-indigo ml-auto" type="submit">Обновить Семейство продукта</loading-button>
         </div>
       </form>
     </div>

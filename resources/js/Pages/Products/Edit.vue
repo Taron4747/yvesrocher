@@ -171,7 +171,7 @@ export default {
     return {
       errorMessage:'',
       categoriesData:this.categories,
-      filtersData:this.filters,
+      filtersData:this.categoryfilters,
       butonFiltersData:this.butonFilters,
       dataTypes:this.types,
       selected: [],
